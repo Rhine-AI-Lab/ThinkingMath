@@ -3,7 +3,7 @@ from general_utils import *
 
 
 # 不支持运算结果为负数的情况
-def make_minus_data(nl, print_all=False):
+def make_data_minus(nl, print_all=False):
     nls = list(map(str, nl))
 
     question_prefix = ['帮我计算一下', '计算', '算下', '求', '算', '']
