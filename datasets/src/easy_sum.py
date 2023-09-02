@@ -1,9 +1,5 @@
 import random
 
-question_prefix = ['帮我计算一下', '计算', '算下', '求', '']
-question_add = ['+', '加']
-question_end = ['的结果', '的答案', '']
-
 print_all = False
 
 
@@ -14,6 +10,9 @@ def random_str(strs):
 def make_data(nl):
     nls = list(map(str, nl))
 
+    question_prefix = ['帮我计算一下', '计算', '算下', '求', '']
+    question_add = ['+', '加']
+    question_end = ['的结果', '的答案', '']
     question = random_str(question_prefix) + random_str(question_add).join(nls) + random_str(question_end)
     print_all and print(question, end='\n\n')
 
@@ -22,7 +21,11 @@ def make_data(nl):
         if len(n) > max_len:
             max_len = len(n)
     thinking_lines = [
-        '@THINK{', f'任务: 计算{len(nl)}个数相加，最长是{max_len}位数', f'题目: {"+".join(nls)}', '', '从右往左计算'
+        '[开始思考]',
+        f'任务: 计算{len(nl)}个数相加，最长是{max_len}位数',
+        f'题目: {"+".join(nls)}',
+        '',
+        '从右往左计算:'
     ]
 
     jw = [0]
@@ -44,7 +47,7 @@ def make_data(nl):
         if len(rs) == 1:
             jw = [0]
         else:
-            # TODO 多位进位合并
+            # TODO 多位进位合并 当前不支持10个以上的数字一起累加进位
             jw = list(map(int, list(rs[:-1])))
             line += f'，进位{rs[:-1]}'
         result = fn + result
@@ -56,7 +59,7 @@ def make_data(nl):
         result = jws + result
 
     thinking_lines.append('计算结果：' + result)
-    thinking_lines += '}'
+    thinking_lines.append('[思考结束]')
     thinking = '\n'.join(thinking_lines)
     print_all and print(thinking, end='\n\n')
 
@@ -71,7 +74,7 @@ def random_len_int(l):
 
 
 tasks = [
-    # 数据条数  多少个数字进行相加-随机范围[min, max]  每个数字的位数-随即范围[min, max]
+    # 数据条数  多少个数字进行相加-随机范围[min>=2, max<=10]  每个数字的位数-随即范围[min, max]
     [20, 2, 2, 2, 3],
     [10, 2, 5, 3, 8],
     [10, 4, 9, 2, 5],
@@ -87,6 +90,6 @@ for task in tasks:
             n = random_len_int(random.randint(task[3], task[4]))
             nl.append(n)
         print('Add', nl, '=', sum(nl), end='\n\n')
-        question, thinking, answer = make_data(nl)
-        file.write(f'{question}\n\n{thinking}\n\n{answer}\n\n\n')
+        g_question, g_thinking, g_answer = make_data(nl)
+        file.write(f'{g_question}\n\n{g_thinking}\n\n{g_answer}\n\n\n')
 file.close()
