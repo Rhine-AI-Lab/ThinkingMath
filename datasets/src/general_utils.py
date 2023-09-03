@@ -10,6 +10,7 @@ def make_question(nls, seps):
     question_prefix = ['帮我计算一下', '计算', '算下', '求', '算', '']
     question_end = ['的结果', '的答案', '']
     question = random_str(question_prefix) + random_str(seps).join(nls) + random_str(question_end)
+    return question
 
 
 # 随机一个长度的整数

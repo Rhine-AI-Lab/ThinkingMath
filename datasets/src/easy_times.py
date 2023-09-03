@@ -6,10 +6,7 @@ from easy_plus import *
 def make_data_times(nl, print_all=False):
     nls = list(map(str, nl))
 
-    question_prefix = ['帮我计算一下', '计算', '算下', '求', '算', '']
-    question_add = ['*', 'x', '乘', '×']
-    question_end = ['的结果', '的答案', '']
-    question = random_str(question_prefix) + random_str(question_add).join(nls) + random_str(question_end)
+    question = make_question(nls, ['*', '*', 'x', '乘', '×'])
     print_all and print(question, end='\n\n')
 
     thinking_lines = [

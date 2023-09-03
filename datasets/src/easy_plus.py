@@ -5,10 +5,7 @@ from general_utils import *
 def make_data_plus(nl, print_all=False):
     nls = list(map(str, nl))
 
-    question_prefix = ['帮我计算一下', '计算', '算下', '求', '']
-    question_add = ['+', '加']
-    question_end = ['的结果', '的答案', '']
-    question = random_str(question_prefix) + random_str(question_add).join(nls) + random_str(question_end)
+    question = make_question(nls, ['+', '+', '加'])
     print_all and print(question, end='\n\n')
 
     max_len = 0

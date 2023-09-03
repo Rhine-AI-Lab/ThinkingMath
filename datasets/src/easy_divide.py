@@ -22,7 +22,7 @@ eg = '''
 def make_data_divide(nl, print_all=False):
     nls = list(map(str, nl))
 
-    question = make_question(nls, ['/', '除以'])
+    question = make_question(nls, ['/', '/', '除以'])
     print_all and print(question, end='\n\n')
 
     thinking_lines = [
