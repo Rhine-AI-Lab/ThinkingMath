@@ -8,9 +8,9 @@ tasks = [
     # ['PLUS', 20, 2, 2, 2, 3],
     # ['PLUS', 10, 2, 5, 3, 8],
     # ['PLUS', 10, 4, 9, 2, 5],
-    # ['PLUS', 10, 2, 3, 6, 15],
-    ['MINUS', 20, 1, 3],
-    ['MINUS', 10, 3, 8],
+    ['PLUS', 10, 2, 3, 6, 15],
+    # ['MINUS', 20, 2, 3],
+    # ['MINUS', 10, 3, 8],
 ]
 file = open('../generate/data_example.txt', 'w', encoding='utf-8')
 
