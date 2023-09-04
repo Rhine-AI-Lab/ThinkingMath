@@ -64,5 +64,3 @@ def make_data_divide(nl, print_all=False):
 
     return question, thinking, answer
 
-
-make_data_divide([10774, 21], True)

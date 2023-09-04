@@ -8,19 +8,112 @@ from easy_minus import make_data_minus
 from easy_times import make_data_times
 from easy_divide import make_data_divide
 
-tasks = [
-    # 数据条数    每个数字的位数-随即范围[min, max]    多少个数字进行相加-随机范围[min>=2, max<=10]
-    ['PLUS', 1000, 2, 2, 2, 3],
-    ['PLUS', 500, 2, 5, 3, 8],
-    ['MINUS', 1000, 2, 3],
-    ['MINUS', 500, 3, 8],
-    ['TIMES', 1000, 2, 3],
-    ['TIMES', 500, 1, 4],
-    ['DIVIDE', 1500, 1, 4],
-]
+"""
+位数：每个数值的长度 随机范围 左右闭区间
+同时运算量：同时对多少个数一起计算 当前仅加法支持 随机范围 左右闭区间
+
+-类型-  -位数-  -同时运算量-
+
+# 简单任务 EASY
+PLUS    2~4   2~3
+PLUS    2~5   2~2
+PLUS    2~3   2~4
+MINUS   2-4
+TIMES   1~3
+DIVIDE  1~3
+
+# 常规任务 NORMAL
+PLUS    3~6   2~4
+PLUS    3~9   2~2
+PLUS    3~5   3~6
+MINUS   3~6
+TIMES   1~4
+DIVIDE  1~4
+
+# 困难任务 HARD
+PLUS    4~8   2~5
+PLUS    4~9   2~3
+PLUS    4~7   3~8
+MINUS   4~8
+TIMES   1~7
+DIVIDE  1~7
+
+# 任务类型推荐配比
+ALL     47  100%
+PLUS-1  6   12.766%   综合加法任务
+PLUS-2  4   8.511%    长数字少并行任务
+PLUS-3  4   8.511%    短数字多并行任务
+MINUS   15  31.915%
+TIMES   9   19.149%
+DIVIDE  9   19.149%
+
+
+# 13b 初步训练 12000条 EPOCH:3
+EASY 9000
+NORMAL 2000
+HARD 1000
+"""
+
+PB = {
+    'PLUS-1': {
+        'rate': 0.12766,
+
+        'EASY': ['PLUS', 0, 2, 4, 2, 3],
+        'NORMAL': ['PLUS', 0, 3, 6, 2, 4],
+        'HARD': ['PLUS', 0, 4, 8, 2, 5],
+    },
+    'PLUS-2': {
+        'rate': 0.08511,
+
+        'EASY': ['PLUS', 0, 2, 5, 2, 2],
+        'NORMAL': ['PLUS', 0, 3, 9, 2, 2],
+        'HARD': ['PLUS', 0, 4, 9, 2, 3],
+    },
+    'PLUS-3': {
+        'rate': 0.08511,
+
+        'EASY': ['PLUS', 0, 2, 3, 2, 4],
+        'NORMAL': ['PLUS', 0, 3, 5, 3, 6],
+        'HARD': ['PLUS', 0, 4, 7, 3, 8],
+    },
+    'MINUS': {
+        'rate': 0.31915,
+
+        'EASY': ['MINUS', 0, 2, 4],
+        'NORMAL': ['MINUS', 0, 3, 6],
+        'HARD': ['MINUS', 0, 4, 8],
+    },
+    'TIMES': {
+        'rate': 0.19149,
+
+        'EASY': ['TIMES', 0, 1, 3],
+        'NORMAL': ['TIMES', 0, 1, 4],
+        'HARD': ['TIMES', 0, 1, 7],
+    },
+    'DIVIDE': {
+        'rate': 0.19149,
+
+        'EASY': ['TIMES', 0, 1, 3],
+        'NORMAL': ['TIMES', 0, 1, 4],
+        'HARD': ['TIMES', 0, 1, 7],
+    },
+}
+
+ALL = {
+    'EASY': 10000,
+    'NORMAL': 2000,
+    'HARD': 1000,
+}
+
+tasks = []
+for k, v in ALL.items():
+    for _, pbv in PB.items():
+        pbv[k][1] = round(pbv['rate'] * v)
+        tasks.append(pbv[k])
+print('Tasks:')
+print('\n'.join(list(map(str, tasks))), '\n')
 
 data_sep = '================================'
-
 
 data = []
 for task in tasks:
@@ -60,7 +153,6 @@ for task in tasks:
             g_question, g_thinking, g_answer = make_data_divide(nl)
         data.append([task[0], g_question, g_thinking, g_answer])
 
-
 file = open('../generate/data_example.txt', 'w', encoding='utf-8')
 jl = jsonlines.open('../generate/think_math_1500x4.jsonl', 'w')
 
@@ -76,13 +168,15 @@ instructions = {
              '第一个乘数的每一位与第二个乘数的每一位相乘，第一个乘数得出的结果进行数学加法运算，得出最终答案。'
              '最后加法部分运算结果按照从右往左重新排列得出最终运算结果，并再思考部分结束后，列出含有答案的式子给用户。',
     'DIVIDE': '计算一个数学除法运算，列出完整的思考过程，包括每一位的计算，进位，以及思考过程。'
-             '从左往右，每一位都除以除数，余数部分乘以10倍留给下一位。'
-             '最后加法部分运算结果按照从右往左重新排列得出最终运算结果，并再思考部分结束后，列出含有答案的式子给用户。',
+              '从左往右，每一位都除以除数，余数部分乘以10倍留给下一位。'
+              '最后加法部分运算结果按照从右往左重新排列得出最终运算结果，并再思考部分结束后，列出含有答案的式子给用户。',
 }
 
+print('Shuffle...')
 random.shuffle(data)
+print('Writing...')
 for line in data:
     file.write(f'{line[0]}\n\n{line[1]}\n\n{line[2]}\n\n{data_sep}\n\n')
     jl.write({'instruction': instructions[line[0]], 'input': line[1], 'output': line[2] + '\n\n' + line[3]})
 file.close()
-
+print('Done.')

@@ -63,5 +63,3 @@ def make_data_times(nl, print_all=False):
 
     return question, thinking, answer
 
-
-make_data_times([36, 12], True)
