@@ -116,9 +116,6 @@ for task in tasks:
             g_question, g_thinking, g_answer = make_data_divide(nl)
         data.append([task[0], g_question, g_thinking, g_answer])
 
-file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_8k4k3k_v1.jsonl', 'w')
-
 instructions = {
     'PLUS': '计算一个数学加法运算，列出完整的思考过程，包括每一位的计算，进位，以及思考过程。'
             '从右边第一位开始，将每个数字的第一位相加，得出的结果，个位作为作为当前位数的运算结果，'
@@ -139,9 +136,14 @@ print('')
 print('Length:', len(data))
 print('Shuffling...')
 random.shuffle(data)
+
 print('Writing...')
+file = open('../generate/data_example.txt', 'w', encoding='utf-8')
+jl = jsonlines.open('../generate/think_math_8k4k3k_v1.jsonl', 'w')
 for line in data:
     file.write(f'{line[0]}\n\n{line[1]}\n\n{line[2]}\n\n{data_sep}\n\n')
     jl.write({'instruction': instructions[line[0]], 'input': line[1], 'output': line[2] + '\n\n' + line[3]})
 file.close()
+jl.close()
+
 print('Done.')
