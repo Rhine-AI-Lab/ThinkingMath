@@ -11,7 +11,7 @@ from maker.easy_divide import make_data_divide
 同时运算量：同时对多少个数一起计算 当前仅加法支持 随机范围 左右闭区间
 
 # 13b 初步训练 12000条 EPOCH:3
-EASY 9000
+EASY 10000
 NORMAL 2000
 HARD 1000
 """
@@ -62,9 +62,9 @@ PB = {
 }
 
 ALL = {
-    'EASY': 10000,
-    'NORMAL': 2000,
-    'HARD': 1000,
+    'EASY': 8000,
+    'NORMAL': 4000,
+    'HARD': 3000,
 }
 
 tasks = []
@@ -117,7 +117,7 @@ for task in tasks:
         data.append([task[0], g_question, g_thinking, g_answer])
 
 file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_10k2k1k_v2.jsonl', 'w')
+jl = jsonlines.open('../generate/think_math_8k4k3k_v1.jsonl', 'w')
 
 instructions = {
     'PLUS': '计算一个数学加法运算，列出完整的思考过程，包括每一位的计算，进位，以及思考过程。'

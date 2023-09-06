@@ -1,6 +1,6 @@
 import random
-from general_utils import *
-from easy_plus import *
+from maker.general_utils import *
+from maker.easy_plus import *
 
 
 def make_data_times(nl, print_all=False):

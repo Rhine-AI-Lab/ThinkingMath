@@ -1,5 +1,5 @@
 import random
-from general_utils import *
+from maker.general_utils import *
 
 
 def make_data_plus(nl, print_all=False):
