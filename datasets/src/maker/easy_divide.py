@@ -50,17 +50,25 @@ def make_data_divide(nl, print_all=False):
         thinking_lines.append(f'计算第{si}位，{aw}/{cs}={c_result}...{jw}')
         result += str(c_result)
 
-    fl = f'计算结果：{result}...{jw}'
+    fl = f'计算结果：{result}'
+    if jw != 0:
+        fl += f'...{jw}'
     if result[0] == '0':
         result = str(int(result))
-        fl += f'，去除开头的0后：{result}...{jw}'
+        fl += f'，去除开头的0后：{result}'
+        if jw != 0:
+            fl += f'...{jw}'
     thinking_lines.append(fl)
     thinking_lines.append('[思考结束]')
     thinking = '\n'.join(thinking_lines)
     print_all and print(thinking, end='\n\n')
 
-    answer = f'{"/".join(nls)}={result}...{jw}'
+    answer = f'{"/".join(nls)}={result}'
+    if jw != 0:
+        answer += f'...{jw}'
     print_all and print(answer)
 
     return question, thinking, answer
 
+
+# make_data_divide([710505, 45], True)

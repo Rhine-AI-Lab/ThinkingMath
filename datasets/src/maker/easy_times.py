@@ -48,16 +48,20 @@ def make_data_times(nl, print_all=False):
             thinking_lines.append(f'仍有进位，第{j}位为：{jw}')
         fcr = int(c_result) * (10 ** i)
         result.append(fcr)
-        thinking_lines.append(f'第{i + 1}位结果：{c_result}，{c_result}*{10 ** i}={fcr}')
+        if len(nls[0]) > 1:
+            thinking_lines.append(f'第{i + 1}位结果：{c_result}，{c_result}*{10 ** i}={fcr}')
 
-    thinking_lines.append(f'\n转换为加法任务：' + '+'.join(list(map(str, result))))
+    if len(result) > 1:
+        thinking_lines.append(f'\n转换为加法任务：' + '+'.join(list(map(str, result))))
 
-    _, think_plus, _ = make_data_plus(result, False)
-    think_plus = think_plus.split('从右往左计算:')[1]
+        _, think_plus, _ = make_data_plus(result, False)
+        think_plus = think_plus.split('从右往左计算:')[1]
 
-    thinking = '\n'.join(thinking_lines) + think_plus
+        thinking = '\n'.join(thinking_lines) + think_plus
+    else:
+        thinking = '\n'.join(thinking_lines) + f'\n\n计算结果：{result[0]}\n[思考结束]'
+
     print_all and print(thinking, end='\n\n')
-
     answer = "*".join(nls) + '=' + str(sum(result))
     print_all and print(answer)
 

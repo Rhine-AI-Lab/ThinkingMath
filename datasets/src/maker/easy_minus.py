@@ -59,4 +59,3 @@ def make_data_minus(nl, print_all=False):
     print_all and print(answer)
 
     return question, thinking, answer
-
