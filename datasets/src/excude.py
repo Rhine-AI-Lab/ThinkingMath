@@ -1,52 +1,14 @@
-import random
-
 from jsonlines import jsonlines
 
-from general_utils import *
-from easy_plus import make_data_plus
-from easy_minus import make_data_minus
-from easy_times import make_data_times
-from easy_divide import make_data_divide
+from maker.general_utils import *
+from maker.easy_plus import make_data_plus
+from maker.easy_minus import make_data_minus
+from maker.easy_times import make_data_times
+from maker.easy_divide import make_data_divide
 
 """
 位数：每个数值的长度 随机范围 左右闭区间
 同时运算量：同时对多少个数一起计算 当前仅加法支持 随机范围 左右闭区间
-
--类型-  -位数-  -同时运算量-
-
-# 简单任务 EASY
-PLUS    2~4   2~3
-PLUS    2~5   2~2
-PLUS    2~3   2~4
-MINUS   2-4
-TIMES   1~3
-DIVIDE  1~3
-
-# 常规任务 NORMAL
-PLUS    3~6   2~4
-PLUS    3~9   2~2
-PLUS    3~5   3~6
-MINUS   3~6
-TIMES   1~4
-DIVIDE  1~4
-
-# 困难任务 HARD
-PLUS    4~8   2~5
-PLUS    4~9   2~3
-PLUS    4~7   3~8
-MINUS   4~8
-TIMES   1~7
-DIVIDE  1~7
-
-# 任务类型推荐配比
-ALL     47  100%
-PLUS-1  6   12.766%   综合加法任务
-PLUS-2  4   8.511%    长数字少并行任务
-PLUS-3  4   8.511%    短数字多并行任务
-MINUS   15  31.915%
-TIMES   9   19.149%
-DIVIDE  9   19.149%
-
 
 # 13b 初步训练 12000条 EPOCH:3
 EASY 9000
@@ -93,9 +55,9 @@ PB = {
     'DIVIDE': {
         'rate': 0.19149,
 
-        'EASY': ['TIMES', 0, 1, 3],
-        'NORMAL': ['TIMES', 0, 1, 4],
-        'HARD': ['TIMES', 0, 1, 7],
+        'EASY': ['DIVIDE', 0, 1, 3],
+        'NORMAL': ['DIVIDE', 0, 1, 4],
+        'HARD': ['DIVIDE', 0, 1, 7],
     },
 }
 
@@ -115,6 +77,7 @@ print('\n'.join(list(map(str, tasks))), '\n')
 
 data_sep = '================================'
 
+print('Expression:')
 data = []
 for task in tasks:
     for _ in range(task[1]):
@@ -125,19 +88,19 @@ for task in tasks:
             for i in range(num):
                 n = random_len_int(random.randint(task[2], task[3]))
                 nl.append(n)
-            print(task[0], nl, '=', sum(nl), end='\n\n')
+            print(task[0], nl, '=', sum(nl), end='\n')
             g_question, g_thinking, g_answer = make_data_plus(nl)
         elif task[0] == 'MINUS':
             n1 = random_len_int(random.randint(task[2], task[3]))
             n2 = random.randint(10 ** (task[2] - 1), n1)
             nl = [n1, n2]
-            print(task[0], nl, '=', n1 - n2, end='\n\n')
+            print(task[0], nl, '=', n1 - n2, end='\n')
             g_question, g_thinking, g_answer = make_data_minus(nl)
         elif task[0] == 'TIMES':
             n1 = random_len_int(random.randint(task[2], task[3]))
             n2 = random_len_int(random.randint(task[2], task[3]))
             nl = [n1, n2]
-            print(task[0], nl, '=', n1 * n2, end='\n\n')
+            print(task[0], nl, '=', n1 * n2, end='\n')
             g_question, g_thinking, g_answer = make_data_times(nl)
         elif task[0] == 'DIVIDE':
             n1 = random_len_int(random.randint(task[2], task[3]))
@@ -149,12 +112,12 @@ for task in tasks:
             if n2 == 0:
                 n2 = 1
             nl = [n1, n2]
-            print(task[0], nl, '=', f'{n1 // n2}...{n1 % n2}', end='\n\n')
+            print(task[0], nl, '=', f'{n1 // n2}...{n1 % n2}', end='\n')
             g_question, g_thinking, g_answer = make_data_divide(nl)
         data.append([task[0], g_question, g_thinking, g_answer])
 
 file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_1500x4.jsonl', 'w')
+jl = jsonlines.open('../generate/think_math_10k2k1k_v2.jsonl', 'w')
 
 instructions = {
     'PLUS': '计算一个数学加法运算，列出完整的思考过程，包括每一位的计算，进位，以及思考过程。'
@@ -172,7 +135,9 @@ instructions = {
               '最后加法部分运算结果按照从右往左重新排列得出最终运算结果，并再思考部分结束后，列出含有答案的式子给用户。',
 }
 
-print('Shuffle...')
+print('')
+print('Length:', len(data))
+print('Shuffling...')
 random.shuffle(data)
 print('Writing...')
 for line in data:

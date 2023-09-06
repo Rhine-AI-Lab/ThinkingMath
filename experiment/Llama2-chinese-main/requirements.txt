@@ -6,7 +6,7 @@ loralib
 bitsandbytes==0.39.1
 black
 black[jupyter]
-datasets
+datasets==2.13.1
 fire
 git+https://github.com/huggingface/peft.git
 transformers>=4.31.0
