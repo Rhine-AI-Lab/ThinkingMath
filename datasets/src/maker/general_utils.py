@@ -16,3 +16,15 @@ def make_question(nls, seps):
 # 随机一个长度的整数
 def random_len_int(l):
     return random.randint(10 ** (l - 1), 10 ** l)
+
+
+def is_td(text):
+    return text == '*' or text == '/'
+
+
+def is_pm(text):
+    return text == '+' or text == '-'
+
+
+def is_md(text):
+    return text == '-' or text == '/'

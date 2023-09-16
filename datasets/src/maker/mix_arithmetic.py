@@ -27,18 +27,6 @@ example = {
 }
 
 
-def is_td(text):
-    return text == '*' or text == '/'
-
-
-def is_pm(text):
-    return text == '+' or text == '-'
-
-
-def is_md(text):
-    return text == '-' or text == '/'
-
-
 # 自定义数值随机生成逻辑
 # operator: 运算符  可用于参考生成
 def random_number(operator):
