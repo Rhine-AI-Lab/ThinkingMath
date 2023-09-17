@@ -12,8 +12,10 @@ eg = """
 
 ma_len = random.randint(5, 8)  # 式子长度
 operates = ['+', '-', '+', '-', '*', '/']  # 数量越多概率越大
-# result = random.randint(10, 1000)
 result = 6666
+
+use_space = True
+use_bracket_level = True
 
 example = {
     "left": {
@@ -28,6 +30,16 @@ example = {
     "operator": "+",
     "right": 7
 }
+
+
+def add_bracket(text, level=0):
+    if level == 0:
+        text = f'({text})'
+    elif level == 1:
+        text = f'[{text}]'
+    else:
+        text = '{' + text + '}'
+    return text
 
 
 def random_layer(target, now_len, level, result):
@@ -58,30 +70,41 @@ def random_layer(target, now_len, level, result):
     right_len = now_len - left_len
 
     target['level'] = level
+    bracket_level = 0
     if left_len == 1:
         target['left'] = left_result
     else:
         target['left'] = random_layer({}, left_len, level + 1, left_result)
+        bracket_level = max(target['left']['bracket_level'], bracket_level)
     target['operator'] = operator
     if right_len == 1:
         target['right'] = right_result
     else:
         target['right'] = random_layer({}, right_len, level + 1, right_result)
+        bracket_level = max(target['right']['bracket_level'], bracket_level)
     target['result'] = result
+
 
     left_expression = target['left'] if left_len == 1 else target['left']['expression']
     right_expression = target['right'] if right_len == 1 else target['right']['expression']
 
+    add_bracket = False
     if is_td(operator):
         if left_len > 1 and is_pm(target['left']['operator']):
             left_expression = f'({left_expression})'
+            add_bracket = True
         if right_len > 1 and is_pm(target['right']['operator']):
             right_expression = f'({right_expression})'
+            add_bracket = True
     if right_len > 1 and is_pm(target['right']['operator']):
         if is_md(operator) and right_expression[0] != '(':
             right_expression = f'({right_expression})'
+            add_bracket = True
+    if add_bracket:
+        bracket_level += 1
 
     target['expression'] = f'{left_expression} {target["operator"]} {right_expression}'
+    target['bracket_level'] = bracket_level
 
     return target
 
