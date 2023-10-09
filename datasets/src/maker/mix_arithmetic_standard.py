@@ -3,6 +3,9 @@ import random
 from general_utils import *
 from factorize_number import *
 from easy_plus import make_data_plus
+from easy_minus import make_data_minus
+from easy_times import make_data_times
+from easy_divide import make_data_divide
 
 eg = """
 (((36+(8*(72-4)))/2)+7)
@@ -245,7 +248,7 @@ print(f'Check result:  {eval(tree["expression"])}  {eval(tree["tree_expression"]
 print('\n-----------------------------------------\n')
 
 
-def speak_process(target):
+def speak_process(target, i, steps):
     left = target['left']
     right = target['right']
     operator = target['operator']
@@ -257,32 +260,46 @@ def speak_process(target):
     rv = right["result"] if rg else right
 
     if lg:
-        flag = speak_process(left)
+        flag = speak_process(left, i, steps)
         if 'done' in left and left['done']:
             target['left'] = int(left['result'])
         if flag:
             return True
     if rg:
-        flag = speak_process(right)
+        flag = speak_process(right, i, steps)
         if 'done' in right and right['done']:
             target['right'] = int(right['result'])
         if flag:
             return True
 
     if not lg and not rg:
-        print(f'先计算 {lv} {operator} {rv}')
+        pre = '然后计算'
+        if i == 0:
+            pre = '先计算'
+        elif i == steps - 1:
+            pre = '最后计算'
+        print(f'{pre} {lv} {operator} {rv}')
         if operator == '+':
             question, thinking, answer = make_data_plus([lv, rv], easy=True)
-            print()
-            print(thinking)
-            print()
+        elif operator == '-':
+            question, thinking, answer = make_data_minus([lv, rv], easy=True)
+        elif operator == '*':
+            question, thinking, answer = make_data_times([lv, rv], easy=True)
+        else:
+            question, thinking, answer = make_data_divide([lv, rv], easy=True)
+        print()
+        print(thinking)
+        print()
         target["done"] = True
         return True
     return False
 
 
-for i in range(tree['len'] - 1):
-    print(f'当前算式 {tree["math_expression"]}')
+steps = tree['len'] - 1
+for i in range(steps):
+    if i < steps - 1:
+        print(f'当前算式 {tree["math_expression"]}')
     print('')
-    speak_process(tree)
+    speak_process(tree, i, steps)
     mark_tree(tree)
+print(f'最终结果：{tree["math_expression"]} = {tree["result"]}')

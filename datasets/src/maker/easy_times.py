@@ -1,9 +1,10 @@
 import random
-from maker.general_utils import *
-from maker.easy_plus import *
+
+from easy_plus import make_data_plus
+from general_utils import *
 
 
-def make_data_times(nl, print_all=False):
+def make_data_times(nl, print_all=False, easy=False):
     nls = list(map(str, nl))
 
     question = make_question(nls, ['*', '*', 'x', '乘', '×'])
@@ -16,6 +17,11 @@ def make_data_times(nl, print_all=False):
         '',
         '第一个数的每一位分别与第二个数的每一位相乘并累加',
     ]
+    if easy:
+        thinking_lines = [
+            f'计算{len(nls[0])}位数乘以{len(nls[1])}位数',
+            '第一个数的每一位分别与第二个数的每一位相乘并累加',
+        ]
 
     if nl[0] > nl[1]:
         thinking_lines.append(f'{nl[0]}>{nl[1]}，交换位置：{nl[1]}*{nl[0]}')
@@ -59,7 +65,9 @@ def make_data_times(nl, print_all=False):
 
         thinking = '\n'.join(thinking_lines) + think_plus
     else:
-        thinking = '\n'.join(thinking_lines) + f'\n\n计算结果：{result[0]}\n[思考结束]'
+        thinking = '\n'.join(thinking_lines) + f'\n\n计算结果：{result[0]}'
+        if not easy:
+            thinking += '\n[思考结束]'
 
     print_all and print(thinking, end='\n\n')
     answer = "*".join(nls) + '=' + str(sum(result))

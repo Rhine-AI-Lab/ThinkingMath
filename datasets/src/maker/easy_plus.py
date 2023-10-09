@@ -13,10 +13,10 @@ def make_data_plus(nl, print_all=False, easy=False):
         if len(n) > max_len:
             max_len = len(n)
     thinking_lines = [
+        '[开始思考]',
         f'任务: 计算{len(nl)}个数相加，最长是{max_len}位数',
         f'题目: {"+".join(nls)}',
         '',
-        '[开始思考]',
     ]
     if easy:
         thinking_lines = [

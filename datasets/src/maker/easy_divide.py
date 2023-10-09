@@ -1,5 +1,5 @@
 import random
-from maker.general_utils import *
+from general_utils import *
 
 eg = '''
 
@@ -20,7 +20,7 @@ eg = '''
 '''
 
 
-def make_data_divide(nl, print_all=False):
+def make_data_divide(nl, print_all=False, easy=False):
     nls = list(map(str, nl))
 
     question = make_question(nls, ['/', '/', '除以'])
@@ -28,12 +28,18 @@ def make_data_divide(nl, print_all=False):
 
     thinking_lines = [
         '[开始思考]',
-        f'任务: 计算{len(nls[0])}位数减去{len(nls[1])}位数',
+        f'任务: 计算{len(nls[0])}位数除以{len(nls[1])}位数',
         f'题目: {"/".join(nls)}',
         '',
         '除数/被除数=商...余数，余数将*10后给下一位的被除数',
         '从左往右计算：'
     ]
+
+    if easy:
+        thinking_lines = [
+            f'计算{len(nls[0])}位数除以{len(nls[1])}位数',
+            '从左往右计算：'
+        ]
 
     jw = 0
     result = ''
@@ -59,7 +65,8 @@ def make_data_divide(nl, print_all=False):
         if jw != 0:
             fl += f'...{jw}'
     thinking_lines.append(fl)
-    thinking_lines.append('[思考结束]')
+    if not easy:
+        thinking_lines.append('[思考结束]')
     thinking = '\n'.join(thinking_lines)
     print_all and print(thinking, end='\n\n')
 

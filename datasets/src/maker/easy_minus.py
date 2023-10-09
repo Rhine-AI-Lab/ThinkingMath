@@ -1,9 +1,9 @@
 import random
-from maker.general_utils import *
+from general_utils import *
 
 
 # 不支持运算结果为负数的情况
-def make_data_minus(nl, print_all=False):
+def make_data_minus(nl, print_all=False, easy=False):
     nls = list(map(str, nl))
 
     question = make_question(nls, ['-', '-', '减'])
@@ -17,6 +17,11 @@ def make_data_minus(nl, print_all=False):
         '每一位取对应位置上数字计算 被减数-减数-借位<0 则需要问下一位借位',
         '从右往左计算:'
     ]
+    if easy:
+        thinking_lines = [
+            f'计算{len(nls[0])}位数减去{len(nls[1])}位数',
+            '从右往左计算:'
+        ]
 
     jw = [0]
     result = ''
@@ -51,7 +56,8 @@ def make_data_minus(nl, print_all=False):
         result = str(int(result))
         fl += f'，去除开头的0后：{result}'
     thinking_lines.append(fl)
-    thinking_lines.append('[思考结束]')
+    if not easy:
+        thinking_lines.append('[思考结束]')
     thinking = '\n'.join(thinking_lines)
     print_all and print(thinking, end='\n\n')
 
