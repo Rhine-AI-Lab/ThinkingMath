@@ -84,34 +84,42 @@ def random_layer(target, now_len, level, result):
         bracket_level = max(target['right']['bracket_level'], bracket_level)
     target['result'] = result
 
-
     left_expression = target['left'] if left_len == 1 else target['left']['expression']
     right_expression = target['right'] if right_len == 1 else target['right']['expression']
+    left_tree_expression = target['left'] if left_len == 1 else '(' + target['left']['tree_expression'] + ')'
+    right_tree_expression = target['right'] if right_len == 1 else '(' + target['right']['tree_expression'] + ')'
+    left_math_expression = target['left'] if left_len == 1 else target['left']['math_expression']
+    right_math_expression = target['right'] if right_len == 1 else target['right']['math_expression']
 
-    add_bracket = False
+    had_add_bracket = False
     if is_td(operator):
         if left_len > 1 and is_pm(target['left']['operator']):
+            left_math_expression = add_bracket(left_expression, bracket_level)
             left_expression = f'({left_expression})'
-            add_bracket = True
+            had_add_bracket = True
         if right_len > 1 and is_pm(target['right']['operator']):
             right_expression = f'({right_expression})'
-            add_bracket = True
+            right_math_expression = add_bracket(right_expression, bracket_level)
+            had_add_bracket = True
     if right_len > 1 and is_pm(target['right']['operator']):
         if is_md(operator) and right_expression[0] != '(':
             right_expression = f'({right_expression})'
-            add_bracket = True
-    if add_bracket:
+            right_math_expression = add_bracket(right_expression, bracket_level)
+            had_add_bracket = True
+    if had_add_bracket:
         bracket_level += 1
 
     target['expression'] = f'{left_expression} {target["operator"]} {right_expression}'
+    target['tree_expression'] = f'{left_tree_expression} {target["operator"]} {right_tree_expression}'
+    target['math_expression'] = f'{left_math_expression} {target["operator"]} {right_math_expression}'
     target['bracket_level'] = bracket_level
 
     return target
 
 
-expression = random_layer({}, ma_len, 0, result)
-print(json.dumps(expression, indent=4))
+tree = random_layer({}, ma_len, 0, result)
+print(json.dumps(tree, indent=4))
 
 print('\n-----------------------------------------')
-print(f'{expression["expression"]} = {expression["result"]}')
+print(f'{tree["expression"]} = {tree["result"]}')
 print('-----------------------------------------')
