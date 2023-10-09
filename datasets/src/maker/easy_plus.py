@@ -1,8 +1,8 @@
 import random
-from maker.general_utils import *
+from general_utils import *
 
 
-def make_data_plus(nl, print_all=False):
+def make_data_plus(nl, print_all=False, easy=False):
     nls = list(map(str, nl))
 
     question = make_question(nls, ['+', '+', '加'])
@@ -13,12 +13,16 @@ def make_data_plus(nl, print_all=False):
         if len(n) > max_len:
             max_len = len(n)
     thinking_lines = [
-        '[开始思考]',
         f'任务: 计算{len(nl)}个数相加，最长是{max_len}位数',
         f'题目: {"+".join(nls)}',
         '',
-        '从右往左计算:'
+        '[开始思考]',
     ]
+    if easy:
+        thinking_lines = [
+            f'{len(nl)}个数相加，最长{max_len}位数',
+        ]
+    thinking_lines.append('从右往左计算:')
 
     jw = [0]
     result = ''
@@ -51,7 +55,8 @@ def make_data_plus(nl, print_all=False):
         result = jws + result
 
     thinking_lines.append('计算结果：' + result)
-    thinking_lines.append('[思考结束]')
+    if not easy:
+        thinking_lines.append('[思考结束]')
     thinking = '\n'.join(thinking_lines)
     print_all and print(thinking, end='\n\n')
 

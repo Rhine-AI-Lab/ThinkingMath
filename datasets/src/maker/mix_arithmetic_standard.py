@@ -2,6 +2,7 @@ import json
 import random
 from general_utils import *
 from factorize_number import *
+from easy_plus import make_data_plus
 
 eg = """
 (((36+(8*(72-4)))/2)+7)
@@ -10,7 +11,7 @@ eg = """
 35+10*(15+32)/2-3
 """
 
-ma_len = random.randint(15, 19)  # 算式长度
+ma_len = random.randint(5, 5)  # 算式长度
 operates = ['+', '-', '+', '-', '*', '/']  # 数量越多概率越大
 result = 6666  # 控制运算结果
 
@@ -149,7 +150,7 @@ def arrange_tree(tree):
         n += arrange_tree(right)
 
     # print(json.dumps(tree, indent=4))
-    if tree['len'] > 3 and not is_num(right):
+    if tree['len'] > 2 and not is_num(right):
         if tree['operator'] == '*' and is_td(right['operator']):
             trans_tree(tree)
             n += 1
@@ -162,7 +163,6 @@ def arrange_tree(tree):
 def mark_tree(tree, level=0):
     left = tree['left']
     right = tree['right']
-    length = tree['len']
     operator = tree['operator']
 
     lg = not is_num(left)  # left is group
@@ -241,4 +241,48 @@ print(f'Operation order:  {tree["tree_expression"]} = {tree["result"]}')
 print(f'Math expression:  {tree["math_expression"]} = {tree["result"]}')
 print('\n')
 print(f'Program:  {tree["expression"]} = {tree["result"]}')
-print(f'Check result:  {eval(tree["expression"])}  {eval(tree["tree_expression"])}  {result}')
+print(f'Check result:  {eval(tree["expression"])}  {eval(tree["tree_expression"])}  {tree["result"]}  {result}')
+print('\n-----------------------------------------\n')
+
+
+def speak_process(target):
+    left = target['left']
+    right = target['right']
+    operator = target['operator']
+
+    lg = not is_num(left)  # left is group
+    rg = not is_num(right)  # right is group
+
+    lv = left["result"] if lg else left
+    rv = right["result"] if rg else right
+
+    if lg:
+        flag = speak_process(left)
+        if 'done' in left and left['done']:
+            target['left'] = int(left['result'])
+        if flag:
+            return True
+    if rg:
+        flag = speak_process(right)
+        if 'done' in right and right['done']:
+            target['right'] = int(right['result'])
+        if flag:
+            return True
+
+    if not lg and not rg:
+        print(f'先计算 {lv} {operator} {rv}')
+        if operator == '+':
+            question, thinking, answer = make_data_plus([lv, rv], easy=True)
+            print()
+            print(thinking)
+            print()
+        target["done"] = True
+        return True
+    return False
+
+
+for i in range(tree['len'] - 1):
+    print(f'当前算式 {tree["math_expression"]}')
+    print('')
+    speak_process(tree)
+    mark_tree(tree)
