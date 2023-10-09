@@ -28,3 +28,7 @@ def is_pm(text):
 
 def is_md(text):
     return text == '-' or text == '/'
+
+
+def is_num(num):
+    return isinstance(num, (int, float, complex))
