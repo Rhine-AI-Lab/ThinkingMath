@@ -1,4 +1,5 @@
 from jsonlines import jsonlines
+import copy
 
 from maker.general_utils import *
 from maker.easy_plus import make_data_plus
@@ -63,15 +64,17 @@ PB = {
 
 ALL = {
     'EASY': 8000,
-    'NORMAL': 4000,
-    'HARD': 3000,
+    'NORMAL': 8000,
+    'HARD': 8000,
 }
 
 tasks = []
 for k, v in ALL.items():
     for _, pbv in PB.items():
         pbv[k][1] = round(pbv['rate'] * v)
-        tasks.append(pbv[k])
+        t = copy.deepcopy(pbv[k])
+        t.append(k)
+        tasks.append(t)
 print('Tasks:')
 print('\n'.join(list(map(str, tasks))), '\n')
 
@@ -114,7 +117,7 @@ for task in tasks:
             nl = [n1, n2]
             print(task[0], nl, '=', f'{n1 // n2}...{n1 % n2}', end='\n')
             g_question, g_thinking, g_answer = make_data_divide(nl)
-        data.append([task[0], g_question, g_thinking, g_answer])
+        data.append([task[0], g_question, g_thinking, g_answer, task[-1]])
 
 instructions = {
     'PLUS':   '计算一个数学加法运算，列出完整的思考过程，包括每一位的计算，进位，以及思考过程。'
@@ -139,10 +142,20 @@ random.shuffle(data)
 
 print('Writing...')
 file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_8k4k3k_v1.jsonl', 'w')
+jl = jsonlines.open('../generate/think_math_8k8k8k_v4.jsonl', 'w')
 for line in data:
     file.write(f'{line[0]}\n\n{line[1]}\n\n{line[2]}\n\n{data_sep}\n\n')
-    jl.write({'instruction': instructions[line[0]], 'input': line[1], 'output': line[2] + '\n\n' + line[3]})
+    equation = line[3].split('=')[0]
+    result = line[3].split('=')[1]
+    jl.write({
+        'equation': equation,
+        'result': result,
+        'difficulty': line[4],
+        'type': line[0],
+        'input': line[1],
+        'output': line[2] + '\n\n' + line[3],
+        'instruction': instructions[line[0]],
+    })
 file.close()
 jl.close()
 
