@@ -1,5 +1,5 @@
 import random
-from general_utils import *
+from maker.general_utils import *
 
 
 # 不支持运算结果为负数的情况

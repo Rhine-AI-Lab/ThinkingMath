@@ -1,42 +1,15 @@
 import json
 import random
-from general_utils import *
-from factorize_number import *
-from easy_plus import make_data_plus
-from easy_minus import make_data_minus
-from easy_times import make_data_times
-from easy_divide import make_data_divide
+from maker.general_utils import *
+from maker.factorize_number import *
+from maker.easy_plus import make_data_plus
+from maker.easy_minus import make_data_minus
+from maker.easy_times import make_data_times
+from maker.easy_divide import make_data_divide
 
-eg = """
-(((36+(8*(72-4)))/2)+7)
-27*[8+(45-3)/6]+10
-16*[32+45*(3+6)]/4+9
-35+10*(15+32)/2-3
-"""
-
-ma_len = random.randint(5, 5)  # 算式长度
 operates = ['+', '-', '+', '-', '*', '/']  # 数量越多概率越大
-result = 6666  # 控制运算结果
-
-# ma_len = random.randint(666, 666)  # 算式长度
-# result = 666666  # 控制运算结果
-
 use_space = True
 use_bracket_level = True
-
-example = {
-    "left": {
-        "left": 9,
-        "operator": "*",
-        "right": {
-            "left": 10,
-            "operator": "-",
-            "right": 4
-        }
-    },
-    "operator": "+",
-    "right": 7
-}
 
 
 def add_bracket(text, level=0):
@@ -172,9 +145,11 @@ def mark_tree(tree, level=0):
     rg = not is_num(right)  # right is group
 
     if lg:
-        mark_tree(left, level=level+1)
+        if mark_tree(left, level=level+1):
+            return True
     if rg:
-        mark_tree(right, level=level+1)
+        if mark_tree(right, level=level+1):
+            return True
 
     left_result = left['result'] if lg else left
     left_expression = left['expression'] if lg else left
@@ -219,33 +194,18 @@ def mark_tree(tree, level=0):
     tree['level'] = level
     tree['bracket_level'] = bracket_level
     tree['had_bracket'] = False
-    tree['result'] = eval(f'{left_result}{operator}{right_result}')
+    result = eval(f'{left_result}{operator}{right_result}')
+    if result % 1 != 0:
+        return True
+    if result < 0:
+        return True
+    result = int(result)
+    tree['result'] = result
     tree['expression'] = f'{left_expression} {tree["operator"]} {right_expression}'
     tree['tree_expression'] = f'{left_tree_expression} {tree["operator"]} {right_tree_expression}'
     tree['math_expression'] = f'{left_math_expression} {tree["operator"]} {right_math_expression}'
 
-
-tree = random_layer({}, ma_len, 0, result)
-mark_tree(tree)
-print(json.dumps(tree, indent=4))
-print('\n-----------------------------------------\n')
-# print(f'{tree["expression"]} = {tree["result"]}')
-print(f'Preliminary order:  {tree["tree_expression"]} = {tree["result"]}')
-print('\n-----------------------------------------\n')
-for i in range(ma_len):
-    n = arrange_tree(tree)
-    print(f'Arrange tree: index {i} change {n}')
-    if n <= 0:
-        break
-mark_tree(tree)
-print('\n-----------------------------------------\n')
-# print(f'{tree["expression"]} = {tree["result"]}')
-print(f'Operation order:  {tree["tree_expression"]} = {tree["result"]}')
-print(f'Math expression:  {tree["math_expression"]} = {tree["result"]}')
-print('\n')
-print(f'Program:  {tree["expression"]} = {tree["result"]}')
-print(f'Check result:  {eval(tree["expression"])}  {eval(tree["tree_expression"])}  {tree["result"]}  {result}')
-print('\n-----------------------------------------\n')
+    return False
 
 
 def speak_process(target, i, steps):
@@ -260,25 +220,25 @@ def speak_process(target, i, steps):
     rv = right["result"] if rg else right
 
     if lg:
-        flag = speak_process(left, i, steps)
+        text = speak_process(left, i, steps)
         if 'done' in left and left['done']:
             target['left'] = int(left['result'])
-        if flag:
-            return True
+        if text != "":
+            return text
     if rg:
-        flag = speak_process(right, i, steps)
+        text = speak_process(right, i, steps)
         if 'done' in right and right['done']:
             target['right'] = int(right['result'])
-        if flag:
-            return True
+        if text != "":
+            return text
 
     if not lg and not rg:
-        pre = '然后计算'
+        text = '然后计算'
         if i == 0:
-            pre = '先计算'
+            text = '先计算'
         elif i == steps - 1:
-            pre = '最后计算'
-        print(f'{pre} {lv} {operator} {rv}')
+            text = '最后计算'
+        text += f' {lv} {operator} {rv}\n'
         if operator == '+':
             question, thinking, answer = make_data_plus([lv, rv], easy=True)
         elif operator == '-':
@@ -287,19 +247,50 @@ def speak_process(target, i, steps):
             question, thinking, answer = make_data_times([lv, rv], easy=True)
         else:
             question, thinking, answer = make_data_divide([lv, rv], easy=True)
-        print()
-        print(thinking)
-        print()
+        text += f'\n{thinking}\n\n'
         target["done"] = True
-        return True
-    return False
+        return text
+    return ""
 
 
-steps = tree['len'] - 1
-for i in range(steps):
-    if i < steps - 1:
-        print(f'当前算式 {tree["math_expression"]}')
-    print('')
-    speak_process(tree, i, steps)
+def make_data_mix(length, result, printAll=False):
+    tree = random_layer({}, length, 0, result)
+    if mark_tree(tree):
+        return '', '', -1
+    if printAll:
+        print(json.dumps(tree, indent=4))
+        print('\n-----------------------------------------\n')
+        # print(f'{tree["expression"]} = {tree["result"]}')
+        print(f'Preliminary order:  {tree["tree_expression"]} = {tree["result"]}')
+        print('\n-----------------------------------------\n')
+    for i in range(length):
+        n = arrange_tree(tree)
+        if printAll:
+            print(f'Arrange tree: index {i} change {n}')
+        if n <= 0:
+            break
     mark_tree(tree)
-print(f'最终结果：{tree["math_expression"]} = {tree["result"]}')
+    if printAll:
+        print('\n-----------------------------------------\n')
+        # print(f'{tree["expression"]} = {tree["result"]}')
+        print(f'Operation order:  {tree["tree_expression"]} = {tree["result"]}')
+        print(f'Math expression:  {tree["math_expression"]} = {tree["result"]}')
+        print('\n')
+        print(f'Program:  {tree["expression"]} = {tree["result"]}')
+        print(f'Check result:  {eval(tree["expression"])}  {eval(tree["tree_expression"])}  {tree["result"]}  {result}')
+        print('\n-----------------------------------------\n')
+    result = ""
+    steps = tree['len'] - 1
+    source_expression = tree["math_expression"]
+    cal_result = tree["result"]
+    for i in range(steps):
+        if i < steps - 1:
+            result += f'当前的算式 {tree["math_expression"]}\n'
+        result += speak_process(tree, i, steps)
+        mark_tree(tree)
+    result += f'最终结果：{source_expression} = {tree["result"]}'
+    if printAll:
+        print(result)
+    return source_expression, result, cal_result
+
+# make_data_mix(6, 60, True)

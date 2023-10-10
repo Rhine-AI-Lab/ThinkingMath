@@ -1,7 +1,7 @@
 import random
 
-from easy_plus import make_data_plus
-from general_utils import *
+from maker.easy_plus import make_data_plus
+from maker.general_utils import *
 
 
 def make_data_times(nl, print_all=False, easy=False):
@@ -60,7 +60,7 @@ def make_data_times(nl, print_all=False, easy=False):
     if len(result) > 1:
         thinking_lines.append(f'\n转换为加法任务：' + '+'.join(list(map(str, result))))
 
-        _, think_plus, _ = make_data_plus(result, False)
+        _, think_plus, _ = make_data_plus(result, False, easy)
         think_plus = think_plus.split('从右往左计算:')[1]
 
         thinking = '\n'.join(thinking_lines) + think_plus
