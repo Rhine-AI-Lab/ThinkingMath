@@ -856,14 +856,14 @@ class TestDeepSpeedWithLauncher(TestCasePlus):
     # Tests to devise #
     #
     # 1. predict_with_generate on multigpu - need to figure out how to give input sequences so that
-    # the 2 gpus will generate prediction sequences that aren't of the same length - this is because
+    # the 2 gpus will output prediction sequences that aren't of the same length - this is because
     # we had to code a special feature to sync the gpus when the predicted sequences aren't of the
     # same length. In general this will tested as a side-effect through a variety of other tests -
     # it'll simply hang trying to synchronize with other gpus if this problem is encountered. So as
     # long as we have a few full tests running on zero3 + predict_with_generate this should be
     # mostly covered.
     #
-    # but there are 5 variations on beam search in `generate`- with identical code branched with `if
+    # but there are 5 variations on beam search in `output`- with identical code branched with `if
     # synced_gpus`
     #
     # 2. most tests should probably be run on both: zero2 and zero3 configs

@@ -96,7 +96,7 @@ class HumanEvalArguments:
     top_p: Optional[float] = field(default=0.95, metadata={"help": "Top-p parameter used for nucleus sampling."})
     batch_size: Optional[int] = field(default=10, metadata={"help": "Number of generations to run in parallel."})
     n_samples: Optional[int] = field(
-        default=200, metadata={"help": "Number of completions to generate for each sample."}
+        default=200, metadata={"help": "Number of completions to output for each sample."}
     )
     seed: Optional[int] = field(default=1, metadata={"help": "Random seed used for evaluation."})
     output_file: Optional[str] = field(

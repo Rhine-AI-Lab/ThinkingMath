@@ -116,7 +116,7 @@ ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             [`PreTrainedTokenizer`]. See [`PreTrainedTokenizer.encode`] and [`PreTrainedTokenizer.__call__`] for
             details.
         decoder_attention_mask (`np.ndarray` or `tf.Tensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         encoder_outputs (`tuple(tuple(tf.Tensor)`, *optional*):
             This tuple must consist of (`last_hidden_state`, *optional*: `hidden_states`, *optional*: `attentions`)
@@ -519,7 +519,7 @@ class TFEncoderDecoderModel(TFPreTrainedModel, TFCausalLanguageModelingLoss):
         >>> model = TFEncoderDecoderModel.from_pretrained("bert2gpt2")
 
         >>> # generation
-        >>> generated = model.generate(input_ids, decoder_start_token_id=model.config.decoder.bos_token_id)
+        >>> generated = model.output(input_ids, decoder_start_token_id=model.config.decoder.bos_token_id)
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
@@ -668,7 +668,7 @@ class TFEncoderDecoderModel(TFPreTrainedModel, TFCausalLanguageModelingLoss):
             "attention_mask": attention_mask,
             "decoder_attention_mask": decoder_attention_mask,
             "decoder_input_ids": decoder_inputs["input_ids"],
-            # TODO (joao): the `TFBaseModelOutput` wrapper should not be needed after the generate refactor is complete
+            # TODO (joao): the `TFBaseModelOutput` wrapper should not be needed after the output refactor is complete
             "encoder_outputs": TFBaseModelOutput(last_hidden_state=encoder_outputs[0]),
             "past_key_values": past_key_values,
             "use_cache": use_cache,

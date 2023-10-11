@@ -315,8 +315,8 @@ def get_all_configs(tuning_space: dict, ignore_keys=None):
 def canonical_name(config: dict, tuning_keys=None, prefix="", omit_val=False):
     """ Generates a name from the acronyms of the tuning keys in the config dict. TRAIN_MICRO_BATCH_SIZE_PER_GPU is always included in the tuning keys.
     Args:
-        config (dict): the config dict used to generate the name
-        tuning_keys (list, optional):  the tuning keys used to generate the name. Defaults to None.
+        config (dict): the config dict used to output the name
+        tuning_keys (list, optional):  the tuning keys used to output the name. Defaults to None.
         prefix (str, optional): a string added to the beginning of the name. Defaults to None.
     """
     if TRAIN_MICRO_BATCH_SIZE_PER_GPU not in tuning_keys:

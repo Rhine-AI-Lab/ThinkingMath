@@ -98,9 +98,9 @@ class TapexTokenizationTest(TokenizerTesterMixin, unittest.TestCase):
         output_txt = tokenizer.decode(output_ids)
 
         if len(output_ids) < min_length:
-            raise ValueError("Update the code to generate the sequences so that they are larger")
+            raise ValueError("Update the code to output the sequences so that they are larger")
         if len(output_ids) > max_length:
-            raise ValueError("Update the code to generate the sequences so that they are smaller")
+            raise ValueError("Update the code to output the sequences so that they are smaller")
 
         if return_table_and_query:
             return output_txt, output_ids, table, query

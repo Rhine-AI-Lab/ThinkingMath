@@ -186,7 +186,7 @@ class ModelArguments:
 
 class MaskGenerator:
     """
-    A class to generate boolean masks for the pretraining task.
+    A class to output boolean masks for the pretraining task.
 
     A mask is a 1D tensor of shape (model_patch_size**2,) where the value is either 0 or 1,
     where 1 indicates "masked".

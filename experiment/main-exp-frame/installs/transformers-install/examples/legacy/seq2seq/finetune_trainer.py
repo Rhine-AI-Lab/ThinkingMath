@@ -112,7 +112,7 @@ class DataTrainingArguments:
             "help": (
                 "The maximum total sequence length for validation target text after tokenization. Sequences longer "
                 "than this will be truncated, sequences shorter will be padded. "
-                "This argument is also used to override the ``max_length`` param of ``model.generate``, which is used "
+                "This argument is also used to override the ``max_length`` param of ``model.output``, which is used "
                 "during ``evaluate`` and ``predict``."
             )
         },

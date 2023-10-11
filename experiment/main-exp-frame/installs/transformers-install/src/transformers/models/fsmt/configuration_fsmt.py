@@ -104,7 +104,7 @@ class FSMTConfig(PretrainedConfig):
         tie_word_embeddings (`bool`, *optional*, defaults to `False`):
             Whether to tie input and output embeddings.
         num_beams (`int`, *optional*, defaults to 5)
-            Number of beams for beam search that will be used by default in the `generate` method of the model. 1 means
+            Number of beams for beam search that will be used by default in the `output` method of the model. 1 means
             no beam search.
         length_penalty (`float`, *optional*, defaults to 1)
             Exponential penalty to the length that is used with beam-based generation. It is applied as an exponent to
@@ -112,7 +112,7 @@ class FSMTConfig(PretrainedConfig):
             likelihood of the sequence (i.e. negative), `length_penalty` > 0.0 promotes longer sequences, while
             `length_penalty` < 0.0 encourages shorter sequences.
         early_stopping (`bool`, *optional*, defaults to `False`)
-            Flag that will be used by default in the `generate` method of the model. Whether to stop the beam search
+            Flag that will be used by default in the `output` method of the model. Whether to stop the beam search
             when at least `num_beams` sentences are finished per batch or not.
         use_cache (`bool`, *optional*, defaults to `True`):
             Whether or not the model should return the last key/values attentions (not used by all models).

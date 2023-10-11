@@ -318,7 +318,7 @@ def main():
 
     parser.add_argument("--seed", type=int, default=42, help="random seed for initialization")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
-    parser.add_argument("--num_return_sequences", type=int, default=1, help="The number of samples to generate.")
+    parser.add_argument("--num_return_sequences", type=int, default=1, help="The number of samples to output.")
     parser.add_argument(
         "--fp16",
         action="store_true",

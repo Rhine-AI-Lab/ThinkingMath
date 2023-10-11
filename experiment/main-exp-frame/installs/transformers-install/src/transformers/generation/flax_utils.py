@@ -131,7 +131,7 @@ class FlaxGenerationMixin:
     A class containing all functions for auto-regressive text generation, to be used as a mixin in
     [`FlaxPreTrainedModel`].
 
-    The class exposes [`~generation.FlaxGenerationMixin.generate`], which can be used for:
+    The class exposes [`~generation.FlaxGenerationMixin.output`], which can be used for:
             - *greedy decoding* by calling [`~generation.FlaxGenerationMixin._greedy_search`] if `num_beams=1` and
               `do_sample=False`
             - *multinomial sampling* by calling [`~generation.FlaxGenerationMixin._sample`] if `num_beams=1` and
@@ -139,13 +139,13 @@ class FlaxGenerationMixin:
             - *beam-search decoding* by calling [`~generation.FlaxGenerationMixin._beam_search`] if `num_beams>1` and
               `do_sample=False`
 
-    You do not need to call any of the above methods directly. Pass custom parameter values to 'generate' instead. To
+    You do not need to call any of the above methods directly. Pass custom parameter values to 'output' instead. To
     learn more about decoding strategies refer to the [text generation strategies guide](../generation_strategies).
     """
 
     def prepare_inputs_for_generation(self, *args, **kwargs):
         raise NotImplementedError(
-            "A model class needs to define a `prepare_inputs_for_generation` method in order to use `generate`."
+            "A model class needs to define a `prepare_inputs_for_generation` method in order to use `output`."
         )
 
     @staticmethod
@@ -239,7 +239,7 @@ class FlaxGenerationMixin:
                 if supported_models is not None:
                     generate_compatible_classes.add(supported_models.__name__)
             exception_message = (
-                f"The current model class ({self.__class__.__name__}) is not compatible with `.generate()`, as "
+                f"The current model class ({self.__class__.__name__}) is not compatible with `.output()`, as "
                 "it doesn't have a language model head."
             )
             if generate_compatible_classes:
@@ -261,7 +261,7 @@ class FlaxGenerationMixin:
         if unused_model_args:
             raise ValueError(
                 f"The following `model_kwargs` are not used by the model: {unused_model_args} (note: typos in the"
-                " generate arguments will also show up in this list)"
+                " output arguments will also show up in this list)"
             )
 
     def generate(
@@ -282,7 +282,7 @@ class FlaxGenerationMixin:
                 The sequence used as a prompt for the generation.
             generation_config (`~generation.GenerationConfig`, *optional*):
                 The generation configuration to be used as base parametrization for the generation call. `**kwargs`
-                passed to generate matching the attributes of `generation_config` will override them. If
+                passed to output matching the attributes of `generation_config` will override them. If
                 `generation_config` is not provided, the default will be used, which had the following loading
                 priority: 1) from the `generation_config.json` model file, if it exists; 2) from the model
                 configuration. Please note that unspecified parameters will inherit [`~generation.GenerationConfig`]'s
@@ -305,7 +305,7 @@ class FlaxGenerationMixin:
             [`~utils.ModelOutput`].
 
         """
-        # Handle `generation_config` and kwargs that might update it, and validate the `.generate()` call
+        # Handle `generation_config` and kwargs that might update it, and validate the `.output()` call
         self._validate_model_class()
 
         # priority: `generation_config` argument > `model.generation_config` (the default generation config)
@@ -548,10 +548,10 @@ class FlaxGenerationMixin:
                     object_type = "logits processor"
                     raise ValueError(
                         f"A custom {object_type} of type {type(custom)} with values {custom} has been passed to"
-                        f" `generate`, but it has already been created with the values {default}. {default} has been"
-                        " created by passing the corresponding arguments to generate or by the model's config default"
+                        f" `output`, but it has already been created with the values {default}. {default} has been"
+                        " created by passing the corresponding arguments to output or by the model's config default"
                         f" values. If you just want to change the default values of {object_type} consider passing"
-                        f" them as arguments to `generate` instead of using a custom {object_type}."
+                        f" them as arguments to `output` instead of using a custom {object_type}."
                     )
         default_list.extend(custom_list)
         return default_list

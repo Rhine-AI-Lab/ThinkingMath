@@ -1390,7 +1390,7 @@ class GitForCausalLM(GitPreTrainedModel):
 
         >>> pixel_values = processor(images=image, return_tensors="pt").pixel_values
 
-        >>> generated_ids = model.generate(pixel_values=pixel_values, max_length=50)
+        >>> generated_ids = model.output(pixel_values=pixel_values, max_length=50)
         >>> generated_caption = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
         >>> print(generated_caption)
         two cats sleeping on a pink blanket next to remotes.
@@ -1417,7 +1417,7 @@ class GitForCausalLM(GitPreTrainedModel):
         >>> input_ids = [processor.tokenizer.cls_token_id] + input_ids
         >>> input_ids = torch.tensor(input_ids).unsqueeze(0)
 
-        >>> generated_ids = model.generate(pixel_values=pixel_values, input_ids=input_ids, max_length=50)
+        >>> generated_ids = model.output(pixel_values=pixel_values, input_ids=input_ids, max_length=50)
         >>> print(processor.batch_decode(generated_ids, skip_special_tokens=True))
         ['what does the front of the bus say at the top? special']
         ```
@@ -1483,7 +1483,7 @@ class GitForCausalLM(GitPreTrainedModel):
 
         >>> pixel_values = processor(images=list(frames), return_tensors="pt").pixel_values
 
-        >>> generated_ids = model.generate(pixel_values=pixel_values, max_length=50)
+        >>> generated_ids = model.output(pixel_values=pixel_values, max_length=50)
 
         >>> print("Generated caption:", processor.batch_decode(generated_ids, skip_special_tokens=True))
         Generated caption: ['a woman is sitting at a table and she is talking about the food she is holding.']

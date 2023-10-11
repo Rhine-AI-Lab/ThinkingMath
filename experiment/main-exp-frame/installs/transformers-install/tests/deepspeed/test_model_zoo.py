@@ -348,7 +348,7 @@ class TestDeepSpeedModelZoo(TestCasePlus):
 
         cmd, output_dir = self.get_task_cmd(task, stage)
 
-        # 1. generate the checkpoint
+        # 1. output the checkpoint
         cmd += "--save_steps 1".split()
         # keep for quick debug
         # print(" ".join([f"\nPYTHONPATH={self.src_dir_str}"] + cmd)); die

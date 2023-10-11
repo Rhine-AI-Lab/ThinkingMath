@@ -9,7 +9,7 @@ def _gen_VF_wrapper(name):
         return getattr(_VF, name)(*args, **kwargs)
     return wrapper
 
-# Some python magic to generate an object that has the rnn cell functions
+# Some python magic to output an object that has the rnn cell functions
 # defined on it, all of which call into corresponding _VF version.
 # Intended to patch torch.nn.modules.rnn._VF (aka, the ref named "_VF"
 # imported at module scope within torch.nn.modules.rnn).  This should

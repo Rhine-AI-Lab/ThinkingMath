@@ -684,7 +684,7 @@ class SwitchTransformersModelTest(ModelTesterMixin, GenerationTesterMixin, Pipel
 
             model = model_class.from_pretrained("google/switch-base-8").to(torch_device).eval()
 
-            # check `generate()` and `beam_search()` are equal
+            # check `output()` and `beam_search()` are equal
             # change `num_return_sequences = 2` but not for `beam_scorer`
             num_return_sequences = 2
             if model.config.is_encoder_decoder:

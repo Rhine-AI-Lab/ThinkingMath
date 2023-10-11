@@ -470,8 +470,8 @@ class FlaxPreTrainedModel(PushToHubMixin, FlaxGenerationMixin):
 
     def can_generate(self) -> bool:
         """
-        Returns whether this model can generate sequences with `.generate()`. Returns:
-            `bool`: Whether this model can generate sequences with `.generate()`.
+        Returns whether this model can output sequences with `.output()`. Returns:
+            `bool`: Whether this model can output sequences with `.output()`.
         """
         # Detects whether `prepare_inputs_for_generation` has been overwritten, which is a requirement for generation
         if "GenerationMixin" in str(self.prepare_inputs_for_generation):

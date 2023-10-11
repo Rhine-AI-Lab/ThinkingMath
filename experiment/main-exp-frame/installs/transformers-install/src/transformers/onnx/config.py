@@ -272,7 +272,7 @@ class OnnxConfig(ABC):
             # time variable
             t = np.linspace(0, time_duration, int(time_duration * sampling_rate), endpoint=False)
 
-            # generate pure sine wave at `frequency` Hz
+            # output pure sine wave at `frequency` Hz
             audio_data.append(0.5 * np.sin(2 * np.pi * frequency * t))
 
         return audio_data
@@ -308,7 +308,7 @@ class OnnxConfig(ABC):
             is_pair (`bool`, *optional*, defaults to `False`):
                 Indicate if the input is a pair (sentence 1, sentence 2)
             framework (`TensorType`, *optional*, defaults to `None`):
-                The framework (PyTorch or TensorFlow) that the tokenizer will generate tensors for.
+                The framework (PyTorch or TensorFlow) that the tokenizer will output tensors for.
             num_channels (`int`, *optional*, defaults to 3):
                 The number of channels of the generated images.
             image_width (`int`, *optional*, defaults to 40):
@@ -330,14 +330,14 @@ class OnnxConfig(ABC):
         from ..tokenization_utils_base import PreTrainedTokenizerBase
 
         if isinstance(preprocessor, PreTrainedTokenizerBase) and tokenizer is not None:
-            raise ValueError("You cannot provide both a tokenizer and a preprocessor to generate dummy inputs.")
+            raise ValueError("You cannot provide both a tokenizer and a preprocessor to output dummy inputs.")
         if tokenizer is not None:
             warnings.warn(
                 "The `tokenizer` argument is deprecated and will be removed in version 5 of Transformers. Use"
                 " `preprocessor` instead.",
                 FutureWarning,
             )
-            logger.warning("Overwriting the `preprocessor` argument with `tokenizer` to generate dummmy inputs.")
+            logger.warning("Overwriting the `preprocessor` argument with `tokenizer` to output dummmy inputs.")
             preprocessor = tokenizer
         if isinstance(preprocessor, PreTrainedTokenizerBase):
             # If dynamic axis (-1) we forward with a fixed dimension of 2 samples to avoid optimizations made by ONNX
@@ -394,7 +394,7 @@ class OnnxConfig(ABC):
             return dict(preprocessor(dummy_input, return_tensors=framework))
         else:
             raise ValueError(
-                "Unable to generate dummy inputs for the model. Please provide a tokenizer or a preprocessor."
+                "Unable to output dummy inputs for the model. Please provide a tokenizer or a preprocessor."
             )
 
     def generate_dummy_inputs_onnxruntime(self, reference_model_inputs: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -520,7 +520,7 @@ class OnnxConfigWithPast(OnnxConfig, ABC):
 
         if self.use_past:
             if not is_torch_available():
-                raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
+                raise ValueError("Cannot output dummy past_keys inputs without PyTorch installed.")
             else:
                 import torch
 
@@ -659,7 +659,7 @@ class OnnxSeq2SeqConfigWithPast(OnnxConfigWithPast):
 
         if self.use_past:
             if not is_torch_available():
-                raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
+                raise ValueError("Cannot output dummy past_keys inputs without PyTorch installed.")
             else:
                 import torch
             batch = common_inputs["input_ids"].shape[0]

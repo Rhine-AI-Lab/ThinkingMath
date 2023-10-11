@@ -128,7 +128,7 @@ class Text2TextGenerationPipeline(Pipeline):
                 f" `args[0]`: {args[0]} have the wrong format. The should be either of type `str` or type `list`"
             )
         inputs = self.tokenizer(*args, padding=padding, truncation=truncation, return_tensors=self.framework)
-        # This is produced by tokenizers but is an invalid generate kwargs
+        # This is produced by tokenizers but is an invalid output kwargs
         if "token_type_ids" in inputs:
             del inputs["token_type_ids"]
         return inputs
@@ -151,7 +151,7 @@ class Text2TextGenerationPipeline(Pipeline):
                 (default) will never truncate, but it is sometimes desirable to truncate the input to fit the model's
                 max_length instead of throwing an error down the line.
             generate_kwargs:
-                Additional keyword arguments to pass along to the generate method of the model (see the generate method
+                Additional keyword arguments to pass along to the output method of the model (see the output method
                 corresponding to your framework [here](./model#generative-models)).
 
         Return:
@@ -252,7 +252,7 @@ class SummarizationPipeline(Text2TextGenerationPipeline):
             clean_up_tokenization_spaces (`bool`, *optional*, defaults to `False`):
                 Whether or not to clean up the potential extra spaces in the text output.
             generate_kwargs:
-                Additional keyword arguments to pass along to the generate method of the model (see the generate method
+                Additional keyword arguments to pass along to the output method of the model (see the output method
                 corresponding to your framework [here](./model#generative-models)).
 
         Return:
@@ -353,7 +353,7 @@ class TranslationPipeline(Text2TextGenerationPipeline):
                 The language of the desired output. Might be required for multilingual models. Will not have any effect
                 for single pair translation models
             generate_kwargs:
-                Additional keyword arguments to pass along to the generate method of the model (see the generate method
+                Additional keyword arguments to pass along to the output method of the model (see the output method
                 corresponding to your framework [here](./model#generative-models)).
 
         Return:

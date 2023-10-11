@@ -312,7 +312,7 @@ class ModelTesterMixin:
             with tempfile.TemporaryDirectory() as tmpdirname:
                 model.save_pretrained(tmpdirname)
 
-                # the config file (and the generation config file, if it can generate) should be saved
+                # the config file (and the generation config file, if it can output) should be saved
                 self.assertTrue(os.path.exists(os.path.join(tmpdirname, CONFIG_NAME)))
                 self.assertEqual(
                     model.can_generate(), os.path.exists(os.path.join(tmpdirname, GENERATION_CONFIG_NAME))

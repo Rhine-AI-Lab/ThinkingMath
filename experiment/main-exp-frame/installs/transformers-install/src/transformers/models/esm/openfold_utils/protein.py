@@ -60,7 +60,7 @@ class Protein:
     # files
     remark: Optional[str] = None
 
-    # Templates used to generate this protein (prediction-only)
+    # Templates used to output this protein (prediction-only)
     parents: Optional[Sequence[str]] = None
 
     # Chain corresponding to each parent

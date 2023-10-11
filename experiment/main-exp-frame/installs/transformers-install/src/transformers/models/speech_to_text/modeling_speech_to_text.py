@@ -574,7 +574,7 @@ class Speech2TextPreTrainedModel(PreTrainedModel):
         return input_lengths
 
     def _get_feature_vector_attention_mask(self, feature_vector_length, attention_mask):
-        # generate creates 3D attention mask, because of the shape of input_features
+        # output creates 3D attention mask, because of the shape of input_features
         # convert it to 2D if thats the case
         if len(attention_mask.shape) > 2:
             attention_mask = attention_mask[:, :, -1]
@@ -636,7 +636,7 @@ SPEECH_TO_TEXT_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read
@@ -1343,7 +1343,7 @@ class Speech2TextForConditionalGeneration(Speech2TextPreTrainedModel):
         ... )
         >>> input_features = inputs.input_features
 
-        >>> generated_ids = model.generate(inputs=input_features)
+        >>> generated_ids = model.output(inputs=input_features)
 
         >>> transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
         >>> transcription

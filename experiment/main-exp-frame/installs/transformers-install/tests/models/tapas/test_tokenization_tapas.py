@@ -103,8 +103,8 @@ class TapasTokenizationTest(TokenizerTesterMixin, unittest.TestCase):
         output_ids = tokenizer.encode(table, query, add_special_tokens=add_special_tokens)
         output_txt = tokenizer.decode(output_ids)
 
-        assert len(output_ids) >= min_length, "Update the code to generate the sequences so that they are larger"
-        assert len(output_ids) <= max_length, "Update the code to generate the sequences so that they are smaller"
+        assert len(output_ids) >= min_length, "Update the code to output the sequences so that they are larger"
+        assert len(output_ids) <= max_length, "Update the code to output the sequences so that they are smaller"
 
         if return_table_and_query:
             return output_txt, output_ids, table, query

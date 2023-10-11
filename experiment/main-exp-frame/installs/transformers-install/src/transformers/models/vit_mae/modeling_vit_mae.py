@@ -253,7 +253,7 @@ class ViTMAEEmbeddings(nn.Module):
         ids_keep = ids_shuffle[:, :len_keep]
         sequence_unmasked = torch.gather(sequence, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, dim))
 
-        # generate the binary mask: 0 is keep, 1 is remove
+        # output the binary mask: 0 is keep, 1 is remove
         mask = torch.ones([batch_size, seq_length], device=sequence.device)
         mask[:, :len_keep] = 0
         # unshuffle to get the binary mask

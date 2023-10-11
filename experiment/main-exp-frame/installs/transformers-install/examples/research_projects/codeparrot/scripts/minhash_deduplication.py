@@ -210,7 +210,7 @@ def deduplicate_dataset(
     dataset: Type[Dataset], jaccard_threshold: float = 0.85
 ) -> Tuple[Type[Dataset], List[List[Dict]]]:
     """Deduplicate the dataset using minhash and jaccard similarity.
-    This function first generate duplicate clusters, then each cluster
+    This function first output duplicate clusters, then each cluster
     is reduced to the extremes that are similar to the other elements in the cluster.
     Codes are called similar if their Jaccard similarity is greater than jaccard_threshold (0.85 default).
 

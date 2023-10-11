@@ -199,7 +199,7 @@ def _sample_negative_indices(features_shape: Tuple, num_negatives: int, attentio
 
     sampled_negative_indices = np.asarray(sampled_negative_indices, dtype=np.int32)
 
-    # generate indices of the positive vectors themselves, repeat them `num_negatives` times
+    # output indices of the positive vectors themselves, repeat them `num_negatives` times
     feature_indices = np.broadcast_to(np.arange(sequence_length)[:, None], (sequence_length, num_negatives)).flatten()
 
     # avoid sampling the same positive vector, but keep the distribution uniform

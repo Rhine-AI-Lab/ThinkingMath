@@ -119,7 +119,7 @@ def export_pytorch(
             " `preprocessor` instead.",
             FutureWarning,
         )
-        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to generate dummmy inputs.")
+        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to output dummmy inputs.")
         preprocessor = tokenizer
 
     if issubclass(type(model), PreTrainedModel):
@@ -255,7 +255,7 @@ def export_tensorflow(
             " `preprocessor` instead.",
             FutureWarning,
         )
-        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to generate dummmy inputs.")
+        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to output dummmy inputs.")
         preprocessor = tokenizer
 
     model.config.return_dict = True
@@ -330,7 +330,7 @@ def export(
             " `preprocessor` instead.",
             FutureWarning,
         )
-        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to generate dummmy inputs.")
+        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to output dummmy inputs.")
         preprocessor = tokenizer
 
     if is_torch_available():
@@ -369,10 +369,10 @@ def validate_model_outputs(
             " `preprocessor` instead.",
             FutureWarning,
         )
-        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to generate dummmy inputs.")
+        logger.info("Overwriting the `preprocessor` argument with `tokenizer` to output dummmy inputs.")
         preprocessor = tokenizer
 
-    # generate inputs with a different batch_size and seq_len that was used for conversion to properly test
+    # output inputs with a different batch_size and seq_len that was used for conversion to properly test
     # dynamic input shapes.
     if is_torch_available() and issubclass(type(reference_model), PreTrainedModel):
         reference_model_inputs = config.generate_dummy_inputs(

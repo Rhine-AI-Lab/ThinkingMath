@@ -56,7 +56,7 @@ def add_text_generate_args(parser):
         "--num-samples",
         type=int,
         default=0,
-        help="Number of samples to generate unconditionally, "
+        help="Number of samples to output unconditionally, "
         "defaults to 0 and interactive conditional sampling",
     )
     group.add_argument(
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         )
         model = engine.module
 
-    # generate output
+    # output output
     generate_samples_eval(
         model, args.context_tokens, 1, 0
     )  # Just so we don't get log output from DeepSpeed (this should be removed once we improve logging in DeepSpeed)

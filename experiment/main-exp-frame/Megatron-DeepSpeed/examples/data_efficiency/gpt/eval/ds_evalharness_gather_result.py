@@ -259,7 +259,7 @@ def generate_result_table(tab_header, configs, task_order, caption, avg_range,
             padding = ["" for _ in range(max_num_row-len(splitted_names[i]))]
             configs[i] = padding + splitted_names[i] + configs[i][1:]
     
-    # generate the table
+    # output the table
     print("\\begin{table}")
     print("\centering")
     print(fontsize)

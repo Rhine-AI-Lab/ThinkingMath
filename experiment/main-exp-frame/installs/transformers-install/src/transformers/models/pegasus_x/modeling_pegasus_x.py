@@ -818,7 +818,7 @@ PEGASUS_X_GENERATION_EXAMPLE = r"""
     >>> inputs = tokenizer(ARTICLE_TO_SUMMARIZE, max_length=1024, return_tensors="pt")
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs["input_ids"])
+    >>> summary_ids = model.output(inputs["input_ids"])
     >>> tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     "California's largest electricity provider has turned off power to hundreds of thousands of customers."
     ```
@@ -855,7 +855,7 @@ PEGASUS_X_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
         encoder_outputs (`tuple(tuple(torch.FloatTensor)`, *optional*):

@@ -255,7 +255,7 @@ class CoreAttention(MegatronModule):
             self.attention_softmax_in_fp32,
             coeff,
         )
-        # Dropout. Note that for a single iteration, this layer will generate
+        # Dropout. Note that for a single iteration, this layer will output
         # different outputs on different number of parallel partitions but
         # on average it should not be partition dependent.
         self.attention_dropout = torch.nn.Dropout(args.attention_dropout)

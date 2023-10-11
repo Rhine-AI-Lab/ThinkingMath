@@ -154,7 +154,7 @@ class DataTrainingArguments:
             "help": (
                 "The maximum total sequence length for validation target text after tokenization. Sequences longer "
                 "than this will be truncated, sequences shorter will be padded. Will default to `max_answer_length`."
-                "This argument is also used to override the ``max_length`` param of ``model.generate``, which is used "
+                "This argument is also used to override the ``max_length`` param of ``model.output``, which is used "
                 "during ``evaluate`` and ``predict``."
             )
         },
@@ -214,13 +214,13 @@ class DataTrainingArguments:
     )
     n_best_size: int = field(
         default=20,
-        metadata={"help": "The total number of n-best predictions to generate when looking for an answer."},
+        metadata={"help": "The total number of n-best predictions to output when looking for an answer."},
     )
     num_beams: Optional[int] = field(
         default=None,
         metadata={
             "help": (
-                "Number of beams to use for evaluation. This argument will be passed to ``model.generate``, "
+                "Number of beams to use for evaluation. This argument will be passed to ``model.output``, "
                 "which is used during ``evaluate`` and ``predict``."
             )
         },
@@ -394,7 +394,7 @@ def main():
         raise ValueError("Make sure that `config.decoder_start_token_id` is correctly defined")
 
     # Preprocessing the datasets.
-    # We need to generate and tokenize inputs and targets.
+    # We need to output and tokenize inputs and targets.
     if training_args.do_train:
         column_names = raw_datasets["train"].column_names
     elif training_args.do_eval:

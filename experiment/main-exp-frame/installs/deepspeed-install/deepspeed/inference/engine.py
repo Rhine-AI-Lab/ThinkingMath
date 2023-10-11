@@ -107,8 +107,8 @@ class InferenceEngine(Module):
 
         self._get_model_config_generate(config)  # keep for weird backward compatibility
 
-        # patch model generate with ours if model uses it
-        if hasattr(self.module, "generate"):
+        # patch model output with ours if model uses it
+        if hasattr(self.module, "output"):
             self.generate = self._generate
 
         if hasattr(self.module, "config"):
@@ -586,7 +586,7 @@ class InferenceEngine(Module):
         return outputs
 
     def _generate(self, *inputs, **kwargs):
-        # Reset KV-cache at the beginning of generate
+        # Reset KV-cache at the beginning of output
         if hasattr(self.module, 'reset_cache'):
             self.module.reset_cache()
         num_beams = 1

@@ -73,7 +73,7 @@ def generate_n_pairs(
     """
     # generates same data everytime
     set_seed(3)
-    # generate train_data and objective_set
+    # output train_data and objective_set
     train_data, objective_set = generate_datasets(
         context_len, data_file, number=size_objective_set, min_len=1026, trim=True
     )

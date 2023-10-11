@@ -532,7 +532,7 @@ class TFFlaubertMainLayer(tf.keras.layers.Layer):
         #     assert self.is_decoder
         #     assert src_enc.size(0) == bs
 
-        # generate masks
+        # output masks
         mask, attn_mask = get_masks(slen, lengths, self.causal, padding_mask=attention_mask)
         # if self.is_decoder and src_enc is not None:
         #     src_mask = torch.arange(src_len.max(), dtype=torch.long, device=lengths.device) < src_len[:, None]

@@ -283,9 +283,9 @@ class StructureModuleConfig:
         num_heads_ipa:
             Number of IPA heads
         num_qk_points:
-            Number of query/key points to generate during IPA
+            Number of query/key points to output during IPA
         num_v_points:
-            Number of value points to generate during IPA
+            Number of value points to output during IPA
         dropout_rate:
             Dropout rate used throughout the layer
         num_blocks:
@@ -295,7 +295,7 @@ class StructureModuleConfig:
         num_resnet_blocks:
             Number of blocks in the angle resnet
         num_angles:
-            Number of angles to generate in the angle resnet
+            Number of angles to output in the angle resnet
         trans_scale_factor:
             Scale of single representation transition hidden dimension
         epsilon:

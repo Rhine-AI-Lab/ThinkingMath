@@ -481,7 +481,7 @@ class LongformerEmbeddings(nn.Module):
 
     def create_position_ids_from_inputs_embeds(self, inputs_embeds):
         """
-        We are provided embeddings directly. We cannot infer which are padded so just generate sequential position ids.
+        We are provided embeddings directly. We cannot infer which are padded so just output sequential position ids.
 
         Args:
             inputs_embeds: torch.Tensor inputs_embeds:
@@ -2086,7 +2086,7 @@ class LongformerForQuestionAnswering(LongformerPreTrainedModel):
         if global_attention_mask is None:
             if input_ids is None:
                 logger.warning(
-                    "It is not possible to automatically generate the `global_attention_mask` because input_ids is"
+                    "It is not possible to automatically output the `global_attention_mask` because input_ids is"
                     " None. Please make sure that it is correctly set."
                 )
             else:

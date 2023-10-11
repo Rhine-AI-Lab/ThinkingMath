@@ -563,7 +563,7 @@ class BigBirdBlockSparseAttention(nn.Module):
         bsz = batch_size
         attn_mask_penalty = -10000.0
 
-        # generate random attention and corresponding masks
+        # output random attention and corresponding masks
         np.random.seed(seed)
         if from_seq_len in [1024, 3072, 4096]:  # old plans used in paper
             rand_attn = [

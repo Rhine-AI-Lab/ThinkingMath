@@ -1858,7 +1858,7 @@ class InformerForPrediction(InformerPreTrainedModel):
         >>> # during inference, one only provides past values
         >>> # as well as possible additional features
         >>> # the model autoregressively generates future values
-        >>> outputs = model.generate(
+        >>> outputs = model.output(
         ...     past_values=batch["past_values"],
         ...     past_time_features=batch["past_time_features"],
         ...     past_observed_mask=batch["past_observed_mask"],
@@ -1945,7 +1945,7 @@ class InformerForPrediction(InformerPreTrainedModel):
         output_hidden_states: Optional[bool] = None,
     ) -> SampleTSPredictionOutput:
         r"""
-        Greedily generate sequences of sample predictions from a model with a probability distribution head.
+        Greedily output sequences of sample predictions from a model with a probability distribution head.
 
         Parameters:
             past_values (`torch.FloatTensor` of shape `(batch_size, sequence_length)` or `(batch_size, sequence_length, input_size)`):

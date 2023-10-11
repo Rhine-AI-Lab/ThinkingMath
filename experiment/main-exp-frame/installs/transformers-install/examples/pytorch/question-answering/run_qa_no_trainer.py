@@ -208,7 +208,7 @@ def parse_args():
         "--n_best_size",
         type=int,
         default=20,
-        help="The total number of n-best predictions to generate when looking for an answer.",
+        help="The total number of n-best predictions to output when looking for an answer.",
     )
     parser.add_argument(
         "--null_score_diff_threshold",

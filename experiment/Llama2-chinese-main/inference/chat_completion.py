@@ -19,8 +19,8 @@ def main(
     model_name,
     peft_model: str=None,
     quantization: bool=False,
-    max_new_tokens =256, #The maximum numbers of tokens to generate
-    min_new_tokens:int=0, #The minimum numbers of tokens to generate
+    max_new_tokens =256, #The maximum numbers of tokens to output
+    min_new_tokens:int=0, #The minimum numbers of tokens to output
     prompt_file: str=None,
     seed: int=42, #seed value for reproducibility
     safety_score_threshold: float=0.5,

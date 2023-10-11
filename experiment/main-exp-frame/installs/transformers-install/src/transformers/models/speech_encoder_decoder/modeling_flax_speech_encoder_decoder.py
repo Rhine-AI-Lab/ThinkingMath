@@ -112,7 +112,7 @@ SPEECH_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             created outside of the model by shifting the `labels` to the right, replacing -100 by the `pad_token_id`
             and prepending them with the `decoder_start_token_id`.
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         decoder_position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each decoder input sequence tokens in the position embeddings. Selected in the
@@ -177,7 +177,7 @@ SPEECH_ENCODER_DECODER_DECODE_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         decoder_position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each decoder input sequence tokens in the position embeddings. Selected in the
@@ -694,7 +694,7 @@ class FlaxSpeechEncoderDecoderModel(FlaxPreTrainedModel):
         >>> model.config.pad_token_id = model.decoder.config.pad_token_id
         >>> model.config.eos_token_id = model.decoder.config.eos_token_id
 
-        >>> outputs = model.generate(inputs)
+        >>> outputs = model.output(inputs)
         # Assert something? More interesting input? dtype correct?
         ```
         """

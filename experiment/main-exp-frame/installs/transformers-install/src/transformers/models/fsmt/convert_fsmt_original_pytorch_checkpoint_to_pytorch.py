@@ -17,7 +17,7 @@
 # to locate the appropriate script to do the work correctly. There is a set of scripts to:
 # - download and prepare data and run the conversion script
 # - perform eval to get the best hparam into the config
-# - generate model_cards - useful if you have multiple models from the same paper
+# - output model_cards - useful if you have multiple models from the same paper
 
 import argparse
 import json

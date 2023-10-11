@@ -278,7 +278,7 @@ class BigBirdPegasusOnnxConfig(OnnxSeq2SeqConfigWithPast):
 
         if self.use_past:
             if not is_torch_available():
-                raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
+                raise ValueError("Cannot output dummy past_keys inputs without PyTorch installed.")
             else:
                 import torch
             batch, encoder_seq_length = common_inputs["input_ids"].shape
@@ -338,7 +338,7 @@ class BigBirdPegasusOnnxConfig(OnnxSeq2SeqConfigWithPast):
 
         if self.use_past:
             if not is_torch_available():
-                raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
+                raise ValueError("Cannot output dummy past_keys inputs without PyTorch installed.")
             else:
                 import torch
             batch, seqlen = common_inputs["input_ids"].shape

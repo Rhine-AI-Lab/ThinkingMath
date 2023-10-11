@@ -66,7 +66,7 @@ def add_text_generate_args(parser):
     group.add_argument("--sample-output-file", type=str, default=None,
                        help='Output file got from --sample-input-file')
     group.add_argument("--num-samples", type=int, default=0,
-                       help='Number of samples to generate unconditionally, '
+                       help='Number of samples to output unconditionally, '
                        'defaults to 0 and interactive conditional sampling')
     group.add_argument("--genfile", type=str,
                        help='Output file when generating unconditionally')

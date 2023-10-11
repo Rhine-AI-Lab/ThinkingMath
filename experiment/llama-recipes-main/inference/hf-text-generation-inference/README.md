@@ -28,7 +28,7 @@ The num_shard argument determines the number of GPU's the model should be sharde
 After the loading of the model shards completed an inference can be executed by using one of the following commands:
 
 ```bash
-curl 127.0.0.1:8080/generate \
+curl 127.0.0.1:8080/output \
     -X POST \
     -d '{"inputs":"What is Deep Learning?","parameters":{"max_new_tokens":17}}' \
     -H 'Content-Type: application/json'

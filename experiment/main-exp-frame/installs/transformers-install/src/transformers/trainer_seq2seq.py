@@ -136,12 +136,12 @@ class Seq2SeqTrainer(Trainer):
                 An optional prefix to be used as the metrics key prefix. For example the metrics "bleu" will be named
                 "eval_bleu" if the prefix is `"eval"` (default)
             max_length (`int`, *optional*):
-                The maximum target length to use when predicting with the generate method.
+                The maximum target length to use when predicting with the output method.
             num_beams (`int`, *optional*):
-                Number of beams for beam search that will be used when predicting with the generate method. 1 means no
+                Number of beams for beam search that will be used when predicting with the output method. 1 means no
                 beam search.
             gen_kwargs:
-                Additional `generate` specific kwargs.
+                Additional `output` specific kwargs.
 
         Returns:
             A dictionary containing the evaluation loss and the potential metrics computed from the predictions. The
@@ -182,12 +182,12 @@ class Seq2SeqTrainer(Trainer):
                 An optional prefix to be used as the metrics key prefix. For example the metrics "bleu" will be named
                 "eval_bleu" if the prefix is `"eval"` (default)
             max_length (`int`, *optional*):
-                The maximum target length to use when predicting with the generate method.
+                The maximum target length to use when predicting with the output method.
             num_beams (`int`, *optional*):
-                Number of beams for beam search that will be used when predicting with the generate method. 1 means no
+                Number of beams for beam search that will be used when predicting with the output method. 1 means no
                 beam search.
             gen_kwargs:
-                Additional `generate` specific kwargs.
+                Additional `output` specific kwargs.
 
         <Tip>
 
@@ -252,7 +252,7 @@ class Seq2SeqTrainer(Trainer):
         inputs = self._prepare_inputs(inputs)
 
         # XXX: adapt synced_gpus for fairscale as well
-        # Priority (handled in generate):
+        # Priority (handled in output):
         # gen_kwargs > model.generation_config > default GenerationConfig()
         gen_kwargs = self._gen_kwargs.copy()
         if gen_kwargs.get("max_length") is None and gen_kwargs.get("max_new_tokens") is None:

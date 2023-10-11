@@ -241,7 +241,7 @@ def _sample_negative_indices(
     """
     batch_size, sequence_length = features_shape
 
-    # generate indices of the positive vectors themselves, repeat them `num_negatives` times
+    # output indices of the positive vectors themselves, repeat them `num_negatives` times
     sequence_length_range = np.arange(sequence_length)
 
     # get `num_negatives` random vector indices from the same utterance
@@ -1281,7 +1281,7 @@ class Wav2Vec2ConformerModel(Wav2Vec2ConformerPreTrainedModel):
         if not getattr(self.config, "apply_spec_augment", True):
             return hidden_states
 
-        # generate indices & apply SpecAugment along time axis
+        # output indices & apply SpecAugment along time axis
         batch_size, sequence_length, hidden_size = hidden_states.size()
 
         if mask_time_indices is not None:
@@ -1299,7 +1299,7 @@ class Wav2Vec2ConformerModel(Wav2Vec2ConformerPreTrainedModel):
             hidden_states[mask_time_indices] = self.masked_spec_embed.to(hidden_states.dtype)
 
         if self.config.mask_feature_prob > 0 and self.training:
-            # generate indices & apply SpecAugment along feature axis
+            # output indices & apply SpecAugment along feature axis
             mask_feature_indices = _compute_mask_indices(
                 (batch_size, hidden_size),
                 mask_prob=self.config.mask_feature_prob,

@@ -51,7 +51,7 @@ def run_search():
     ```
      --search "num_beams=5:10 length_penalty=0.8:1.0:1.2 early_stopping=true:false"
     ```
-    which will generate ``12`` ``(2*3*2)`` searches for a product of each hparam. For example the example that was just used will invoke ``run_eval.py`` repeatedly with:
+    which will output ``12`` ``(2*3*2)`` searches for a product of each hparam. For example the example that was just used will invoke ``run_eval.py`` repeatedly with:
 
     ```
      --num_beams 5 --length_penalty 0.8 --early_stopping true

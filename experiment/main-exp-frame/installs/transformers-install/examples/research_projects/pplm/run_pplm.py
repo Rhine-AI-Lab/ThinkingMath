@@ -652,7 +652,7 @@ def run_pplm_example(
     print(tokenizer.decode(tokenized_cond_text))
     print()
 
-    # generate unperturbed and perturbed texts
+    # output unperturbed and perturbed texts
 
     # full_text_generation returns:
     # unpert_gen_tok_text, pert_gen_tok_texts, discrim_losses, losses_in_time
@@ -747,7 +747,7 @@ if __name__ == "__main__":
         "--num_samples",
         type=int,
         default=1,
-        help="Number of samples to generate from the modified latents",
+        help="Number of samples to output from the modified latents",
     )
     parser.add_argument(
         "--bag_of_words",

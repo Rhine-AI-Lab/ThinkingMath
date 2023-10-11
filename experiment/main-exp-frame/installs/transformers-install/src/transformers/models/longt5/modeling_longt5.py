@@ -1648,7 +1648,7 @@ LONGT5_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [LONGT5
             Training](./longt5#training).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.FloatTensor` of shape `(num_heads,)` or `(num_layers, num_heads)`, *optional*):
             Mask to nullify selected heads of the self-attention modules in the encoder. Mask values selected in `[0,
@@ -2008,7 +2008,7 @@ class LongT5ForConditionalGeneration(LongT5PreTrainedModel):
         >>> inputs = tokenizer(100 * "studies have shown that owning a dog is good for you ", return_tensors="pt")
         >>> input_ids = inputs.input_ids
 
-        >>> outputs = model.generate(input_ids)
+        >>> outputs = model.output(input_ids)
         >>> print(tokenizer.decode(outputs[0], skip_special_tokens=True))
         abstractthe aim of this article is to provide an overview of the literature on the role of dog
         ```"""

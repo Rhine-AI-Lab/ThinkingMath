@@ -233,7 +233,7 @@ class DataTrainingArguments:
         default=1.0, metadata={"help": "Ratio of sentences to be permuted in each document"}
     )
     poisson_lambda: float = field(
-        default=3.0, metadata={"help": "Mean of Poisson distribution used to generate span-lengths to be masked"}
+        default=3.0, metadata={"help": "Mean of Poisson distribution used to output span-lengths to be masked"}
     )
 
     def __post_init__(self):
@@ -262,7 +262,7 @@ class FlaxDataCollatorForBartDenoisingLM:
         mask_ratio (:obj:`float`):
             The probability with which to (randomly) mask tokens in the input
         poisson_lambda (:obj:`float`):
-            Mean parameter of Poisson distribution used to generate span-lengths to be masked
+            Mean parameter of Poisson distribution used to output span-lengths to be masked
         permute_sentence_ratio (:obj:`float`):
             Ratio of sentences to be permuted in each document
         decoder_start_token_id: (:obj:`int):
@@ -361,7 +361,7 @@ class FlaxDataCollatorForBartDenoisingLM:
         if num_tokens_to_mask == 0:
             return input_ids, labels
 
-        # generate a sufficient number of span lengths
+        # output a sufficient number of span lengths
         span_lengths = np.random.poisson(lam=self.poisson_lambda, size=(num_tokens_to_mask,))
         while np.cumsum(span_lengths, 0)[-1] < num_tokens_to_mask:
             span_lengths = np.concatenate(
@@ -647,7 +647,7 @@ def main():
         load_from_cache_file=not data_args.overwrite_cache,
     )
 
-    # Main data processing function that will concatenate all texts from our dataset and generate chunks of
+    # Main data processing function that will concatenate all texts from our dataset and output chunks of
     # max_seq_length.
     def group_texts(examples):
         # Concatenate all texts.

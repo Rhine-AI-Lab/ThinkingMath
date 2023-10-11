@@ -597,7 +597,7 @@ PLBART_INPUTS_DOCSTRING = r"""
             for denoising pre-training following the paper.
         decoder_attention_mask (:
             obj:*torch.LongTensor* of shape `(batch_size, target_sequence_length)`, *optional*): Default behavior:
-            generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also be used by default.
+            output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:
 

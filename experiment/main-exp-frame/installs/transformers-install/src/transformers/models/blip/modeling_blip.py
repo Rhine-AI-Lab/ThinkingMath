@@ -1028,7 +1028,7 @@ class BlipForConditionalGeneration(BlipPreTrainedModel):
         **generate_kwargs,
     ) -> torch.LongTensor:
         r"""
-        Overrides *generate* function to be able to use the model as a conditional generator
+        Overrides *output* function to be able to use the model as a conditional generator
 
         Parameters:
             pixel_values (*torch.FloatTensor* of shape *(batch_size, num_channels, image_height, image_width)*:
@@ -1053,7 +1053,7 @@ class BlipForConditionalGeneration(BlipPreTrainedModel):
 
         >>> inputs = processor(images=image, return_tensors="pt")
 
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         two cats sleeping on a couch
         ```
@@ -1178,7 +1178,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel):
         >>> # inference
         >>> text = "How many cats are in the picture?"
         >>> inputs = processor(images=image, text=text, return_tensors="pt")
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         2
         ```"""
@@ -1186,7 +1186,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel):
             raise ValueError(
                 "Either `decoder_input_ids` or `labels` should be passed when calling `forward` with"
                 " `BlipForQuestionAnswering`. if you are training the model make sure that `labels` is passed, if you"
-                " are using the model for inference make sure that `decoder_input_ids` is passed or call `generate`"
+                " are using the model for inference make sure that `decoder_input_ids` is passed or call `output`"
             )
 
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
@@ -1257,7 +1257,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel):
         **generate_kwargs,
     ) -> torch.LongTensor:
         r"""
-        Overrides *generate* function to be able to use the model as a conditional generator
+        Overrides *output* function to be able to use the model as a conditional generator
 
         Parameters:
             input_ids (*torch.LongTensor* of shape *(batch_size, sequence_length)*):
@@ -1268,7 +1268,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel):
                 Mask to avoid performing attention on padding token indices. Mask values selected in `[0, 1]`. `1` for
                 tokens that are NOT MASKED, `0` for MASKED tokens.
             **generate_kwargs:
-                Additional arguments passed to the *generate* function of the decoder
+                Additional arguments passed to the *output* function of the decoder
 
 
         Examples:
@@ -1286,7 +1286,7 @@ class BlipForQuestionAnswering(BlipPreTrainedModel):
 
         >>> inputs = processor(images=image, text=text, return_tensors="pt")
 
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         2
         ```

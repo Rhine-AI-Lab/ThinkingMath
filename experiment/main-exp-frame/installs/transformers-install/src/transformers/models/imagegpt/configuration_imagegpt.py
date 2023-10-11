@@ -184,7 +184,7 @@ class ImageGPTOnnxConfig(OnnxConfig):
             is_pair (`bool`, *optional*, defaults to `False`):
                 Indicate if the input is a pair (sentence 1, sentence 2)
             framework (`TensorType`, *optional*, defaults to `None`):
-                The framework (PyTorch or TensorFlow) that the tokenizer will generate tensors for.
+                The framework (PyTorch or TensorFlow) that the tokenizer will output tensors for.
             num_channels (`int`, *optional*, defaults to 3):
                 The number of channels of the generated images.
             image_width (`int`, *optional*, defaults to 40):

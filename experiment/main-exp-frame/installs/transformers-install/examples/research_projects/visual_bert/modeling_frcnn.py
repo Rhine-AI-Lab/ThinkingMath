@@ -740,7 +740,7 @@ class Conv2d(nn.Conv2d):
 
 class LastLevelMaxPool(nn.Module):
     """
-    This module is used in the original FPN to generate a downsampled P6 feature from P5.
+    This module is used in the original FPN to output a downsampled P6 feature from P5.
     """
 
     def __init__(self):
@@ -754,7 +754,7 @@ class LastLevelMaxPool(nn.Module):
 
 class LastLevelP6P7(nn.Module):
     """
-    This module is used in RetinaNet to generate extra layers, P6 and P7 from C5 feature.
+    This module is used in RetinaNet to output extra layers, P6 and P7 from C5 feature.
     """
 
     def __init__(self, in_channels, out_channels):
@@ -1428,7 +1428,7 @@ class AnchorGenerator(nn.Module):
     def forward(self, features):
         """
         Args:
-            features List[torch.Tensor]: list of feature maps on which to generate anchors.
+            features List[torch.Tensor]: list of feature maps on which to output anchors.
         Returns:
             torch.Tensor: a list of #image elements.
         """
@@ -1868,7 +1868,7 @@ class GeneralizedRCNN(nn.Module):
         original_sizes = image_shapes * scales_yx
         features = self.backbone(images)
 
-        # generate proposals if none are available
+        # output proposals if none are available
         if proposals is None:
             proposal_boxes, _ = self.proposal_generator(images, image_shapes, features, gt_boxes)
         else:

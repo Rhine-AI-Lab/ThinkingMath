@@ -141,8 +141,8 @@ print('Shuffling...')
 random.shuffle(data)
 
 print('Writing...')
-file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_8k8k8k_v4.jsonl', 'w')
+file = open('../output/data_example.txt', 'w', encoding='utf-8')
+jl = jsonlines.open('../output/think_math_8k8k8k_v4.jsonl', 'w')
 for line in data:
     file.write(f'{line[0]}\n\n{line[1]}\n\n{line[2]}\n\n{data_sep}\n\n')
     equation = line[3].split('=')[0]

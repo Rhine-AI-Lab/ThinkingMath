@@ -66,7 +66,7 @@ class PromptEncoderConfig(PromptLearningConfig):
 # with some refactor
 class PromptEncoder(torch.nn.Module):
     """
-    The prompt encoder network that is used to generate the virtual token embeddings for p-tuning.
+    The prompt encoder network that is used to output the virtual token embeddings for p-tuning.
 
     Args:
         config ([`PromptEncoderConfig`]): The configuration of the prompt encoder.

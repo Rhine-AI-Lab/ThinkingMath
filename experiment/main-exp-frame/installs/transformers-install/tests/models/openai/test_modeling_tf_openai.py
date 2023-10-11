@@ -200,7 +200,7 @@ class TFOpenAIGPTModelTest(TFModelTesterMixin, PipelineTesterMixin, unittest.Tes
     )
     all_generative_model_classes = (
         (TFOpenAIGPTLMHeadModel,) if is_tf_available() else ()
-    )  # TODO (PVP): Add Double HeadsModel when generate() function is changed accordingly
+    )  # TODO (PVP): Add Double HeadsModel when output() function is changed accordingly
     pipeline_model_mapping = (
         {
             "feature-extraction": TFOpenAIGPTModel,

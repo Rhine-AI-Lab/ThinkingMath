@@ -155,7 +155,7 @@ class PipelineTesterMixin:
                 processor_names = tiny_model_summary[model_arch_name]["processor_classes"]
                 if "sha" in tiny_model_summary[model_arch_name]:
                     commit = tiny_model_summary[model_arch_name]["sha"]
-            # Adding `None` (if empty) so we can generate tests
+            # Adding `None` (if empty) so we can output tests
             tokenizer_names = [None] if len(tokenizer_names) == 0 else tokenizer_names
             processor_names = [None] if len(processor_names) == 0 else processor_names
 

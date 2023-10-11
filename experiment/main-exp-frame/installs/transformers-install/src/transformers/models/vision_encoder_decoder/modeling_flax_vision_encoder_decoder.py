@@ -96,7 +96,7 @@ VISION_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
 
             [What are decoder input IDs?](../glossary#decoder-input-ids)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         decoder_position_ids (`jnp.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each decoder input sequence tokens in the position embeddings. Selected in the
@@ -147,7 +147,7 @@ VISION_ENCODER_DECODER_DECODE_INPUTS_DOCSTRING = r"""
             `last_hidden_state` of shape `(batch_size, sequence_length, hidden_size)`, *optional*) is a sequence of
             hidden-states at the output of the last layer of the encoder. Used in the cross-attention of the decoder.
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         decoder_position_ids (`jnp.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each decoder input sequence tokens in the position embeddings. Selected in the
@@ -640,7 +640,7 @@ class FlaxVisionEncoderDecoderModel(FlaxPreTrainedModel):
         >>> model.config.pad_token_id = model.config.eos_token_id
 
         >>> # generation
-        >>> sequences = model.generate(pixel_values, num_beams=4, max_length=12).sequences
+        >>> sequences = model.output(pixel_values, num_beams=4, max_length=12).sequences
 
         >>> captions = tokenizer_output.batch_decode(sequences, skip_special_tokens=True)
         ```"""

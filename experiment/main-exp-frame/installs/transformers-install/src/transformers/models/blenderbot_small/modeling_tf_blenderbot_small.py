@@ -546,7 +546,7 @@ BLENDERBOT_SMALL_GENERATION_EXAMPLE = r"""
     >>> print("Human: ", UTTERANCE)
     >>> inputs = tokenizer([UTTERANCE], return_tensors="tf")
 
-    >>> reply_ids = model.generate(**inputs)
+    >>> reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(reply_ids, skip_special_tokens=True)[0])
     what kind of carbs do they eat? i don't know much about carbs.
 
@@ -560,7 +560,7 @@ BLENDERBOT_SMALL_GENERATION_EXAMPLE = r"""
 
     >>> inputs = tokenizer([NEXT_UTTERANCE], return_tensors="tf")
     >>> inputs.pop("token_type_ids")
-    >>> next_reply_ids = model.generate(**inputs)
+    >>> next_reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(next_reply_ids, skip_special_tokens=True)[0])
     ```
 """

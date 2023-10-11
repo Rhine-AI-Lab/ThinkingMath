@@ -42,7 +42,7 @@ class OnnxUtilsTestCaseV2(TestCase):
     def test_compute_effective_axis_dimension(self):
         """
         When exporting ONNX model with dynamic axis (batch or sequence) we set batch_size and/or sequence_length = -1.
-        We cannot generate an effective tensor with axis dim == -1, so we trick by using some "fixed" values
+        We cannot output an effective tensor with axis dim == -1, so we trick by using some "fixed" values
         (> 1 to avoid ONNX squeezing the axis).
 
         This test ensure we are correctly replacing generated batch / sequence tensor with axis > 1

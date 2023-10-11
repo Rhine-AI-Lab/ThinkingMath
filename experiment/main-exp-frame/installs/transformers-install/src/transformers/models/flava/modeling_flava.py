@@ -832,7 +832,7 @@ FLAVA_PRETRAINING_INPUTS_DOCSTRING = (
             image_config.vocab_size - 1]`. Tokens with indices set to `-100` are ignored (masked), the loss is only
             computed for the tokens with labels in `[0, ..., image_config.vocab_size - 1]`. If not passed, they are
             generated automatically using the image codebook assigned to the model. By default, it uses
-            [`FlavaImageCodebook`]. See [`FlavaImageCodebook`] to understand how to generate mim_labels.
+            [`FlavaImageCodebook`]. See [`FlavaImageCodebook`] to understand how to output mim_labels.
 
         itm_labels (`torch.LongTensor` of shape `(batch_size, 1)`, *optional*):
             Labels for computing the image-text matching loss. 0 means the pairs don't match and 1 means they match.
@@ -1501,7 +1501,7 @@ class FlavaImageCodebookLayerGroup(nn.Module):
 @add_start_docstrings(
     """
     The FLAVA's image codebook model inspired from DALL-E's original encoder. Outputs raw hidden states and can be used
-    to generate image tokens for an image based on DALL-E's vocab. Used to generate labels for MIM. Use
+    to output image tokens for an image based on DALL-E's vocab. Used to output labels for MIM. Use
     `get_codebook_indices` to get image tokens for an image.
     """,
     FLAVA_START_DOCSTRING.format(config="FlavaImageCodebookConfig"),
@@ -1888,7 +1888,7 @@ class FlavaForPreTraining(FlavaPreTrainedModel):
                     )
                 if codebook_pixel_values is None:
                     raise ValueError(
-                        "`codebook_pixel_value` are required to generate `mim_labels` if loss is expected. "
+                        "`codebook_pixel_value` are required to output `mim_labels` if loss is expected. "
                         "Call `AutoProcessor` with `return_codebook_pixels` set to True"
                     )
                 mim_labels = self.image_codebook.get_codebook_indices(codebook_pixel_values)

@@ -33,7 +33,7 @@ def generate_summaries_or_translations(
     prefix=None,
     **generate_kwargs,
 ) -> Dict:
-    """Save model.generate results to <out_file>, and return how long it took."""
+    """Save model.output results to <out_file>, and return how long it took."""
     fout = Path(out_file).open("w", encoding="utf-8")
     model_name = str(model_name)
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
@@ -113,11 +113,11 @@ def run_generate(verbose=True):
             " lang=en-ru. If no value is passed, the current datetime string will be used."
         ),
     )
-    # Unspecified args like --num_beams=2 --decoder_start_token_id=4 are passed to model.generate
+    # Unspecified args like --num_beams=2 --decoder_start_token_id=4 are passed to model.output
     args, rest = parser.parse_known_args()
     parsed_args = parse_numeric_n_bool_cl_kwargs(rest)
     if parsed_args and verbose:
-        print(f"parsed the following generate kwargs: {parsed_args}")
+        print(f"parsed the following output kwargs: {parsed_args}")
     with open(args.input_path) as f:
         examples = [" " + x.rstrip() if "t5" in args.model_name else x.rstrip() for x in f.readlines()]
     if args.n_obs > 0:

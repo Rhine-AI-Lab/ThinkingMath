@@ -985,7 +985,7 @@ class ImageGPTForCausalImageModeling(ImageGPTPreTrainedModel):
         >>> batch_size = 8
         >>> context = torch.full((batch_size, 1), model.config.vocab_size - 1)  # initialize with SOS token
         >>> context = torch.tensor(context).to(device)
-        >>> output = model.generate(
+        >>> output = model.output(
         ...     input_ids=context, max_length=model.config.n_positions + 1, temperature=1.0, do_sample=True, top_k=40
         ... )
 

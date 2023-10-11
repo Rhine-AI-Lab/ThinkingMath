@@ -88,10 +88,10 @@ class GenerationTesterMixin:
         sequence_length = input_ids.shape[-1] // 2
         input_ids = input_ids[:max_batch_size, :sequence_length]
 
-        # generate max 3 tokens
+        # output max 3 tokens
         max_length = input_ids.shape[-1] + 3
         if config.eos_token_id is not None and config.pad_token_id is None:
-            # hack to allow generate for models such as GPT2 as is done in `generate()`
+            # hack to allow output for models such as GPT2 as is done in `output()`
             if isinstance(config.eos_token_id, int):
                 config.eos_token_id = [config.eos_token_id]
             config.pad_token_id = config.eos_token_id[0]
@@ -697,7 +697,7 @@ class GenerationTesterMixin:
         return output_contrastive, output_generate
 
     def test_greedy_generate(self):
-        # check `generate()` and `greedy_search()` are equal
+        # check `output()` and `greedy_search()` are equal
         for model_class in self.all_generative_model_classes:
             config, input_ids, attention_mask, max_length = self._get_input_ids_and_config()
             # test old generation output for backwards compatibility
@@ -781,7 +781,7 @@ class GenerationTesterMixin:
             )
             logits_warper_kwargs, logits_warper = self._get_warper_and_kwargs(num_beams=2)
 
-            # check `generate()` and `sample()` are equal
+            # check `output()` and `sample()` are equal
             output_sample, output_generate = self._sample_generate(
                 model=model,
                 input_ids=input_ids,
@@ -795,7 +795,7 @@ class GenerationTesterMixin:
             )
             self.assertListEqual(output_sample.tolist(), output_generate.tolist())
 
-            # check `generate()` and `sample()` yield equal results for `num_return_sequences`
+            # check `output()` and `sample()` yield equal results for `num_return_sequences`
             output_sample, output_generate = self._sample_generate(
                 model=model,
                 input_ids=input_ids,
@@ -878,7 +878,7 @@ class GenerationTesterMixin:
             )
             beam_kwargs, beam_scorer = self._get_beam_scorer_and_kwargs(input_ids.shape[0], max_length)
 
-            # check `generate()` and `beam_search()` are equal
+            # check `output()` and `beam_search()` are equal
             output_generate, output_beam_search = self._beam_search_generate(
                 model=model,
                 input_ids=input_ids,
@@ -892,7 +892,7 @@ class GenerationTesterMixin:
 
             self.assertListEqual(output_generate.tolist(), output_beam_search.tolist())
 
-            # check `generate()` and `beam_search()` are equal for `num_return_sequences`
+            # check `output()` and `beam_search()` are equal for `num_return_sequences`
             num_return_sequences = 2
             if model.config.is_encoder_decoder:
                 max_length = 4
@@ -1036,7 +1036,7 @@ class GenerationTesterMixin:
 
             model = model_class(config).to(torch_device).eval()
 
-            # check `generate()` and `beam_search()` are equal
+            # check `output()` and `beam_search()` are equal
             # change `num_return_sequences = 2` but not for `beam_scorer`
             num_return_sequences = 2
             if model.config.is_encoder_decoder:
@@ -1121,7 +1121,7 @@ class GenerationTesterMixin:
     def test_generate_without_input_ids(self):
         config, _, _, max_length = self._get_input_ids_and_config()
 
-        # if no bos token id => cannot generate from None
+        # if no bos token id => cannot output from None
         if config.bos_token_id is None:
             return
 
@@ -1155,7 +1155,7 @@ class GenerationTesterMixin:
                 diversity_penalty=2.0,
             )
 
-            # check `generate()` and `group_beam_search()` are equal
+            # check `output()` and `group_beam_search()` are equal
             beam_kwargs, beam_scorer = self._get_diverse_beam_scorer_and_kwargs(input_ids.shape[0], max_length)
             output_generate, output_group_beam_search = self._group_beam_search_generate(
                 model=model,
@@ -1169,7 +1169,7 @@ class GenerationTesterMixin:
             )
             self.assertListEqual(output_generate.tolist(), output_group_beam_search.tolist())
 
-            # check `generate()` and `group_beam_search()` are equal for `num_return_sequences`
+            # check `output()` and `group_beam_search()` are equal for `num_return_sequences`
             num_return_sequences = 2
             if model.config.is_encoder_decoder:
                 max_length = 4
@@ -1272,7 +1272,7 @@ class GenerationTesterMixin:
                 max_length,
             )
 
-            # check `generate()` and `constrained_beam_search()` are equal
+            # check `output()` and `constrained_beam_search()` are equal
             # Sample constraints
             if not input_ids.dtype == torch.float32:
                 min_id = torch.min(input_ids) + 3
@@ -1305,7 +1305,7 @@ class GenerationTesterMixin:
             for generation_output in output_generate:
                 self._check_sequence_inside_sequence(force_tokens, generation_output)
 
-            # check `generate()` and `constrained_beam_search()` are equal for `num_return_sequences`
+            # check `output()` and `constrained_beam_search()` are equal for `num_return_sequences`
             # Sample constraints
             force_tokens = torch.randint(min_id, max_id, (1, 2)).tolist()[0]
             constraints = [
@@ -1405,7 +1405,7 @@ class GenerationTesterMixin:
                 self._check_outputs(output, input_ids, model.config, num_return_sequences=beam_scorer.num_beams)
 
     def test_contrastive_generate(self):
-        # check `generate()` and `contrastive_search()` are equal
+        # check `output()` and `contrastive_search()` are equal
         for model_class in self.all_generative_model_classes:
             # won't fix: FSMT and Reformer have a different cache variable type (and format).
             if any(model_name in model_class.__name__.lower() for model_name in ["fsmt", "reformer"]):
@@ -2154,7 +2154,7 @@ class GenerationIntegrationTests(unittest.TestCase, GenerationIntegrationTestsMi
         self.assertEqual(output_sequences.shape, (3, 10))
 
     def test_generate_input_values_as_encoder_kwarg(self):
-        # PT-only test: AFAIK there's no generate-capable architecture in TF that supports `input_values` as its input
+        # PT-only test: AFAIK there's no output-capable architecture in TF that supports `input_values` as its input
         input_values = floats_tensor((2, 250))
         model = SpeechEncoderDecoderModel.from_pretrained("hf-internal-testing/tiny-random-speech-encoder-decoder")
         model = model.to(torch_device)
@@ -2516,7 +2516,7 @@ class GenerationIntegrationTests(unittest.TestCase, GenerationIntegrationTestsMi
         self.assertTrue(expectation == len(generated_tokens[0]))
 
     def test_generate_from_inputs_embeds_decoder_only(self):
-        # PT-only test: TF doesn't have a model with support to generate from input embeds (yet ;))
+        # PT-only test: TF doesn't have a model with support to output from input embeds (yet ;))
         # Note: the model must support generation from input embeddings
         model = AutoModelForCausalLM.from_pretrained("hf-internal-testing/tiny-random-gpt2").to(torch_device)
         tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-gpt2")

@@ -577,7 +577,7 @@ BART_GENERATION_EXAMPLE = r"""
     >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, return_tensors="pt")
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs["input_ids"], num_beams=2, min_length=0, max_length=20)
+    >>> summary_ids = model.output(inputs["input_ids"], num_beams=2, min_length=0, max_length=20)
     >>> tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     'PG&E scheduled the blackouts in response to forecasts for high winds amid dry conditions'
     ```
@@ -635,7 +635,7 @@ BART_INPUTS_DOCSTRING = r"""
             `decoder_input_ids` is provided, the model will create this tensor by shifting the `input_ids` to the right
             for denoising pre-training following the paper.
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read [`modeling_bart._prepare_decoder_attention_mask`]

@@ -291,9 +291,9 @@ class PeftCommonTester:
 
         inputs = self.prepare_inputs_for_testing()
 
-        # check if `generate` works
+        # check if `output` works
         _ = model.generate(**inputs)
 
         with self.assertRaises(TypeError):
-            # check if `generate` raises an error if no positional arguments are passed
+            # check if `output` raises an error if no positional arguments are passed
             _ = model.generate(inputs["input_ids"])

@@ -261,7 +261,7 @@ class TFViTMAEEmbeddings(tf.keras.layers.Layer):
             indices=ids_keep,
         )
 
-        # generate the binary mask: 0 is keep, 1 is remove
+        # output the binary mask: 0 is keep, 1 is remove
         # this hack is needed because TF's EagerTensors don't support
         # assignment
         mask_keep = tf.zeros((batch_size, len_keep))

@@ -647,7 +647,7 @@ WHISPER_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read
@@ -1183,11 +1183,11 @@ class WhisperModel(WhisperPreTrainedModel):
         if not getattr(self.config, "apply_spec_augment", True):
             return input_features
 
-        # generate indices & apply SpecAugment along time axis
+        # output indices & apply SpecAugment along time axis
         batch_size, hidden_size, sequence_length = input_features.size()
 
         if self.config.mask_time_prob > 0 and self.training:
-            # generate indices & apply SpecAugment along time axis
+            # output indices & apply SpecAugment along time axis
             mask_time_indices = _compute_mask_indices(
                 (batch_size, sequence_length),
                 mask_prob=self.config.mask_time_prob,
@@ -1200,7 +1200,7 @@ class WhisperModel(WhisperPreTrainedModel):
             input_features[mask_time_indices] = 0
 
         if self.config.mask_feature_prob > 0 and self.training:
-            # generate indices & apply SpecAugment along feature axis
+            # output indices & apply SpecAugment along feature axis
             mask_feature_indices = _compute_mask_indices(
                 (batch_size, hidden_size),
                 mask_prob=self.config.mask_feature_prob,
@@ -1397,7 +1397,7 @@ class WhisperForConditionalGeneration(WhisperPreTrainedModel):
         >>> inputs = processor(ds[0]["audio"]["array"], return_tensors="pt")
         >>> input_features = inputs.input_features
 
-        >>> generated_ids = model.generate(inputs=input_features)
+        >>> generated_ids = model.output(inputs=input_features)
 
         >>> transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
         >>> transcription
@@ -1472,7 +1472,7 @@ class WhisperForConditionalGeneration(WhisperPreTrainedModel):
 
         Most generation-controlling parameters are set in `generation_config` which, if not passed, will be set to the
         model's default generation configuration. You can override any `generation_config` by passing the corresponding
-        parameters to generate(), e.g. `.generate(inputs, num_beams=4, do_sample=True)`.
+        parameters to output(), e.g. `.output(inputs, num_beams=4, do_sample=True)`.
 
         For an overview of generation strategies and code examples, check out the [following
         guide](./generation_strategies).
@@ -1487,7 +1487,7 @@ class WhisperForConditionalGeneration(WhisperPreTrainedModel):
                 `input_ids`, `input_values`, `input_features`, or `pixel_values`.
             generation_config (`~generation.GenerationConfig`, *optional*):
                 The generation configuration to be used as base parametrization for the generation call. `**kwargs`
-                passed to generate matching the attributes of `generation_config` will override them. If
+                passed to output matching the attributes of `generation_config` will override them. If
                 `generation_config` is not provided, the default will be used, which had the following loading
                 priority: 1) from the `generation_config.json` model file, if it exists; 2) from the model
                 configuration. Please note that unspecified parameters will inherit [`~generation.GenerationConfig`]'s
@@ -1552,7 +1552,7 @@ class WhisperForConditionalGeneration(WhisperPreTrainedModel):
                 raise ValueError(
                     "You are trying to return timestamps, but the generation config is not properly set."
                     "Make sure to initialize the generation config with the correct attributes that are needed such as `no_timestamps_token_id`."
-                    "For more details on how to generate the approtiate config, refer to https://github.com/huggingface/transformers/issues/21878#issuecomment-1451902363"
+                    "For more details on how to output the approtiate config, refer to https://github.com/huggingface/transformers/issues/21878#issuecomment-1451902363"
                 )
 
             generation_config.return_timestamps = return_timestamps

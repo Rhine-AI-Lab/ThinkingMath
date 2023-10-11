@@ -284,7 +284,7 @@ class Swin2SRSelfAttention(nn.Module):
         )
         self.pretrained_window_size = pretrained_window_size
         self.logit_scale = nn.Parameter(torch.log(10 * torch.ones((num_heads, 1, 1))))
-        # mlp to generate continuous relative position bias
+        # mlp to output continuous relative position bias
         self.continuous_position_bias_mlp = nn.Sequential(
             nn.Linear(2, 512, bias=True), nn.ReLU(inplace=True), nn.Linear(512, num_heads, bias=False)
         )

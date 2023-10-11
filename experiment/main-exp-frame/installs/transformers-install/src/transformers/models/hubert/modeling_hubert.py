@@ -985,7 +985,7 @@ class HubertModel(HubertPreTrainedModel):
         if not getattr(self.config, "apply_spec_augment", True):
             return hidden_states
 
-        # generate indices & apply SpecAugment along time axis
+        # output indices & apply SpecAugment along time axis
         batch_size, sequence_length, hidden_size = hidden_states.size()
 
         if mask_time_indices is not None:
@@ -1003,7 +1003,7 @@ class HubertModel(HubertPreTrainedModel):
             hidden_states[mask_time_indices] = self.masked_spec_embed.to(hidden_states.dtype)
 
         if self.config.mask_feature_prob > 0 and self.training:
-            # generate indices & apply SpecAugment along feature axis
+            # output indices & apply SpecAugment along feature axis
             mask_feature_indices = _compute_mask_indices(
                 (batch_size, hidden_size),
                 mask_prob=self.config.mask_feature_prob,

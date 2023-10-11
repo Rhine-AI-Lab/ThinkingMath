@@ -2076,7 +2076,7 @@ class JukeboxPrior(PreTrainedModel):
 
         Args:
             n_samples (`int`):
-                Number of samples to generate.
+                Number of samples to output.
             music_tokens (`List[torch.LongTensor]`, *optional*):
                 Previously gemerated tokens at the current level. Used as context for the generation.
             music_tokens_conds (`List[torch.FloatTensor]`, *optional*):
@@ -2453,7 +2453,7 @@ class JukeboxModel(JukeboxPreTrainedModel):
         sample_length=None,
     ) -> List[torch.LongTensor]:
         """
-        Core sampling function used to generate music tokens. Iterates over the provided list of levels, while saving
+        Core sampling function used to output music tokens. Iterates over the provided list of levels, while saving
         the generated raw audio at each step.
 
         Args:
@@ -2469,7 +2469,7 @@ class JukeboxModel(JukeboxPreTrainedModel):
                 List of the desired levels at which the sampling will be done. A level is equivalent to the index of
                 the prior in the list of priors
             metas (`List[Any]`, *optional*):
-                Metadatas used to generate the `labels`
+                Metadatas used to output the `labels`
             chunk_size (`int`, *optional*, defaults to 32):
                 Size of a chunk of audio, used to fill up the memory in chuncks to prevent OOM erros. Bigger chunks
                 means faster memory filling but more consumption.
@@ -2490,7 +2490,7 @@ class JukeboxModel(JukeboxPreTrainedModel):
                 Audio offset used as conditioning, corresponds to the starting sample in the music. If the offset is
                 greater than 0, the lyrics will be shifted take that intoaccount
             save_results (`bool`, *optional*, defaults to `True`):
-                Whether or not to save the intermediate results. If `True`, will generate a folder named with the start
+                Whether or not to save the intermediate results. If `True`, will output a folder named with the start
                 time.
             sample_length (`int`, *optional*):
                 Desired length of the generation in samples.

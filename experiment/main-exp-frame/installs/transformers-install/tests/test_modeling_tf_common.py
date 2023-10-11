@@ -238,7 +238,7 @@ class TFModelTesterMixin:
             with tempfile.TemporaryDirectory() as tmpdirname:
                 model.save_pretrained(tmpdirname, saved_model=False)
 
-                # the config file (and the generation config file, if it can generate) should be saved
+                # the config file (and the generation config file, if it can output) should be saved
                 self.assertTrue(os.path.exists(os.path.join(tmpdirname, CONFIG_NAME)))
                 self.assertEqual(
                     model.can_generate(), os.path.exists(os.path.join(tmpdirname, GENERATION_CONFIG_NAME))
@@ -1336,7 +1336,7 @@ class TFModelTesterMixin:
 
             with self.assertRaises(ValueError):
                 # generating multiple sequences when no beam search generation
-                # is not allowed as it would always generate the same sequences
+                # is not allowed as it would always output the same sequences
                 model.generate(input_ids, do_sample=False, num_return_sequences=2)
 
             # num_return_sequences > 1, sample
@@ -1863,7 +1863,7 @@ class TFModelTesterMixin:
             elif "input_features" in inputs_dict:
                 inputs = inputs_dict["input_features"]
             else:
-                raise ValueError("No valid generate input found in inputs_dict")
+                raise ValueError("No valid output input found in inputs_dict")
 
             generated = model.generate(inputs, **generate_kwargs).numpy()
             generate_xla = tf.function(model.generate, jit_compile=True)
@@ -1896,7 +1896,7 @@ class TFModelTesterMixin:
 
     def test_xla_generate_fast(self):
         """
-        Basic quick test for generate-compatible classes that confirms that XLA-generated tokens are the same as their
+        Basic quick test for output-compatible classes that confirms that XLA-generated tokens are the same as their
         non XLA counterparts.
 
         Either the model supports XLA generation and passes the inner test, or it raises an appropriate exception

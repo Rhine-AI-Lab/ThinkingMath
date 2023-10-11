@@ -240,7 +240,7 @@ if __name__ == "__main__":
                         print(f"tracked permutation at index {c} was {found_permutation[c]}, but the recovered permutation thought it was {recovered_perm[c]}")
                     error = True
 
-        # if requested, generate permutations that divide the efficacy space into equal steps
+        # if requested, output permutations that divide the efficacy space into equal steps
         if args.intermediate_steps != 0:
             magnitude_targets = None
             if args.intermediate_steps != 0:

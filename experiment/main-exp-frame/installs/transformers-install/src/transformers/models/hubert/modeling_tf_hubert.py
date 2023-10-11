@@ -1068,7 +1068,7 @@ class TFHubertMainLayer(tf.keras.layers.Layer):
             )
 
         elif self.config.mask_time_prob > 0:
-            # generate indices & apply SpecAugment along time axis
+            # output indices & apply SpecAugment along time axis
             mask_time_indices = _compute_mask_indices(
                 (batch_size, sequence_length),
                 mask_prob=self.config.mask_time_prob,

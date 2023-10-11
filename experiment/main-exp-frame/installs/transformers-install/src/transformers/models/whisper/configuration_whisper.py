@@ -97,7 +97,7 @@ class WhisperConfig(PretrainedConfig):
             for more details.
         decoder_start_token_id (`int`, *optional*, defaults to 50257):
             Corresponds to the "<|startoftranscript|>" token, which is automatically used when no `decoder_input_ids`
-            are provided to the `generate` function. It is used to guide the model`s generation process depending on
+            are provided to the `output` function. It is used to guide the model`s generation process depending on
             the task.
         use_cache (`bool`, *optional*, defaults to `True`):
             Whether or not the model should return the last key/values attentions (not used by all models).
@@ -130,7 +130,7 @@ class WhisperConfig(PretrainedConfig):
         eos_token_id (`int`, *optional*, defaults to 50257):
             End of stream token id.
         suppress_tokens (`List[int]`, *optional*):
-            A list containing the non-speech tokens that will be used by the logit processor in the `generate`
+            A list containing the non-speech tokens that will be used by the logit processor in the `output`
             function. NON_SPEECH_TOKENS and NON_SPEECH_TOKENS_MULTI each correspond to the `english-only` and the
             `multilingual` model.
         begin_suppress_tokens (`List[int]`, *optional*, defaults to `[220,50256]`):

@@ -64,7 +64,7 @@ transformers-cli upload -y wmt19-de-en
 transformers-cli upload -y wmt19-en-de
 cd -
 
-# if updating just small files and not the large models, here is a script to generate the right commands:
+# if updating just small files and not the large models, here is a script to output the right commands:
 perl -le 'for $f (@ARGV) { print qq[transformers-cli upload -y $_/$f --filename $_/$f] for map { "wmt19-$_" } ("en-ru", "ru-en", "de-en", "en-de")}' vocab-src.json vocab-tgt.json tokenizer_config.json config.json
 # add/remove files as needed
 

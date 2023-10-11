@@ -328,7 +328,7 @@ class GitModelTester:
         model.to(torch_device)
         model.eval()
 
-        # generate
+        # output
         generated_ids = model.generate(
             input_ids,
             attention_mask=input_mask,
@@ -346,7 +346,7 @@ class GitModelTester:
         model.to(torch_device)
         model.eval()
 
-        # generate
+        # output
         generated_ids = model.generate(
             input_ids=None,  # captioning -> no input_ids
             attention_mask=None,

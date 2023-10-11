@@ -191,7 +191,7 @@ class TFLayoutLMv3TextEmbeddings(tf.keras.layers.Layer):
 
     def create_position_ids_from_inputs_embeds(self, inputs_embds: tf.Tensor) -> tf.Tensor:
         """
-        We are provided embeddings directly. We cannot infer which are padded, so just generate sequential position
+        We are provided embeddings directly. We cannot infer which are padded, so just output sequential position
         ids.
         """
         input_shape = tf.shape(inputs_embds)

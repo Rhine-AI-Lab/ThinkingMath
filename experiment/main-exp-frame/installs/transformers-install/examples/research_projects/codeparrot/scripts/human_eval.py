@@ -35,7 +35,7 @@ class TokenizedDataset(IterableDataset):
     def __iter__(self):
         prompts = []
         for task in range(self.n_tasks):
-            # without strip, the model generate commented codes ...
+            # without strip, the model output commented codes ...
             prompts.append(self.tokenizer.eos_token + self.dataset[task]["prompt"].strip())
         outputs = self.tokenizer(prompts, padding=True, return_tensors="pt")
         for task in range(self.n_tasks):

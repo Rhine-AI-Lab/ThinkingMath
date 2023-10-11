@@ -481,7 +481,7 @@ class TFSpeech2TextModelTest(TFModelTesterMixin, PipelineTesterMixin, unittest.T
 
             with self.assertRaises(ValueError):
                 # generating multiple sequences when no beam search generation
-                # is not allowed as it would always generate the same sequences
+                # is not allowed as it would always output the same sequences
                 model.generate(input_features, do_sample=False, num_return_sequences=2)
 
             # num_return_sequences > 1, sample

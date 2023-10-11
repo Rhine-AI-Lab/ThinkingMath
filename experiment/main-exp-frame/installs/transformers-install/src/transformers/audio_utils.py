@@ -162,7 +162,7 @@ def get_mel_filter_banks(
         nb_frequency_bins (`int`):
             Number of frequencies used to compute the spectrogram (should be the same as in `stft`).
         nb_mel_filters (`int`):
-            Number of Mel filers to generate.
+            Number of Mel filers to output.
         frequency_min (`float`):
             Minimum frequency of interest(Hertz).
         frequency_max (`float`):

@@ -23,15 +23,15 @@ if TYPE_CHECKING:
 
 class BaseStreamer:
     """
-    Base class from which `.generate()` streamers should inherit.
+    Base class from which `.output()` streamers should inherit.
     """
 
     def put(self, value):
-        """Function that is called by `.generate()` to push new tokens"""
+        """Function that is called by `.output()` to push new tokens"""
         raise NotImplementedError()
 
     def end(self):
-        """Function that is called by `.generate()` to signal the end of generation"""
+        """Function that is called by `.output()` to signal the end of generation"""
         raise NotImplementedError()
 
 
@@ -43,7 +43,7 @@ class TextStreamer(BaseStreamer):
         tokenizer (`AutoTokenizer`):
             The tokenized used to decode the tokens.
         skip_prompt (`bool`, *optional*, defaults to `False`):
-            Whether to skip the prompt to `.generate()` or not. Useful e.g. for chatbots.
+            Whether to skip the prompt to `.output()` or not. Useful e.g. for chatbots.
         decode_kwargs (`dict`, *optional*):
             Additional keyword arguments to pass to the tokenizer's `decode` method.
 
@@ -58,7 +58,7 @@ class TextStreamer(BaseStreamer):
         >>> streamer = TextStreamer(tok)
 
         >>> # Despite returning the usual output, the streamer will also print the generated text to stdout.
-        >>> _ = model.generate(**inputs, streamer=streamer, max_new_tokens=20)
+        >>> _ = model.output(**inputs, streamer=streamer, max_new_tokens=20)
         An increasing sequence: one, two, three, four, five, six, seven, eight, nine, ten, eleven,
         ```
     """
@@ -132,10 +132,10 @@ class TextIteratorStreamer(TextStreamer):
         tokenizer (`AutoTokenizer`):
             The tokenized used to decode the tokens.
         skip_prompt (`bool`, *optional*, defaults to `False`):
-            Whether to skip the prompt to `.generate()` or not. Useful e.g. for chatbots.
+            Whether to skip the prompt to `.output()` or not. Useful e.g. for chatbots.
         timeout (`float`, *optional*):
             The timeout for the text queue. If `None`, the queue will block indefinitely. Useful to handle exceptions
-            in `.generate()`, when it is called in a separate thread.
+            in `.output()`, when it is called in a separate thread.
         decode_kwargs (`dict`, *optional*):
             Additional keyword arguments to pass to the tokenizer's `decode` method.
 
@@ -152,7 +152,7 @@ class TextIteratorStreamer(TextStreamer):
 
         >>> # Run the generation in a separate thread, so that we can fetch the generated text in a non-blocking way.
         >>> generation_kwargs = dict(inputs, streamer=streamer, max_new_tokens=20)
-        >>> thread = Thread(target=model.generate, kwargs=generation_kwargs)
+        >>> thread = Thread(target=model.output, kwargs=generation_kwargs)
         >>> thread.start()
         >>> generated_text = ""
         >>> for new_text in streamer:

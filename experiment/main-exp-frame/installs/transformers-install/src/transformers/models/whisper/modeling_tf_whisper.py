@@ -534,7 +534,7 @@ WHISPER_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`tf.Tensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read
@@ -1283,7 +1283,7 @@ class TFWhisperForConditionalGeneration(TFWhisperPreTrainedModel, TFCausalLangua
         >>> inputs = processor(ds[0]["audio"]["array"], return_tensors="tf")
         >>> input_features = inputs.input_features
 
-        >>> generated_ids = model.generate(input_features=input_features)
+        >>> generated_ids = model.output(input_features=input_features)
 
         >>> transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
         >>> transcription

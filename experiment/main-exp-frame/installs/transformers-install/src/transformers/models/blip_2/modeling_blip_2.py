@@ -368,7 +368,7 @@ BLIP_2_TEXT_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [T5
             Training](./t5#training).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         output_attentions (`bool`, *optional*):
             Whether or not to return the attentions tensors of all attention layers. See `attentions` under returned
@@ -409,7 +409,7 @@ BLIP_2_INPUTS_DOCSTRING = r"""
             [`PreTrainedTokenizer.__call__`] for details. [What are decoder input IDs?](../glossary#decoder-input-ids)
 
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             Only relevant in case an encoder-decoder language model (like T5) is used.
@@ -1632,7 +1632,7 @@ class Blip2ForConditionalGeneration(Blip2PreTrainedModel):
             )
 
         if hasattr(self.language_model, "_hf_hook"):
-            self.language_model._hf_hook.io_same_device = True  # For `generate` compatibility
+            self.language_model._hf_hook.io_same_device = True  # For `output` compatibility
 
     @add_start_docstrings_to_model_forward(BLIP_2_INPUTS_DOCSTRING)
     @replace_return_docstrings(output_type=Blip2ForConditionalGenerationModelOutput, config_class=Blip2VisionConfig)
@@ -1674,7 +1674,7 @@ class Blip2ForConditionalGeneration(Blip2PreTrainedModel):
 
         >>> inputs = processor(images=image, return_tensors="pt").to(device, torch.float16)
 
-        >>> generated_ids = model.generate(**inputs)
+        >>> generated_ids = model.output(**inputs)
         >>> generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         >>> print(generated_text)
         two cats laying on a couch
@@ -1702,7 +1702,7 @@ class Blip2ForConditionalGeneration(Blip2PreTrainedModel):
         >>> prompt = "Question: how many cats are there? Answer:"
         >>> inputs = processor(images=image, text=prompt, return_tensors="pt").to(device, torch.float16)
 
-        >>> generated_ids = model.generate(**inputs)
+        >>> generated_ids = model.output(**inputs)
         >>> generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         >>> print(generated_text)
         two
@@ -1803,7 +1803,7 @@ class Blip2ForConditionalGeneration(Blip2PreTrainedModel):
         **generate_kwargs,
     ) -> torch.LongTensor:
         """
-        Overrides `generate` function to be able to use the model as a conditional generator.
+        Overrides `output` function to be able to use the model as a conditional generator.
 
         Args:
             pixel_values (`torch.FloatTensor` of shape (batch_size, num_channels, height, width)):

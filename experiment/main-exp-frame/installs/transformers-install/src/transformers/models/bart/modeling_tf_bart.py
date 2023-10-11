@@ -566,7 +566,7 @@ BART_GENERATION_EXAMPLE = r"""
     >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, return_tensors="tf")
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs["input_ids"], num_beams=4, max_length=5)
+    >>> summary_ids = model.output(inputs["input_ids"], num_beams=4, max_length=5)
     >>> print(tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False))
     ```
 

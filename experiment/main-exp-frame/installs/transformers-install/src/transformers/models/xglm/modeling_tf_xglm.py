@@ -103,7 +103,7 @@ def _create_position_ids_from_inputs_embeds(
 ) -> tf.Tensor:
     """
     Args:
-    We are provided embeddings directly. We cannot infer which are padded so just generate sequential position ids.
+    We are provided embeddings directly. We cannot infer which are padded so just output sequential position ids.
         inputs_embeds: tf.Tensor
     Returns: tf.Tensor
     """
@@ -876,7 +876,7 @@ class TFXGLMForCausalLM(TFXGLMPreTrainedModel, TFCausalLanguageModelingLoss):
             name="lm_head",
         )
 
-        # TODO (Joao): investigate why XGLM has numerical issues in XLA generate
+        # TODO (Joao): investigate why XGLM has numerical issues in XLA output
         self.supports_xla_generation = False
 
     def get_output_embeddings(self):

@@ -1160,7 +1160,7 @@ PIX2STRUCT_TEXT_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [Pix2StructText
             Training](./t5#training).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.FloatTensor` of shape `(num_heads,)` or `(num_layers, num_heads)`, *optional*):
             Mask to nullify selected heads of the self-attention modules in the encoder. Mask values selected in `[0,
@@ -1250,7 +1250,7 @@ PIX2STRUCT_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [Pix2StructText
             Training](./t5#training).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.FloatTensor` of shape `(num_heads,)` or `(num_layers, num_heads)`, *optional*):
             Mask to nullify selected heads of the self-attention modules in the encoder. Mask values selected in `[0,
@@ -1788,7 +1788,7 @@ class Pix2StructForConditionalGeneration(Pix2StructPreTrainedModel):
         >>> inputs = processor(images=image, text=conditional_text, return_tensors="pt", add_special_tokens=True)
 
         >>> # forward pass
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.batch_decode(outputs, skip_special_tokens=True))
         ['A stop sign the street with a sign that says yes']
         ```"""

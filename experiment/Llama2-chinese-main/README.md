@@ -78,7 +78,7 @@ tail -f train.log
 微调一轮后，会产生peft增量模型，在output/model下，用以下命令在客户端交互测试。由于未采用流模式，一次性生成后，才能看到结果，所以速度较慢。
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python generate.py \
+CUDA_VISIBLE_DEVICES=0 python output.py \
     --base_model './models/NousResearch/Llama-2-7b-hf' \
     --lora_weights './output/model' \
     --load_8bit 

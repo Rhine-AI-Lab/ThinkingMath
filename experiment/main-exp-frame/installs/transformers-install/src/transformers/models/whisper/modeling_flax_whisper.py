@@ -96,7 +96,7 @@ WHISPER_INPUTS_DOCSTRING = r"""
             [What are decoder input IDs?](../glossary#decoder-input-ids) Whisper uses the `decoder_start_token_id` as
             the starting token for `decoder_input_ids` generation.
         decoder_attention_mask (`numpy.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default. If you want to change padding behavior, you should modify to your needs. See diagram 1
             in [the paper](https://arxiv.org/abs/1910.13461) for more information on the default strategy.
         position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
@@ -151,7 +151,7 @@ WHISPER_DECODE_INPUTS_DOCSTRING = r"""
            Whisper does not support masking of the `input_features`, this argument is preserved for compatibility,
             but it is not used. By default the silence in the input log mel spectrogram are ignored.
         decoder_attention_mask (`numpy.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default. If you want to change padding behavior, you should modify to your needs. See diagram 1
             in [the paper](https://arxiv.org/abs/1910.13461) for more information on the default strategy.
         decoder_position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
@@ -1455,7 +1455,7 @@ FLAX_WHISPER_CONDITIONAL_GENERATION_DOCSTRING = r"""
     >>> ds = load_dataset("hf-internal-testing/librispeech_asr_dummy", "clean", split="validation")
     >>> inputs = processor(ds[0]["audio"]["array"], return_tensors="np")
     >>> input_features = inputs.input_features
-    >>> generated_ids = model.generate(input_ids=input_features)
+    >>> generated_ids = model.output(input_ids=input_features)
     >>> transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
     >>> transcription
     ' Mr. Quilter is the apostle of the middle classes, and we are glad to welcome his gospel.'

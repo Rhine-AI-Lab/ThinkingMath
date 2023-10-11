@@ -14,8 +14,8 @@ from maker.easy_divide import make_data_divide
 size = 12000
 
 print('Writing...')
-file = open('../generate/data_example.txt', 'w', encoding='utf-8')
-jl = jsonlines.open('../generate/think_math_mix_12k_v1.jsonl', 'w')
+file = open('../output/data_example.txt', 'w', encoding='utf-8')
+jl = jsonlines.open('../output/think_math_mix_12k_v1.jsonl', 'w')
 
 i = 0
 while i < size:

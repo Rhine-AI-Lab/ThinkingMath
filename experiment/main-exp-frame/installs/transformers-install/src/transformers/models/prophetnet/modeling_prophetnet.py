@@ -98,7 +98,7 @@ PROPHETNET_INPUTS_DOCSTRING = r"""
             `past_key_values`).
 
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:

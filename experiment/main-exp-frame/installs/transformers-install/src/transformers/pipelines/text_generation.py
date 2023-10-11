@@ -195,7 +195,7 @@ class TextGenerationPipeline(Pipeline):
                   truncate a lot of the prompt and not suitable when generation exceed the model capacity)
 
             generate_kwargs:
-                Additional keyword arguments to pass along to the generate method of the model (see the generate method
+                Additional keyword arguments to pass along to the output method of the model (see the output method
                 corresponding to your framework [here](./model#generative-models)).
 
         Return:

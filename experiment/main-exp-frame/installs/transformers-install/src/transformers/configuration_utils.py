@@ -117,32 +117,32 @@ class PretrainedConfig(PushToHubMixin):
         > Parameters for sequence generation
 
         max_length (`int`, *optional*, defaults to 20):
-            Maximum length that will be used by default in the `generate` method of the model.
+            Maximum length that will be used by default in the `output` method of the model.
         min_length (`int`, *optional*, defaults to 10):
-            Minimum length that will be used by default in the `generate` method of the model.
+            Minimum length that will be used by default in the `output` method of the model.
         do_sample (`bool`, *optional*, defaults to `False`):
-            Flag that will be used by default in the `generate` method of the model. Whether or not to use sampling ;
+            Flag that will be used by default in the `output` method of the model. Whether or not to use sampling ;
             use greedy decoding otherwise.
         early_stopping (`bool`, *optional*, defaults to `False`):
-            Flag that will be used by default in the `generate` method of the model. Whether to stop the beam search
+            Flag that will be used by default in the `output` method of the model. Whether to stop the beam search
             when at least `num_beams` sentences are finished per batch or not.
         num_beams (`int`, *optional*, defaults to 1):
-            Number of beams for beam search that will be used by default in the `generate` method of the model. 1 means
+            Number of beams for beam search that will be used by default in the `output` method of the model. 1 means
             no beam search.
         num_beam_groups (`int`, *optional*, defaults to 1):
             Number of groups to divide `num_beams` into in order to ensure diversity among different groups of beams
-            that will be used by default in the `generate` method of the model. 1 means no group beam search.
+            that will be used by default in the `output` method of the model. 1 means no group beam search.
         diversity_penalty (`float`, *optional*, defaults to 0.0):
-            Value to control diversity for group beam search. that will be used by default in the `generate` method of
+            Value to control diversity for group beam search. that will be used by default in the `output` method of
             the model. 0 means no diversity penalty. The higher the penalty, the more diverse are the outputs.
         temperature (`float`, *optional*, defaults to 1):
-            The value used to module the next token probabilities that will be used by default in the `generate` method
+            The value used to module the next token probabilities that will be used by default in the `output` method
             of the model. Must be strictly positive.
         top_k (`int`, *optional*, defaults to 50):
             Number of highest probability vocabulary tokens to keep for top-k-filtering that will be used by default in
-            the `generate` method of the model.
+            the `output` method of the model.
         top_p (`float`, *optional*, defaults to 1):
-            Value that will be used by default in the `generate` method of the model for `top_p`. If set to float < 1,
+            Value that will be used by default in the `output` method of the model for `top_p`. If set to float < 1,
             only the most probable tokens with probabilities that add up to `top_p` or higher are kept for generation.
         typical_p (`float`, *optional*, defaults to 1):
             Local typicality measures how similar the conditional probability of predicting a target token next is to
@@ -151,7 +151,7 @@ class PretrainedConfig(PushToHubMixin):
             add up to `typical_p` or higher are kept for generation. See [this
             paper](https://arxiv.org/pdf/2202.00666.pdf) for more details.
         repetition_penalty (`float`, *optional*, defaults to 1):
-            Parameter for repetition penalty that will be used by default in the `generate` method of the model. 1.0
+            Parameter for repetition penalty that will be used by default in the `output` method of the model. 1.0
             means no penalty.
         length_penalty (`float`, *optional*, defaults to 1):
             Exponential penalty to the length that is used with beam-based generation. It is applied as an exponent to
@@ -159,18 +159,18 @@ class PretrainedConfig(PushToHubMixin):
             likelihood of the sequence (i.e. negative), `length_penalty` > 0.0 promotes longer sequences, while
             `length_penalty` < 0.0 encourages shorter sequences.
         no_repeat_ngram_size (`int`, *optional*, defaults to 0) -- Value that will be used by default in the
-            `generate` method of the model for `no_repeat_ngram_size`. If set to int > 0, all ngrams of that size can
+            `output` method of the model for `no_repeat_ngram_size`. If set to int > 0, all ngrams of that size can
             only occur once.
         encoder_no_repeat_ngram_size (`int`, *optional*, defaults to 0) -- Value that will be used by
-            default in the `generate` method of the model for `encoder_no_repeat_ngram_size`. If set to int > 0, all
+            default in the `output` method of the model for `encoder_no_repeat_ngram_size`. If set to int > 0, all
             ngrams of that size that occur in the `encoder_input_ids` cannot occur in the `decoder_input_ids`.
         bad_words_ids (`List[int]`, *optional*):
-            List of token ids that are not allowed to be generated that will be used by default in the `generate`
+            List of token ids that are not allowed to be generated that will be used by default in the `output`
             method of the model. In order to get the tokens of the words that should not appear in the generated text,
             use `tokenizer.encode(bad_word, add_prefix_space=True)`.
         num_return_sequences (`int`, *optional*, defaults to 1):
             Number of independently computed returned sequences for each element in the batch that will be used by
-            default in the `generate` method of the model.
+            default in the `output` method of the model.
         output_scores (`bool`, *optional*, defaults to `False`):
             Whether the model should return the logits when used for generation.
         return_dict_in_generate (`bool`, *optional*, defaults to `False`):

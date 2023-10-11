@@ -391,7 +391,7 @@ class Autotuner:
             exp_config[TRAIN_BATCH_SIZE] = mbs * gas * \
                 self.exp_num_gpus * self.exp_num_nodes // self.mp_size()
             exp = {}
-            # generate the expr name
+            # output the expr name
             exp_name = canonical_name(exp_config, tuning_keys, prefix)
             exp['name'] = exp_name
             exp[DS_CONFIG] = exp_config

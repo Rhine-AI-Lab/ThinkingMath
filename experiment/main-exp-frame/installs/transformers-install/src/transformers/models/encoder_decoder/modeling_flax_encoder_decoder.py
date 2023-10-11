@@ -108,7 +108,7 @@ ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             created outside of the model by shifting the `labels` to the right, replacing -100 by the `pad_token_id`
             and prepending them with the `decoder_start_token_id`.
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each input sequence tokens in the position embeddings. Selected in the range `[0,
@@ -184,7 +184,7 @@ ENCODER_DECODER_DECODE_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         decoder_position_ids (`numpy.ndarray` of shape `(batch_size, sequence_length)`, *optional*):
             Indices of positions of each decoder input sequence tokens in the position embeddings. Selected in the
@@ -666,7 +666,7 @@ class FlaxEncoderDecoderModel(FlaxPreTrainedModel):
         >>> model.config.eos_token_id = model.config.decoder.eos_token_id
         >>> model.config.pad_token_id = model.config.eos_token_id
 
-        >>> sequences = model.generate(input_ids, num_beams=4, max_length=12).sequences
+        >>> sequences = model.output(input_ids, num_beams=4, max_length=12).sequences
 
         >>> summary = tokenizer_output.batch_decode(sequences, skip_special_tokens=True)[0]
         >>> assert summary == "SAS Alpha Epsilon suspended Sigma Alpha Epsilon members"

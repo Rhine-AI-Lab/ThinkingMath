@@ -96,7 +96,7 @@ SPEECH_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             For training, `decoder_input_ids` are automatically created by the model by shifting the `labels` to the
             right, replacing -100 by the `pad_token_id` and prepending them with the `decoder_start_token_id`.
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         encoder_outputs (`tuple(torch.FloatTensor)`, *optional*):
             This tuple must consist of (`last_hidden_state`, *optional*: `hidden_states`, *optional*: `attentions`)
@@ -476,7 +476,7 @@ class SpeechEncoderDecoderModel(PreTrainedModel):
 
         >>> input_values = processor(ds[0]["audio"]["array"], return_tensors="pt").input_values
         >>> # Inference: Translate English speech to German
-        >>> generated = model.generate(input_values)
+        >>> generated = model.output(input_values)
         >>> decoded = processor.batch_decode(generated, skip_special_tokens=True)[0]
         >>> decoded
         'Mr. Quilter ist der Apostel der Mittelschicht und wir freuen uns, sein Evangelium willkommen heißen zu können.'

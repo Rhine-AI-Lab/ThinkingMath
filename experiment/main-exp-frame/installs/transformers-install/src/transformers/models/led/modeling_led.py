@@ -1534,7 +1534,7 @@ LED_GENERATION_EXAMPLE = r"""
     >>> global_attention_mask[:, 0] = 1
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs, global_attention_mask=global_attention_mask, num_beams=3, max_length=32)
+    >>> summary_ids = model.output(inputs, global_attention_mask=global_attention_mask, num_beams=3, max_length=32)
     >>> print(tokenizer.decode(summary_ids[0], skip_special_tokens=True, clean_up_tokenization_spaces=True))
     ```
 """
@@ -1567,7 +1567,7 @@ LED_INPUTS_DOCSTRING = r"""
             LED uses the `eos_token_id` as the starting token for `decoder_input_ids` generation. If `past_key_values`
             is used, optionally only the last `decoder_input_ids` have to be input (see `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read [`modeling_led._prepare_decoder_inputs`] and modify
@@ -2420,7 +2420,7 @@ class LEDForConditionalGeneration(LEDPreTrainedModel):
         >>> model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
         >>> input_ids = tokenizer([TXT], return_tensors="pt")["input_ids"]
 
-        >>> prediction = model.generate(input_ids)[0]
+        >>> prediction = model.output(input_ids)[0]
         >>> print(tokenizer.decode(prediction, skip_special_tokens=True))
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict

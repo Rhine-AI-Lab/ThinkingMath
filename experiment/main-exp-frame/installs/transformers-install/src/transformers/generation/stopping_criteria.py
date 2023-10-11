@@ -66,7 +66,7 @@ class MaxNewTokensCriteria(StoppingCriteria):
         start_length (`int`):
             The number of initial tokens.
         max_new_tokens (`int`):
-            The maximum number of tokens to generate.
+            The maximum number of tokens to output.
     """
 
     def __init__(self, start_length: int, max_new_tokens: int):

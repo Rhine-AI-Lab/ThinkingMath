@@ -41,7 +41,7 @@ TF_LOGITS_PROCESSOR_INPUTS_DOCSTRING = r"""
             search or log softmax for each vocabulary token when using beam search.
         cur_len (`int`):
             The current length of valid input sequence tokens. In the TF implementation, the input_ids' sequence length
-            is the maximum length generate can produce, and we need to know which of its tokens are valid.
+            is the maximum length output can produce, and we need to know which of its tokens are valid.
         kwargs:
             Additional logits processor specific kwargs.
 
@@ -505,7 +505,7 @@ class TFForcedEOSTokenLogitsProcessor(TFLogitsProcessor):
 
 class TFSuppressTokensAtBeginLogitsProcessor(TFLogitsProcessor):
     r"""
-    [`TFSuppressTokensAtBeginLogitsProcessor`] suppresses a list of tokens as soon as the `generate` function starts
+    [`TFSuppressTokensAtBeginLogitsProcessor`] suppresses a list of tokens as soon as the `output` function starts
     generating using `begin_index` tokens. This should ensure that the tokens defined by `begin_suppress_tokens` at not
     sampled at the begining of the generation.
     """

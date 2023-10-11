@@ -198,7 +198,7 @@ class OpenAIGPTModelTest(ModelTesterMixin, GenerationTesterMixin, PipelineTester
     )
     all_generative_model_classes = (
         (OpenAIGPTLMHeadModel,) if is_torch_available() else ()
-    )  # TODO (PVP): Add Double HeadsModel when generate() function is changed accordingly
+    )  # TODO (PVP): Add Double HeadsModel when output() function is changed accordingly
     pipeline_model_mapping = (
         {
             "feature-extraction": OpenAIGPTModel,

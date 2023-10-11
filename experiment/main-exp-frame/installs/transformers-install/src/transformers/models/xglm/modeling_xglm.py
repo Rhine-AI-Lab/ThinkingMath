@@ -220,7 +220,7 @@ class XGLMSinusoidalPositionalEmbedding(nn.Module):
 
     def create_position_ids_from_inputs_embeds(self, inputs_embeds, past_key_values_length):
         """
-        We are provided embeddings directly. We cannot infer which are padded so just generate sequential position ids.
+        We are provided embeddings directly. We cannot infer which are padded so just output sequential position ids.
 
         Args:
             inputs_embeds: torch.Tensor

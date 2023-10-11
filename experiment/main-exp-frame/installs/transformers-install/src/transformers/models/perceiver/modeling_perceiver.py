@@ -1846,7 +1846,7 @@ class PerceiverForMultimodalAutoencoding(PerceiverPreTrainedModel):
             config,
             # Autoencoding, don't pass inputs to the queries.
             concat_preprocessed_input=False,
-            # Modality specific decoders are used ONLY to generate queries.
+            # Modality specific decoders are used ONLY to output queries.
             # All modalties are decoded together using a unified decoder.
             modalities={
                 "audio": PerceiverBasicDecoder(

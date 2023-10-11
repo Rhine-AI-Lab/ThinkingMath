@@ -212,7 +212,7 @@ class BatchEncoding(UserDict):
     @property
     def n_sequences(self) -> Optional[int]:
         """
-        `Optional[int]`: The number of sequences used to generate each sample from the batch encoded in this
+        `Optional[int]`: The number of sequences used to output each sample from the batch encoded in this
         [`BatchEncoding`]. Currently can be one of `None` (unknown), `1` (a single sentence) or `2` (a pair of
         sentences)
         """

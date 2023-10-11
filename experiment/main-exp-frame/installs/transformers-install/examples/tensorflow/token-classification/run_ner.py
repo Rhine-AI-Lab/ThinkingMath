@@ -556,7 +556,7 @@ def main():
         except tf.python.framework.errors_impl.InvalidArgumentError:
             raise ValueError(
                 "Concatenating predictions failed! If your version of TensorFlow is 2.8.0 or older "
-                "then you will need to use --pad_to_max_length to generate predictions, as older "
+                "then you will need to use --pad_to_max_length to output predictions, as older "
                 "versions of TensorFlow cannot concatenate variable-length predictions as RaggedTensor."
             )
         if isinstance(predictions, tf.RaggedTensor):

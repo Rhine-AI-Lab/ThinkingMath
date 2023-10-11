@@ -97,14 +97,14 @@ def test_cuda_rng_tracker(tensor_model_parallel_size):
     size = [12, 21]
     tensor = get_accelerator().FloatTensor(size)
 
-    # Set to seed_1 and generate two tensors.
+    # Set to seed_1 and output two tensors.
     get_accelerator().manual_seed(seed_1)
     torch.randn(size, out=tensor)
     target_11 = tensor.clone()
     torch.randn(size, out=tensor)
     target_12 = tensor.clone()
 
-    # Set to seed_2 and generate two tensors.
+    # Set to seed_2 and output two tensors.
     get_accelerator().manual_seed(seed_2)
     torch.randn(size, out=tensor)
     target_21 = tensor.clone()

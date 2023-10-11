@@ -1015,7 +1015,7 @@ T5_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`tf.Tensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`tf.Tensor` of shape `(num_heads,)` or `(num_layers, num_heads)`, *optional*):
             Mask to nullify selected heads of the self-attention modules in the encoder. Mask values selected in `[0,
@@ -1379,7 +1379,7 @@ class TFT5ForConditionalGeneration(TFT5PreTrainedModel, TFCausalLanguageModeling
         >>> inputs = tokenizer(
         ...     "summarize: studies have shown that owning a dog is good for you", return_tensors="tf"
         ... ).input_ids  # Batch size 1
-        >>> outputs = model.generate(inputs)
+        >>> outputs = model.output(inputs)
         >>> print(tokenizer.decode(outputs[0], skip_special_tokens=True))
         >>> # studies have shown that owning a dog is good for you
         ```"""

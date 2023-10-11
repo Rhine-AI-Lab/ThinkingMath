@@ -235,5 +235,5 @@ class PerceiverOnnxConfig(OnnxConfig):
             return inputs
         else:
             raise ValueError(
-                "Unable to generate dummy inputs for the model. Please provide a tokenizer or a preprocessor."
+                "Unable to output dummy inputs for the model. Please provide a tokenizer or a preprocessor."
             )

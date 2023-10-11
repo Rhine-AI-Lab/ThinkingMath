@@ -1,5 +1,5 @@
 """
-Framework agnostic tests for generate()-related methods.
+Framework agnostic tests for output()-related methods.
 """
 
 import numpy as np
@@ -409,7 +409,7 @@ class GenerationIntegrationTestsMixin:
         articles = ["Timberlake", "Jessica Biel, welcome to parenthood among other things"]
         tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-bart")
         # need extreme generation values here to force this test
-        # to fail when `attention_mask` is not correctly treated in generate
+        # to fail when `attention_mask` is not correctly treated in output
         model = model_cls.from_pretrained(
             "hf-internal-testing/tiny-random-bart", max_length=50, num_beams=5, num_return_sequences=5
         )
@@ -440,7 +440,7 @@ class GenerationIntegrationTestsMixin:
         return_tensors = self.framework_dependent_parameters["return_tensors"]
         is_pt = not model_cls.__name__.startswith("TF")
 
-        article = """I need input_ids to generate"""
+        article = """I need input_ids to output"""
         tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-gpt2")
         model = model_cls.from_pretrained("hf-internal-testing/tiny-random-gpt2", max_length=15)
         input_ids = tokenizer(article, return_tensors=return_tensors).input_ids
@@ -484,7 +484,7 @@ class GenerationIntegrationTestsMixin:
         model_cls = self.framework_dependent_parameters["AutoModelForCausalLM"]
         return_tensors = self.framework_dependent_parameters["return_tensors"]
 
-        article = """I need input_ids to generate"""
+        article = """I need input_ids to output"""
         tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-gpt2")
         model = model_cls.from_pretrained("hf-internal-testing/tiny-random-gpt2", max_length=10)
         input_ids = tokenizer(article, return_tensors=return_tensors).input_ids
@@ -495,7 +495,7 @@ class GenerationIntegrationTestsMixin:
         model_cls = self.framework_dependent_parameters["AutoModelForSeq2SeqLM"]
         return_tensors = self.framework_dependent_parameters["return_tensors"]
 
-        article = """I need input_ids to generate"""
+        article = """I need input_ids to output"""
         tokenizer = AutoTokenizer.from_pretrained("hf-internal-testing/tiny-random-bart")
         model = model_cls.from_pretrained("hf-internal-testing/tiny-random-bart", max_length=10)
         input_ids = tokenizer(article, return_tensors=return_tensors).input_ids

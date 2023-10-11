@@ -117,7 +117,7 @@ BLENDERBOT_SMALL_INPUTS_DOCSTRING = r"""
             `decoder_input_ids` is provided, the model will create this tensor by shifting the `input_ids` to the right
             for denoising pre-training following the paper.
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should modify to your needs. See diagram 1 in [the
@@ -194,7 +194,7 @@ BLENDERBOT_SMALL_DECODE_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should modify to your needs. See diagram 1 in [the
@@ -1490,7 +1490,7 @@ FLAX_BLENDERBOT_SMALL_CONDITIONAL_GENERATION_DOCSTRING = """
     >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, return_tensors="np")
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs["input_ids"]).sequences
+    >>> summary_ids = model.output(inputs["input_ids"]).sequences
     >>> print(tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False))
     ```
 

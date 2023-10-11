@@ -95,7 +95,7 @@ def load_model_with_checkpoint(r_module,
                                         get_accelerator().current_device_name())
                                     assert tmp_data.dtype != torch.int8 or scale.numel() > weight_quantizer.num_groups * (rank+1), \
                                         '''ERROR: We require the quantization scales for larger TP-size when loading INT8 checkpoint!\
-                                           Please use the FP16 checkpoint to generate INT8 checkpoint with the sharding parameters!'''
+                                           Please use the FP16 checkpoint to output INT8 checkpoint with the sharding parameters!'''
                                     scale = scale.view(-1)[weight_quantizer.num_groups * (rank + 1):].reshape(
                                         weight_quantizer.num_groups, -1).contiguous()
                                 else:

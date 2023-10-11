@@ -680,7 +680,7 @@ def main():
         mean_noise_span_length=data_args.mean_noise_span_length,
     )
 
-    # Main data processing function that will concatenate all texts from our dataset and generate chunks of expanded_inputs_length.
+    # Main data processing function that will concatenate all texts from our dataset and output chunks of expanded_inputs_length.
     def group_texts(examples):
         # Concatenate all texts.
         concatenated_examples = {k: list(chain(*examples[k])) for k in examples.keys()}

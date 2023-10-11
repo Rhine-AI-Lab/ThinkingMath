@@ -143,7 +143,7 @@ class Eigenvalue(object):
         return ev_dict
 
     # 1. Map all eigenvalues to [0, 1.0].
-    # 2. Some layers can't generate valid eigenvalues on fp16 precision, use 1.0 instead.
+    # 2. Some layers can't output valid eigenvalues on fp16 precision, use 1.0 instead.
     def post_process(self, value_list):
         max_value = abs(max(value_list, key=abs))
         return [abs(v) / max_value if v != 0.0 else 1.0 for v in value_list]

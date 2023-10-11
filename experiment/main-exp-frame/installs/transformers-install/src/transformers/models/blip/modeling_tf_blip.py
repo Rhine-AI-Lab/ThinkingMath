@@ -1211,7 +1211,7 @@ class TFBlipForConditionalGeneration(TFBlipPreTrainedModel):
         **generate_kwargs,
     ) -> tf.Tensor:
         r"""
-        Overrides *generate* function to be able to use the model as a conditional generator
+        Overrides *output* function to be able to use the model as a conditional generator
 
         Parameters:
             pixel_values (`tf.Tensor` of shape `(batch_size, num_channels, image_height, image_width)`:
@@ -1236,7 +1236,7 @@ class TFBlipForConditionalGeneration(TFBlipPreTrainedModel):
 
         >>> inputs = processor(images=image, return_tensors="tf")
 
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         two cats are laying on a couch
         ```
@@ -1415,7 +1415,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
         >>> # inference
         >>> text = "How many cats are in the picture?"
         >>> inputs = processor(images=image, text=text, return_tensors="tf")
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         2
         ```"""
@@ -1423,7 +1423,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
             raise ValueError(
                 "Either `decoder_input_ids` or `labels` should be passed when calling `forward` with"
                 " `TFBlipForQuestionAnswering`. if you are training the model make sure that `labels` is passed, if you"
-                " are using the model for inference make sure that `decoder_input_ids` is passed or call `generate`"
+                " are using the model for inference make sure that `decoder_input_ids` is passed or call `output`"
             )
 
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
@@ -1491,7 +1491,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
         **generate_kwargs,
     ) -> tf.Tensor:
         r"""
-        Overrides *generate* function to be able to use the model as a conditional generator
+        Overrides *output* function to be able to use the model as a conditional generator
 
         Parameters:
             input_ids (`tf.Tensor` of shape `(batch_size, sequence_length)`):
@@ -1502,7 +1502,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
                 Mask to avoid performing attention on padding token indices. Mask values selected in `[0, 1]`. `1` for
                 tokens that are NOT MASKED, `0` for MASKED tokens.
             generate_kwargs (dict, *optional*):
-                Additional arguments passed to the `generate` function of the decoder
+                Additional arguments passed to the `output` function of the decoder
 
 
         Examples:
@@ -1520,7 +1520,7 @@ class TFBlipForQuestionAnswering(TFBlipPreTrainedModel):
 
         >>> inputs = processor(images=image, text=text, return_tensors="tf")
 
-        >>> outputs = model.generate(**inputs)
+        >>> outputs = model.output(**inputs)
         >>> print(processor.decode(outputs[0], skip_special_tokens=True))
         2
         ```

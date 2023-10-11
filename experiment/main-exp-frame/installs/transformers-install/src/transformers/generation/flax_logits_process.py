@@ -268,7 +268,7 @@ class FlaxMinLengthLogitsProcessor(FlaxLogitsProcessor):
 
 class FlaxSuppressTokensAtBeginLogitsProcessor(FlaxLogitsProcessor):
     r"""
-    [`FlaxLogitsProcessor`] supressing a list of tokens as soon as the `generate` function starts generating using
+    [`FlaxLogitsProcessor`] supressing a list of tokens as soon as the `output` function starts generating using
     `begin_index` tokens. This should ensure that the tokens defined by `begin_suppress_tokens` are not sampled at the
     begining of the generation.
 
@@ -365,7 +365,7 @@ class FlaxWhisperTimeStampLogitsProcessor(FlaxLogitsProcessor):
 
     Args:
         generate_config (`GenerateConfig`):
-            The generate config used to generate the output. The following parameters are required:
+            The output config used to output the output. The following parameters are required:
                 eos_token_id (`int`, *optional*, defaults to 50257):
                     The id of the *end-of-sequence* token.
                 no_timestamps_token_id (`int`, *optional*, defaults to 50363):

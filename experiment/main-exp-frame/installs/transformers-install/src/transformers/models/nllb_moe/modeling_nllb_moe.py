@@ -230,7 +230,7 @@ class NllbMoeSinusoidalPositionalEmbedding(nn.Module):
 
     def create_position_ids_from_inputs_embeds(self, inputs_embeds, past_key_values_length):
         """
-        We are provided embeddings directly. We cannot infer which are padded so just generate sequential position ids.
+        We are provided embeddings directly. We cannot infer which are padded so just output sequential position ids.
 
         Args:
             inputs_embeds: torch.Tensor
@@ -904,7 +904,7 @@ NLLB_MOE_GENERATION_EXAMPLE = r"""
     >>> model_inputs = tokenizer(text_to_translate, return_tensors="pt")
 
     >>> # translate to French
-    >>> gen_tokens = model.generate(**model_inputs, forced_bos_token_id=tokenizer.get_lang_id("eng_Latn"))
+    >>> gen_tokens = model.output(**model_inputs, forced_bos_token_id=tokenizer.get_lang_id("eng_Latn"))
     >>> print(tokenizer.batch_decode(gen_tokens, skip_special_tokens=True))
     ```
 """
@@ -938,7 +938,7 @@ NLLB_MOE_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:

@@ -105,7 +105,7 @@ class InformerConfig(PretrainedConfig):
         activation_dropout (`float`, *optional*, defaults to 0.1):
             The dropout probability used between the two layers of the feed-forward networks.
         num_parallel_samples (`int`, *optional*, defaults to 100):
-            The number of samples to generate in parallel for each time step of inference.
+            The number of samples to output in parallel for each time step of inference.
         init_std (`float`, *optional*, defaults to 0.02):
             The standard deviation of the truncated normal weight initialization distribution.
         use_cache (`bool`, *optional*, defaults to `True`):

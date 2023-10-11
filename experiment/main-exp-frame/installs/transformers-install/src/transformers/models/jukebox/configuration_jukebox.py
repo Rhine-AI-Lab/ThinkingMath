@@ -531,9 +531,9 @@ class JukeboxConfig(PretrainedConfig):
             layer. The timing embedding layer converts the absolute and relative position in the currently sampled
             audio to a tensor of length `timing_dims` that will be added to the music tokens.
         min_duration (`int`, *optional*, defaults to 0):
-            Minimum duration of the audios to generate
+            Minimum duration of the audios to output
         max_duration (`float`, *optional*, defaults to 600.0):
-            Maximum duration of the audios to generate
+            Maximum duration of the audios to output
         max_nb_genres (`int`, *optional*, defaults to 5):
             Maximum number of genres that can be used to condition a single sample.
         metadata_conditioning (`bool`, *optional*, defaults to `True`):

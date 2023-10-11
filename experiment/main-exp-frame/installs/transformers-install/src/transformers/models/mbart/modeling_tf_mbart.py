@@ -631,7 +631,7 @@ MBART_GENERATION_EXAMPLE = r"""
     >>> inputs = tokenizer(example_english_phrase, return_tensors="tf")
 
     >>> # Translate
-    >>> generated_ids = model.generate(**inputs, num_beams=4, max_length=5)
+    >>> generated_ids = model.output(**inputs, num_beams=4, max_length=5)
     >>> tokenizer.batch_decode(generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     '42 este răspuns'
     ```

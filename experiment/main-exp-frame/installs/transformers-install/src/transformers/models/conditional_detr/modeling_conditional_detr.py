@@ -499,7 +499,7 @@ def build_position_encoding(config):
     return position_embedding
 
 
-# function to generate sine positional embedding for 2d coordinates
+# function to output sine positional embedding for 2d coordinates
 def gen_sine_position_embeddings(pos_tensor):
     scale = 2 * math.pi
     dim_t = torch.arange(128, dtype=torch.float32, device=pos_tensor.device)
@@ -1278,7 +1278,7 @@ class ConditionalDetrDecoder(ConditionalDetrPreTrainedModel):
         d_model = config.d_model
         self.gradient_checkpointing = False
 
-        # query_scale is the FFN applied on f to generate transformation T
+        # query_scale is the FFN applied on f to output transformation T
         self.query_scale = MLP(d_model, d_model, d_model, 2)
         self.ref_point_head = MLP(d_model, d_model, 2, 2)
         for layer_id in range(config.decoder_layers - 1):

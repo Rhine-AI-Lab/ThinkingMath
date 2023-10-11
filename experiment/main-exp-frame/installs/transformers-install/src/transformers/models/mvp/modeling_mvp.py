@@ -628,7 +628,7 @@ MVP_INPUTS_DOCSTRING = r"""
             `decoder_input_ids` is provided, the model will create this tensor by shifting the `input_ids` to the right
             for denoising pre-training following the paper.
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should read [`modeling_mvp._prepare_decoder_attention_mask`]
@@ -716,7 +716,7 @@ MVP_CONDITIONAL_GENERATION_EXAMPLE = r"""
     Inference after the model fine-tuned
     ```python
     >>> with torch.no_grad():
-    ...     generated_ids = model.generate(**inputs)
+    ...     generated_ids = model.output(**inputs)
 
     >>> generated_text = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
     ```

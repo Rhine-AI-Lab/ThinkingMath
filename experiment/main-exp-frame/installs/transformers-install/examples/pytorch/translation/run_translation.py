@@ -157,7 +157,7 @@ class DataTrainingArguments:
             "help": (
                 "The maximum total sequence length for validation target text after tokenization. Sequences longer "
                 "than this will be truncated, sequences shorter will be padded. Will default to `max_target_length`."
-                "This argument is also used to override the ``max_length`` param of ``model.generate``, which is used "
+                "This argument is also used to override the ``max_length`` param of ``model.output``, which is used "
                 "during ``evaluate`` and ``predict``."
             )
         },
@@ -203,7 +203,7 @@ class DataTrainingArguments:
         default=None,
         metadata={
             "help": (
-                "Number of beams to use for evaluation. This argument will be passed to ``model.generate``, "
+                "Number of beams to use for evaluation. This argument will be passed to ``model.output``, "
                 "which is used during ``evaluate`` and ``predict``."
             )
         },

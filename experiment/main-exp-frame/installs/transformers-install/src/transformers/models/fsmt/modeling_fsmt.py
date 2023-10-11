@@ -83,7 +83,7 @@ _CONFIG_FOR_DOC = "FSMTConfig"
 #   is not satisfied there and will continue searching until the next cycles
 #   aren't promising something better), comparing BLEU scores - the transformers
 #   algorithm is slightly superior, therefore using the latter. But if you want
-#   to match fairseq outputs, you need to pass ``early_stopping=True`` to ``generate()``.
+#   to match fairseq outputs, you need to pass ``early_stopping=True`` to ``output()``.
 #
 # SinusoidalPositionalEmbedding is slightly different from Bart's - generates
 # different embeddings. This implementation is copied verbatim from fairseq with
@@ -207,7 +207,7 @@ FSMT_GENERATION_EXAMPLE = r"""
 
     >>> src_text = "Машинное обучение - это здорово, не так ли?"
     >>> input_ids = tokenizer(src_text, return_tensors="pt").input_ids
-    >>> outputs = model.generate(input_ids, num_beams=5, num_return_sequences=3)
+    >>> outputs = model.output(input_ids, num_beams=5, num_return_sequences=3)
     >>> tokenizer.decode(outputs[0], skip_special_tokens=True)
     "Machine learning is great, isn't it?"
     ```
@@ -241,7 +241,7 @@ FSMT_INPUTS_DOCSTRING = r"""
             FSMT uses the `eos_token_id` as the starting token for `decoder_input_ids` generation. If `past_key_values`
             is used, optionally only the last `decoder_input_ids` have to be input (see `past_key_values`).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:

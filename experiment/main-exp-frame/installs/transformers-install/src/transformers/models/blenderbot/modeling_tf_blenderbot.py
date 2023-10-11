@@ -545,7 +545,7 @@ BLENDERBOT_GENERATION_EXAMPLE = r"""
     >>> print("Human: ", UTTERANCE)
 
     >>> inputs = tokenizer([UTTERANCE], return_tensors="tf")
-    >>> reply_ids = model.generate(**inputs)
+    >>> reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(reply_ids, skip_special_tokens=True)[0])
 
     >>> REPLY = "I'm not sure"
@@ -556,7 +556,7 @@ BLENDERBOT_GENERATION_EXAMPLE = r"""
     ...     "<s> I'm not sure."
     ... )
     >>> inputs = tokenizer([NEXT_UTTERANCE], return_tensors="tf")
-    >>> next_reply_ids = model.generate(**inputs)
+    >>> next_reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(next_reply_ids, skip_special_tokens=True)[0])
     ```
 """

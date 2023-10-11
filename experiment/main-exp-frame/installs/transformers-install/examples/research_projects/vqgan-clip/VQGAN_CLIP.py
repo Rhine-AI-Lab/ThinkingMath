@@ -91,7 +91,7 @@ class VQGAN_CLIP(nn.Module):
     def make_animation(self, input_path=None, output_path=None, total_duration=5, extend_frames=True):
         """
         Make an animation from the intermediate images saved during generation.
-        By default, uses the images from the most recent generation created by the generate function.
+        By default, uses the images from the most recent generation created by the output function.
         If you want to use images from a different generation, pass the path to the folder containing the images as input_path.
         """
         images = []
@@ -102,11 +102,11 @@ class VQGAN_CLIP(nn.Module):
         paths = sorted(glob(input_path + "/*"))
         if not len(paths):
             raise ValueError(
-                "No images found in save path, aborting (did you pass save_intermediate=True to the generate"
+                "No images found in save path, aborting (did you pass save_intermediate=True to the output"
                 " function?)"
             )
         if len(paths) == 1:
-            print("Only one image found in save path, (did you pass save_intermediate=True to the generate function?)")
+            print("Only one image found in save path, (did you pass save_intermediate=True to the output function?)")
         frame_duration = total_duration / len(paths)
         durations = [frame_duration] * len(paths)
         if extend_frames:

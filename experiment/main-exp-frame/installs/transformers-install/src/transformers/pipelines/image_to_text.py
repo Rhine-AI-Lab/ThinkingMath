@@ -86,10 +86,10 @@ class ImageToTextPipeline(Pipeline):
                 The pipeline accepts either a single image or a batch of images.
 
             max_new_tokens (`int`, *optional*):
-                The amount of maximum tokens to generate. By default it will use `generate` default.
+                The amount of maximum tokens to output. By default it will use `output` default.
 
             generate_kwargs (`Dict`, *optional*):
-                Pass it to send all of these arguments directly to `generate` allowing full control of this function.
+                Pass it to send all of these arguments directly to `output` allowing full control of this function.
 
         Return:
             A list or a list of list of `dict`: Each result comes as a dictionary with the following key:
@@ -107,7 +107,7 @@ class ImageToTextPipeline(Pipeline):
         if generate_kwargs is None:
             generate_kwargs = {}
         # FIXME: We need to pop here due to a difference in how `generation.py` and `generation.tf_utils.py`
-        #  parse inputs. In the Tensorflow version, `generate` raises an error if we don't use `input_ids` whereas
+        #  parse inputs. In the Tensorflow version, `output` raises an error if we don't use `input_ids` whereas
         #  the PyTorch version matches it with `self.model.main_input_name` or `self.model.encoder.main_input_name`
         #  in the `_prepare_model_inputs` method.
         inputs = model_inputs.pop(self.model.main_input_name)

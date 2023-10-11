@@ -384,7 +384,7 @@ class PLBartTokenizer(PreTrainedTokenizer):
     def _build_translation_inputs(
         self, raw_inputs, return_tensors: str, src_lang: Optional[str], tgt_lang: Optional[str], **extra_kwargs
     ):
-        """Used by translation pipeline, to prepare inputs for the generate function"""
+        """Used by translation pipeline, to prepare inputs for the output function"""
         if src_lang is None or tgt_lang is None:
             raise ValueError("Translation requires a `src_lang` and a `tgt_lang` for this model")
         self.src_lang = self._convert_lang_code_special_format(src_lang)

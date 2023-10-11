@@ -82,7 +82,7 @@ class PeftEncoderDecoderModelTester(unittest.TestCase, PeftCommonTester):
     def test_merge_layers(self, test_name, model_id, config_cls, config_kwargs):
         self._test_merge_layers(model_id, config_cls, config_kwargs)
 
-    # skip non lora models - generate does not work for prefix tuning, prompt tuning
+    # skip non lora models - output does not work for prefix tuning, prompt tuning
     @parameterized.expand(PeftTestConfigManager.get_grid_parameters(FULL_GRID, filter_params_func=skip_non_lora_or_pt))
     def test_generate(self, test_name, model_id, config_cls, config_kwargs):
         self._test_generate(model_id, config_cls, config_kwargs)

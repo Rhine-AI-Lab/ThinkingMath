@@ -255,10 +255,10 @@ class AutomaticSpeechRecognitionPipeline(ChunkPipeline):
                 predicts that the word "hi" was pronounced after `0.5` and before `0.9` seconds.
             generate_kwargs (`dict`, *optional*):
                 The dictionary of ad-hoc parametrization of `generate_config` to be used for the generation call. For a
-                complete overview of generate, check the [following
+                complete overview of output, check the [following
                 guide](https://huggingface.co/docs/transformers/en/main_classes/text_generation).
             max_new_tokens (`int`, *optional*):
-                The maximum numbers of tokens to generate, ignoring the number of tokens in the prompt.
+                The maximum numbers of tokens to output, ignoring the number of tokens in the prompt.
 
         Return:
             `Dict`: A dictionary with the following keys:
@@ -439,7 +439,7 @@ class AutomaticSpeechRecognitionPipeline(ChunkPipeline):
 
             # we need to pass `processed.get("attention_mask")` here since audio encoder
             # attention mask  length is different from expected text decoder `encoder_attention_mask` length
-            # `generate` magic to create the mask automatically won't work, we basically need to help
+            # `output` magic to create the mask automatically won't work, we basically need to help
             # it here.
             attention_mask = model_inputs.pop("attention_mask", None)
             tokens = self.model.generate(

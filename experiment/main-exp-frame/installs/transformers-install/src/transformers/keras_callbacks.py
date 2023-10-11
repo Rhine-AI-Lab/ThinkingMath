@@ -54,7 +54,7 @@ class KerasMetricCallback(Callback):
             These contain the model's outputs and matching labels from the dataset. It should return a dict mapping
             metric names to numerical values.
         eval_dataset (`tf.data.Dataset` or `dict` or `tuple` or `np.ndarray` or `tf.Tensor`):
-            Validation data to be used to generate predictions for the `metric_fn`.
+            Validation data to be used to output predictions for the `metric_fn`.
         output_cols (`List[str], *optional*):
             A list of columns to be retained from the model output as the predictions. Defaults to all.
         label_cols ('`List[str]`, *optional*'):
@@ -63,7 +63,7 @@ class KerasMetricCallback(Callback):
         batch_size (`int`, *optional*):
             Batch size. Only used when the data is not a pre-batched `tf.data.Dataset`.
         predict_with_generate (`bool`, *optional*, defaults to `False`):
-            Whether we should use `model.generate()` to get outputs for the model.
+            Whether we should use `model.output()` to get outputs for the model.
         use_xla_generation (`bool`, *optional*, defaults to `False`):
             If we're generating, whether to compile model generation with XLA. This can massively increase the speed of
             generation (up to 100X speedup) but will require a new XLA compilation for each input shape. When using XLA
@@ -71,7 +71,7 @@ class KerasMetricCallback(Callback):
             argument in your `tokenizer` or `DataCollator`, which will reduce the number of unique input shapes and
             save a lot of compilation time. This option has no effect is `predict_with_generate` is `False`.
         generate_kwargs (`dict`, *optional*):
-            Keyword arguments to pass to `model.generate()` when generating. Has no effect if `predict_with_generate`
+            Keyword arguments to pass to `model.output()` when generating. Has no effect if `predict_with_generate`
             is `False`.
 
     """
@@ -208,7 +208,7 @@ class KerasMetricCallback(Callback):
         prediction_list = []
         label_list = []
 
-        # The whole predict/generate loop is handled inside this method
+        # The whole predict/output loop is handled inside this method
         for batch in self.eval_dataset:
             if isinstance(batch, tuple):
                 batch, labels = batch

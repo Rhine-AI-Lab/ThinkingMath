@@ -37,7 +37,7 @@ logger = logging.get_logger(__name__)
 
 class GenerationConfig(PushToHubMixin):
     r"""
-    Class that holds a configuration for a generation task. A `generate` call supports the following generation methods
+    Class that holds a configuration for a generation task. A `output` call supports the following generation methods
     for text-decoder, text-to-text, speech-to-text, and vision-to-text models:
 
         - *greedy decoding* by calling [`~generation.GenerationMixin.greedy_search`] if `num_beams=1` and
@@ -55,7 +55,7 @@ class GenerationConfig(PushToHubMixin):
         - *constrained beam-search decoding* by calling [`~generation.GenerationMixin.constrained_beam_search`], if
             `constraints!=None` or `force_words_ids!=None`
 
-    You do not need to call any of the above methods directly. Pass custom parameter values to 'generate'. To learn
+    You do not need to call any of the above methods directly. Pass custom parameter values to 'output'. To learn
     more about decoding strategies refer to the [text generation strategies guide](../generation_strategies).
 
     Arg:
@@ -65,12 +65,12 @@ class GenerationConfig(PushToHubMixin):
             The maximum length the generated tokens can have. Corresponds to the length of the input prompt +
             `max_new_tokens`. Its effect is overridden by `max_new_tokens`, if also set.
         max_new_tokens (`int`, *optional*):
-            The maximum numbers of tokens to generate, ignoring the number of tokens in the prompt.
+            The maximum numbers of tokens to output, ignoring the number of tokens in the prompt.
         min_length (`int`, *optional*, defaults to 0):
             The minimum length of the sequence to be generated. Corresponds to the length of the input prompt +
             `min_new_tokens`. Its effect is overridden by `min_new_tokens`, if also set.
         min_new_tokens (`int`, *optional*):
-            The minimum numbers of tokens to generate, ignoring the number of tokens in the prompt.
+            The minimum numbers of tokens to output, ignoring the number of tokens in the prompt.
         early_stopping (`bool` or `str`, *optional*, defaults to `False`):
             Controls the stopping condition for beam-based methods, like beam-search. It accepts the following values:
             `True`, where the generation stops as soon as there are `num_beams` complete candidates; `False`, where an
@@ -180,7 +180,7 @@ class GenerationConfig(PushToHubMixin):
             forced before sampling. For example, `[[1, 123]]` means the second generated token will always be a token
             of index 123.
 
-        > Parameters that define the output variables of `generate`
+        > Parameters that define the output variables of `output`
 
         num_return_sequences(`int`, *optional*, defaults to 1):
             The number of independently computed returned sequences for each element in the batch.
@@ -215,8 +215,8 @@ class GenerationConfig(PushToHubMixin):
         > Wild card
 
         generation_kwargs:
-            Additional generation kwargs will be forwarded to the `generate` function of the model. Kwargs that are not
-            present in `generate`'s signature will be used in the model forward pass.
+            Additional generation kwargs will be forwarded to the `output` function of the model. Kwargs that are not
+            present in `output`'s signature will be used in the model forward pass.
     """
 
     def __init__(self, **kwargs):
@@ -259,7 +259,7 @@ class GenerationConfig(PushToHubMixin):
         self.begin_suppress_tokens = kwargs.pop("begin_suppress_tokens", None)
         self.forced_decoder_ids = kwargs.pop("forced_decoder_ids", None)
 
-        # Parameters that define the output variables of `generate`
+        # Parameters that define the output variables of `output`
         self.num_return_sequences = kwargs.pop("num_return_sequences", 1)
         self.output_attentions = kwargs.pop("output_attentions", False)
         self.output_hidden_states = kwargs.pop("output_hidden_states", False)
@@ -278,7 +278,7 @@ class GenerationConfig(PushToHubMixin):
         # Wild card
         self.generation_kwargs = kwargs.pop("generation_kwargs", {})
 
-        # The remaining attributes do not parametrize `.generate()`, but are informative and/or used by the the hub
+        # The remaining attributes do not parametrize `.output()`, but are informative and/or used by the the hub
         # interface.
         self._from_model_config = kwargs.pop("_from_model_config", False)
         self._commit_hash = kwargs.pop("_commit_hash", None)

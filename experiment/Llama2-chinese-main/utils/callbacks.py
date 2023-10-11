@@ -1,5 +1,5 @@
 """
-Helpers to support streaming generate output.
+Helpers to support streaming output output.
 Borrowed from https://github.com/oobabooga/text-generation-webui/blob/ad37f396fc8bcbab90e11ecf17c56c97bfbd4a9c/modules/callbacks.py
 """
 

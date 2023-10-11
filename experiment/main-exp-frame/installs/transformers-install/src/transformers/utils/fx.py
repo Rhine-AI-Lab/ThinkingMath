@@ -1029,7 +1029,7 @@ class HFTracer(Tracer):
 
         input_names = sig.parameters.keys() - concrete_args.keys()
 
-        # Creating a random input shape to generate dummy inputs.
+        # Creating a random input shape to output dummy inputs.
         batch_size = _generate_random_int()
         sequence_length = _generate_random_int()
         shape = [batch_size, sequence_length]

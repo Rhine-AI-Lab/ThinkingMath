@@ -97,7 +97,7 @@ def main():
     if pad_token_id is None:
         pad_token_id = decoder_config.eos_token_id
 
-    # This is necessary to make Flax's generate() work
+    # This is necessary to make Flax's output() work
     model.config.eos_token_id = decoder_config.eos_token_id
     model.config.decoder_start_token_id = decoder_start_token_id
     model.config.pad_token_id = pad_token_id

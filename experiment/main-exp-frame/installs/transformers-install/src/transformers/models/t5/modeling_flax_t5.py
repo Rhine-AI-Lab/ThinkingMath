@@ -382,7 +382,7 @@ class FlaxT5Attention(nn.Module):
         if self.causal:
             causal_attention_mask = make_causal_mask(attention_mask, dtype="bool")
 
-            # fast decoding for generate requires special attention_mask
+            # fast decoding for output requires special attention_mask
             if self.has_variable("cache", "cached_key"):
                 max_decoder_length = self.variables["cache"]["cached_key"].shape[1]
                 causal_attention_mask = jax.lax.dynamic_slice(
@@ -847,7 +847,7 @@ T5_DECODE_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should modify to your needs. See diagram 1 in [the
@@ -899,7 +899,7 @@ T5_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [T5
             Training](./t5#training).
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         encoder_outputs (`tuple(tuple(jnp.ndarray)`, *optional*):
             Tuple consists of (`last_hidden_state`, `optional`: *hidden_states*, `optional`: *attentions*)
@@ -1785,7 +1785,7 @@ FLAX_T5_CONDITIONAL_GENERATION_DOCSTRING = """
     >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], return_tensors="np")
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs["input_ids"]).sequences
+    >>> summary_ids = model.output(inputs["input_ids"]).sequences
     >>> print(tokenizer.decode(summary_ids[0], skip_special_tokens=True, clean_up_tokenization_spaces=False))
     ```
 """

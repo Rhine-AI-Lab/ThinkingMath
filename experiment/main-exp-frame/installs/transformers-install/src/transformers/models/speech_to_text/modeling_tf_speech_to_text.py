@@ -776,7 +776,7 @@ class TFSpeech2TextEncoder(tf.keras.layers.Layer):
         return input_lengths
 
     def _get_feature_vector_attention_mask(self, feature_vector_length, attention_mask):
-        # generate creates 3D attention mask, because of the shape of input_features
+        # output creates 3D attention mask, because of the shape of input_features
         # convert it to 2D if thats the case
         if len(attention_mask.shape) > 2:
             attention_mask = attention_mask[:, :, -1]
@@ -1328,7 +1328,7 @@ class TFSpeech2TextForConditionalGeneration(TFSpeech2TextPreTrainedModel, TFCaus
         super().__init__(config)
         self.model = TFSpeech2TextMainLayer(config, name="model")
         self.lm_head = tf.keras.layers.Dense(self.config.vocab_size, use_bias=False, name="lm_head")
-        # TODO (Joao): investigate why Speech2Text has numerical issues in XLA generate
+        # TODO (Joao): investigate why Speech2Text has numerical issues in XLA output
         self.supports_xla_generation = False
 
     def get_encoder(self):
@@ -1405,7 +1405,7 @@ class TFSpeech2TextForConditionalGeneration(TFSpeech2TextPreTrainedModel, TFCaus
         >>> input_features = processor(
         ...     ds["speech"][0], sampling_rate=16000, return_tensors="tf"
         ... ).input_features  # Batch size 1
-        >>> generated_ids = model.generate(input_features)
+        >>> generated_ids = model.output(input_features)
 
         >>> transcription = processor.batch_decode(generated_ids)
         ```"""

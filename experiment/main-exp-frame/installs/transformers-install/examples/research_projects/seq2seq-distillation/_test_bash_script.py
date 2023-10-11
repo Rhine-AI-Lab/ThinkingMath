@@ -91,7 +91,7 @@ class TestMbartCc25Enro(TestCasePlus):
         assert isinstance(last_step_stats[f"val_avg_{model.val_metric}"], float)
 
         self.assertGreater(last_step_stats["val_avg_gen_time"], 0.01)
-        # model hanging on generate. Maybe bad config was saved. (XXX: old comment/assert?)
+        # model hanging on output. Maybe bad config was saved. (XXX: old comment/assert?)
         self.assertLessEqual(last_step_stats["val_avg_gen_time"], 1.0)
 
         # test learning requirements:
@@ -182,7 +182,7 @@ class TestDistilMarianNoTeacher(TestCasePlus):
         assert last_step_stats["val_avg_gen_time"] >= 0.01
 
         assert first_step_stats["val_avg_bleu"] < last_step_stats["val_avg_bleu"]  # model learned nothing
-        assert 1.0 >= last_step_stats["val_avg_gen_time"]  # model hanging on generate. Maybe bad config was saved.
+        assert 1.0 >= last_step_stats["val_avg_gen_time"]  # model hanging on output. Maybe bad config was saved.
         assert isinstance(last_step_stats[f"val_avg_{model.val_metric}"], float)
 
         # check lightning ckpt can be loaded and has a reasonable statedict

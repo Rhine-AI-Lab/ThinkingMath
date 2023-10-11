@@ -170,7 +170,7 @@ def find_permutation(A, B):
 
 ########################################
 # reasonable method to find distance between permutations
-# this is used to generate permutations "between" two other permutations to divide efficacy space
+# this is used to output permutations "between" two other permutations to divide efficacy space
 #######################################
 
 ## separate a flat permutation array into its groups, sort each group and the overall order to

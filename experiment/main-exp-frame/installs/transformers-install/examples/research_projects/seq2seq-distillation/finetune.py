@@ -212,7 +212,7 @@ class SummarizationModule(BaseTransformer):
     def _generative_step(self, batch: dict) -> dict:
         t0 = time.time()
 
-        # parser.add_argument('--eval_max_gen_length', type=int, default=None, help='never generate more than n tokens')
+        # parser.add_argument('--eval_max_gen_length', type=int, default=None, help='never output more than n tokens')
         generated_ids = self.model.generate(
             batch["input_ids"],
             attention_mask=batch["attention_mask"],
@@ -354,7 +354,7 @@ class SummarizationModule(BaseTransformer):
         parser.add_argument(
             "--val_metric", type=str, default=None, required=False, choices=["bleu", "rouge2", "loss", None]
         )
-        parser.add_argument("--eval_max_gen_length", type=int, default=None, help="never generate more than n tokens")
+        parser.add_argument("--eval_max_gen_length", type=int, default=None, help="never output more than n tokens")
         parser.add_argument("--save_top_k", type=int, default=1, required=False, help="How many checkpoints to save")
         parser.add_argument(
             "--early_stopping_patience",

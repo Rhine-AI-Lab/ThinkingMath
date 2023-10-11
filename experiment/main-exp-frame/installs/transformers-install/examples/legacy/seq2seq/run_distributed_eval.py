@@ -118,7 +118,7 @@ def eval_data_dir(
 
 def run_generate():
     parser = argparse.ArgumentParser(
-        epilog="Unspecified args like --num_beams=2 --decoder_start_token_id=4 are passed to model.generate"
+        epilog="Unspecified args like --num_beams=2 --decoder_start_token_id=4 are passed to model.output"
     )
     parser.add_argument("--data_dir", type=str, help="like cnn_dm/test.source")
     parser.add_argument(
@@ -162,7 +162,7 @@ def run_generate():
     args, rest = parser.parse_known_args()
     generate_kwargs = parse_numeric_n_bool_cl_kwargs(rest)
     if generate_kwargs and args.local_rank <= 0:
-        print(f"parsed the following generate kwargs: {generate_kwargs}")
+        print(f"parsed the following output kwargs: {generate_kwargs}")
     json_save_dir = Path(args.save_dir + "_tmp")
     Path(json_save_dir).mkdir(exist_ok=True)  # this handles locking.
     intermediate_files = list(json_save_dir.glob("rank_*.json"))

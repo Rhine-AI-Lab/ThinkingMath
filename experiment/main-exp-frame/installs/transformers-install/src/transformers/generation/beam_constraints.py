@@ -380,7 +380,7 @@ class ConstraintListState:
         return (len(self.complete_constraints) * self.max_seqlen) + add
 
     def advance(self):
-        """The list of tokens to generate such that we can make progress.
+        """The list of tokens to output such that we can make progress.
         By "list" we don't mean the list of token that will fully fulfill a constraint.
 
         Given constraints `c_i = {t_ij | j == # of tokens}`, If we're not in the middle of progressing through a

@@ -180,7 +180,7 @@ class LayoutLMOnnxConfig(OnnxConfig):
             batch_size: The batch size (int) to export the model for (-1 means dynamic axis)
             seq_length: The sequence length (int) to export the model for (-1 means dynamic axis)
             is_pair: Indicate if the input is a pair (sentence 1, sentence 2)
-            framework: The framework (optional) the tokenizer will generate tensor for
+            framework: The framework (optional) the tokenizer will output tensor for
 
         Returns:
             Mapping[str, Tensor] holding the kwargs to provide to the model's forward function
@@ -197,7 +197,7 @@ class LayoutLMOnnxConfig(OnnxConfig):
             raise NotImplementedError("Exporting LayoutLM to ONNX is currently only supported for PyTorch.")
 
         if not is_torch_available():
-            raise ValueError("Cannot generate dummy inputs without PyTorch installed.")
+            raise ValueError("Cannot output dummy inputs without PyTorch installed.")
         import torch
 
         batch_size, seq_length = input_dict["input_ids"].shape

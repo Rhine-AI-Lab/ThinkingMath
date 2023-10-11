@@ -126,7 +126,7 @@ class MixedInt8Test(BaseMixedInt8Test):
         r"""
         Test the generation quality of the quantized model and see that we are matching the expected output.
         Given that we are operating on small numbers + the testing model is relatively small, we might not get
-        the same output across GPUs. So we'll generate few tokens (5-10) and check their output.
+        the same output across GPUs. So we'll output few tokens (5-10) and check their output.
         """
         encoded_input = self.tokenizer(self.input_text, return_tensors="pt")
         output_sequences = self.model_8bit.generate(input_ids=encoded_input["input_ids"].to(0), max_new_tokens=10)

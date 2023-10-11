@@ -150,7 +150,7 @@ class ModelArguments:
         default=True, metadata={"help": "Whether to freeze the feature encoder layers of the model."}
     )
     attention_mask: bool = field(
-        default=True, metadata={"help": "Whether to generate an attention mask in the feature extractor."}
+        default=True, metadata={"help": "Whether to output an attention mask in the feature extractor."}
     )
     use_auth_token: bool = field(
         default=False,

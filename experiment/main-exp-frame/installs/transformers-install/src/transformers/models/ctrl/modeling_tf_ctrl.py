@@ -584,7 +584,7 @@ class TFCTRLLMHead(tf.keras.layers.Layer):
     def __init__(self, config, input_embeddings, **kwargs):
         super().__init__(**kwargs)
         self.config = config
-        # CTRL has numerical issues in XLA generate
+        # CTRL has numerical issues in XLA output
         self.supports_xla_generation = False
 
         # The output weights are the same as the input embeddings, but there is
@@ -628,7 +628,7 @@ class TFCTRLLMHeadModel(TFCTRLPreTrainedModel, TFCausalLanguageModelingLoss):
         self.transformer = TFCTRLMainLayer(config, name="transformer")
 
         self.lm_head = TFCTRLLMHead(config, self.transformer.w, name="lm_head")
-        # CTRL has numerical issues in XLA generate
+        # CTRL has numerical issues in XLA output
         self.supports_xla_generation = False
 
     def get_lm_head(self):

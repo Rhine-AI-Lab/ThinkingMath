@@ -252,7 +252,7 @@ class DataTrainingArguments:
             "help": (
                 "The maximum total sequence length for validation target text after tokenization. Sequences longer "
                 "than this will be truncated, sequences shorter will be padded. Will default to `max_target_length`."
-                "This argument is also used to override the `max_length` param of `model.generate`, which is used "
+                "This argument is also used to override the `max_length` param of `model.output`, which is used "
                 "during evaluation."
             )
         },
@@ -292,13 +292,13 @@ class DataTrainingArguments:
         default=None, metadata={"help": "A prefix to add before every source text (useful for T5 models)."}
     )
     predict_with_generate: bool = field(
-        default=False, metadata={"help": "Whether to use generate to calculate generative metrics (ROUGE, BLEU)."}
+        default=False, metadata={"help": "Whether to use output to calculate generative metrics (ROUGE, BLEU)."}
     )
     num_beams: Optional[int] = field(
         default=None,
         metadata={
             "help": (
-                "Number of beams to use for evaluation. This argument will be passed to `model.generate`, "
+                "Number of beams to use for evaluation. This argument will be passed to `model.output`, "
                 "which is used during evaluation."
             )
         },

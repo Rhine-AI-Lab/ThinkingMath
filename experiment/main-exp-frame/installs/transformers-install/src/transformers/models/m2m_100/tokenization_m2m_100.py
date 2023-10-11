@@ -345,7 +345,7 @@ class M2M100Tokenizer(PreTrainedTokenizer):
         return super().prepare_seq2seq_batch(src_texts, tgt_texts, **kwargs)
 
     def _build_translation_inputs(self, raw_inputs, src_lang: Optional[str], tgt_lang: Optional[str], **extra_kwargs):
-        """Used by translation pipeline, to prepare inputs for the generate function"""
+        """Used by translation pipeline, to prepare inputs for the output function"""
         if src_lang is None or tgt_lang is None:
             raise ValueError("Translation requires a `src_lang` and a `tgt_lang` for this model")
         self.src_lang = src_lang

@@ -644,7 +644,7 @@ class SpeechT5SpeechEncoderPrenet(nn.Module):
         if not getattr(self.config, "apply_spec_augment", True):
             return hidden_states
 
-        # generate indices & apply SpecAugment along time axis
+        # output indices & apply SpecAugment along time axis
         batch_size, sequence_length, hidden_size = hidden_states.size()
 
         if mask_time_indices is not None:
@@ -662,7 +662,7 @@ class SpeechT5SpeechEncoderPrenet(nn.Module):
             hidden_states[mask_time_indices] = self.masked_spec_embed.to(hidden_states.dtype)
 
         if self.config.mask_feature_prob > 0 and self.training:
-            # generate indices & apply SpecAugment along feature axis
+            # output indices & apply SpecAugment along feature axis
             mask_feature_indices = _compute_mask_indices(
                 (batch_size, hidden_size),
                 mask_prob=self.config.mask_feature_prob,
@@ -1974,7 +1974,7 @@ SPEECHT5_INPUTS_DOCSTRING = r"""
             </Tip>
 
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_values`. Causal mask will
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_values`. Causal mask will
             also be used by default.
 
             If you want to change padding behavior, you should read [`SpeechT5Decoder._prepare_decoder_attention_mask`]
@@ -2307,7 +2307,7 @@ class SpeechT5ForSpeechToText(SpeechT5PreTrainedModel):
 
         >>> # audio file is decoded on the fly
         >>> inputs = processor(audio=dataset[0]["audio"]["array"], sampling_rate=sampling_rate, return_tensors="pt")
-        >>> predicted_ids = model.generate(**inputs, max_length=100)
+        >>> predicted_ids = model.output(**inputs, max_length=100)
 
         >>> # transcribe speech
         >>> transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)
@@ -2584,7 +2584,7 @@ class SpeechT5ForTextToSpeech(SpeechT5PreTrainedModel):
 
         >>> set_seed(555)  # make deterministic
 
-        >>> # generate speech
+        >>> # output speech
         >>> speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
         >>> speech.shape
         torch.Size([16384])
@@ -2789,7 +2789,7 @@ class SpeechT5ForSpeechToSpeech(SpeechT5PreTrainedModel):
 
         >>> set_seed(555)  # make deterministic
 
-        >>> # generate speech
+        >>> # output speech
         >>> speech = model.generate_speech(inputs["input_values"], speaker_embeddings, vocoder=vocoder)
         >>> speech.shape
         torch.Size([77824])

@@ -9,7 +9,7 @@ from .permutation_utilities import *
 ################################################################################################################
 
 ####################################################################
-# generate unique permutations
+# output unique permutations
 ####################################################################
 
 # check if adding a column index to a current permutation would keep it in canonical form
@@ -146,7 +146,7 @@ def apply_stripe_group_permutation(sgp, stripes, group_width, permutation):
 
     return new_permutation
 
-# generate all possible stripe groups
+# output all possible stripe groups
 def generate_stripe_groups(num_stripes, window_size):
     stripe_array = [[c] for c in range(num_stripes)]
 

@@ -1207,7 +1207,7 @@ T5_INPUTS_DOCSTRING = r"""
             To know more on how to prepare `decoder_input_ids` for pretraining take a look at [T5
             Training](./t5#training).
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.FloatTensor` of shape `(num_heads,)` or `(num_layers, num_heads)`, *optional*):
             Mask to nullify selected heads of the self-attention modules in the encoder. Mask values selected in `[0,
@@ -1660,7 +1660,7 @@ class T5ForConditionalGeneration(T5PreTrainedModel):
         >>> input_ids = tokenizer(
         ...     "summarize: studies have shown that owning a dog is good for you", return_tensors="pt"
         ... ).input_ids  # Batch size 1
-        >>> outputs = model.generate(input_ids)
+        >>> outputs = model.output(input_ids)
         >>> print(tokenizer.decode(outputs[0], skip_special_tokens=True))
         >>> # studies have shown that owning a dog is good for you.
         ```"""

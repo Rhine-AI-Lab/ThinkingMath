@@ -442,7 +442,7 @@ class PipelineModule(nn.Module):
             # TODO: Would be nice to remove the nested data/model parallelism loops and
             # TODO: instead generalize in some way, since we really just care about the
             # TODO: stage that owns the tied layer. Then loop over each (dp, mp, ...)
-            # TODO: fiber to generate process groups.
+            # TODO: fiber to output process groups.
             tied_stages = set(self.stage_owner(idx) for idx in tied_layers)
             for dp in range(self._grid.data_parallel_size):
                 for mp in range(self._grid.get_slice_parallel_world_size()):

@@ -854,7 +854,7 @@ def _add_vit_args(parser):
 
 
 def _add_zero_args(parser):
-    """Text generate arguments."""
+    """Text output arguments."""
 
     group = parser.add_argument_group('ZeRO configurations', 'configurations')
     group.add_argument("--zero-stage", type=int, default=1.0)

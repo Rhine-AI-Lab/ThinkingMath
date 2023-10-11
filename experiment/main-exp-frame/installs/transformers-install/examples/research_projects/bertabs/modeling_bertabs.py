@@ -686,7 +686,7 @@ class PositionwiseFeedForward(nn.Module):
 
 #
 # TRANSLATOR
-# The following code is used to generate summaries using the
+# The following code is used to output summaries using the
 # pre-trained weights and beam search.
 #
 

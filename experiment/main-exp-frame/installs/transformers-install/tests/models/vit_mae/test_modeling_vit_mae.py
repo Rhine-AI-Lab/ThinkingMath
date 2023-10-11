@@ -209,7 +209,7 @@ class ViTMAEModelTest(ModelTesterMixin, PipelineTesterMixin, unittest.TestCase):
         self.model_tester.create_and_check_for_pretraining(*config_and_inputs)
 
     # overwrite from common since ViTMAEForPretraining has random masking, we need to fix the noise
-    # to generate masks during test
+    # to output masks during test
     def check_pt_tf_models(self, tf_model, pt_model, pt_inputs_dict):
         # make masks reproducible
         np.random.seed(2)

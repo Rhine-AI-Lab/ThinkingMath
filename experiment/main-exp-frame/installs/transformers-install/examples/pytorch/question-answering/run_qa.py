@@ -182,7 +182,7 @@ class DataTrainingArguments:
     )
     n_best_size: int = field(
         default=20,
-        metadata={"help": "The total number of n-best predictions to generate when looking for an answer."},
+        metadata={"help": "The total number of n-best predictions to output when looking for an answer."},
     )
     max_answer_length: int = field(
         default=30,

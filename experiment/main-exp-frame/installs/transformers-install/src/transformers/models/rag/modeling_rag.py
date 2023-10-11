@@ -450,7 +450,7 @@ RAG_FORWARD_INPUTS_DOCSTRING = r"""
             Provide for generation tasks. `None` by default, construct as per instructions for the generator model
             you're using with your RAG instance.
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size,  target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         past_key_values (`tuple(tuple(torch.FloatTensor))`):
             Tuple consists of two elements: `encoder_outputs` of the RAG model (see `encoder_outputs`) and
@@ -486,7 +486,7 @@ RAG_FORWARD_INPUTS_DOCSTRING = r"""
             Whether or not to return the `retrieved_doc_embeds`, `retrieved_doc_ids`, `context_input_ids` and
             `context_attention_mask`. See returned tensors for more detail.
         n_docs (`int`, *optional*, defaults to `config.n_docs``)
-            Number of documents to retrieve and/or number of documents for which to generate an answer.
+            Number of documents to retrieve and/or number of documents for which to output an answer.
 """
 
 
@@ -797,7 +797,7 @@ class RagSequenceForGeneration(RagPreTrainedModel):
             Only relevant if `labels` is passed. If `True`, the NLL loss is reduced using the `torch.Tensor.sum`
             operation.
         kwargs (`Dict[str, any]`, optional, defaults to *{}*):
-             Legacy dictionary, which is required so that model can use *generate()* function.
+             Legacy dictionary, which is required so that model can use *output()* function.
 
         Returns:
 
@@ -922,8 +922,8 @@ class RagSequenceForGeneration(RagPreTrainedModel):
         **model_kwargs,
     ) -> torch.LongTensor:
         """
-        Implements RAG sequence "thorough" decoding. Read the [`~generation.GenerationMixin.generate`]` documentation
-        for more information on how to set other generate input parameters.
+        Implements RAG sequence "thorough" decoding. Read the [`~generation.GenerationMixin.output`]` documentation
+        for more information on how to set other output input parameters.
 
         Args:
             input_ids (`torch.LongTensor` of shape `(batch_size, sequence_length)`, *optional*):
@@ -957,14 +957,14 @@ class RagSequenceForGeneration(RagPreTrainedModel):
                 to be set to `False` if used while training with distributed backend.
             num_return_sequences(`int`, *optional*, defaults to 1):
                 The number of independently computed returned sequences for each element in the batch. Note that this
-                is not the value we pass to the `generator`'s `[`~generation.GenerationMixin.generate`]` function,
+                is not the value we pass to the `generator`'s `[`~generation.GenerationMixin.output`]` function,
                 where we set `num_return_sequences` to `num_beams`.
             num_beams (`int`, *optional*, defaults to 1):
                 Number of beams for beam search. 1 means no beam search.
             n_docs (`int`, *optional*, defaults to `config.n_docs`)
-                Number of documents to retrieve and/or number of documents for which to generate an answer.
+                Number of documents to retrieve and/or number of documents for which to output an answer.
             kwargs:
-                Additional kwargs will be passed to [`~generation.GenerationMixin.generate`].
+                Additional kwargs will be passed to [`~generation.GenerationMixin.output`].
 
         Return:
             `torch.LongTensor` of shape `(batch_size * num_return_sequences, sequence_length)`: The generated
@@ -1004,7 +1004,7 @@ class RagSequenceForGeneration(RagPreTrainedModel):
         batch_size = input_ids.shape[0] if input_ids is not None else context_input_ids.shape[0] // n_docs
 
         for index in range(batch_size):
-            # first, generate beams from documents:
+            # first, output beams from documents:
             generator_input_ids = context_input_ids[index * n_docs : (index + 1) * n_docs]  # (n_docs, max_len)
 
             output_sequences = self.generator.generate(
@@ -1264,7 +1264,7 @@ class RagTokenForGeneration(RagPreTrainedModel):
             Only relevant if `labels` is passed. If `True`, the NLL loss is reduced using the `torch.Tensor.sum`
             operation.
         kwargs (`Dict[str, any]`, optional, defaults to *{}*):
-            Legacy dictionary, which is required so that model can use *generate()* function.
+            Legacy dictionary, which is required so that model can use *output()* function.
 
         Returns:
 
@@ -1304,8 +1304,8 @@ class RagTokenForGeneration(RagPreTrainedModel):
         ...     decoder_input_ids=labels,
         ... )
 
-        >>> # or directly generate
-        >>> generated = model.generate(
+        >>> # or directly output
+        >>> generated = model.output(
         ...     context_input_ids=docs_dict["context_input_ids"],
         ...     context_attention_mask=docs_dict["context_attention_mask"],
         ...     doc_scores=doc_scores,
@@ -1422,10 +1422,10 @@ class RagTokenForGeneration(RagPreTrainedModel):
                 If the model has is not initialized with a `retriever`, `context_input_ids` has to be provided to the
                 forward pass. `context_input_ids` are returned by [`~RagRetriever.__call__`].
             n_docs (`int`, *optional*, defaults to `config.n_docs`)
-                Number of documents to retrieve and/or number of documents for which to generate an answer.
+                Number of documents to retrieve and/or number of documents for which to output an answer.
             generation_config (`~generation.GenerationConfig`, *optional*):
                 The generation configuration to be used as base parametrization for the generation call. `**kwargs`
-                passed to generate matching the attributes of `generation_config` will override them. If
+                passed to output matching the attributes of `generation_config` will override them. If
                 `generation_config` is not provided, the default will be used, which has the following loading
                 priority: 1) from the `generation_config.json` model file, if it exists; 2) from the model
                 configuration. Please note that unspecified parameters will inherit [`~generation.GenerationConfig`]'s

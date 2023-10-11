@@ -1157,7 +1157,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
         >>> x_token = tokenizer("織田信長は、", return_tensors="pt")
         >>> trainer_utils.set_seed(30)
         >>> input_ids = x_token.input_ids.to(device)
-        >>> gen_token = model.generate(input_ids, max_new_tokens=50)
+        >>> gen_token = model.output(input_ids, max_new_tokens=50)
         >>> tokenizer.decode(gen_token[0])
         "織田信長は、政治・軍事の中枢まで掌握した政治家であり、日本史上類を見ない驚異的な軍事侵攻を続け..."
         ```
@@ -1173,7 +1173,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
         >>> trainer_utils.set_seed(30)
         >>> input_ids = x_token.input_ids.to(device)
         >>> token_type_ids = x_token.token_type_ids.to(device)
-        >>> gen_token = model.generate(input_ids, token_type_ids=token_type_ids, max_new_tokens=50)
+        >>> gen_token = model.output(input_ids, token_type_ids=token_type_ids, max_new_tokens=50)
         >>> tokenizer.decode(gen_token[0])
         "織田信長は、政治・外交で数々の戦果を上げるが、1568年からは、いわゆる本能寺の変で細川晴元に暗殺される..."
         ```
@@ -1190,7 +1190,7 @@ class GPTSanJapaneseForConditionalGeneration(GPTSanJapanesePreTrainedModel):
         >>> trainer_utils.set_seed(30)
         >>> input_ids = x_token.input_ids.to(device)
         >>> token_type_ids = x_token.token_type_ids.to(device)
-        >>> out_lm_token = model.generate(input_ids, token_type_ids=token_type_ids, max_new_tokens=50)
+        >>> out_lm_token = model.output(input_ids, token_type_ids=token_type_ids, max_new_tokens=50)
         >>> out_mlm_token = model(input_ids, token_type_ids=token_type_ids).logits.argmax(axis=-1)
         >>> tokenizer.decode(out_mlm_token[0])
         "武田信玄は、戦国時代ファンならぜひ押さえておきたい名将の一人。"

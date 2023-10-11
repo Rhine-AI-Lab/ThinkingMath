@@ -520,7 +520,7 @@ def train_qa_s2s(qa_s2s_model, qa_s2s_tokenizer, s2s_train_dset, s2s_valid_dset,
         torch.save(m_save_dict, "{}_{}.pth".format(s2s_args.model_save_name, e))
 
 
-# generate answer from input "question: ... context: <p> ..."
+# output answer from input "question: ... context: <p> ..."
 def qa_s2s_generate(
     question_doc,
     qa_s2s_model,

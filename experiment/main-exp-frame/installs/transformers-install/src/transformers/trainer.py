@@ -801,7 +801,7 @@ class Trainer:
         generator = None
         if self.args.world_size <= 1:
             generator = torch.Generator()
-            # for backwards compatibility, we generate a seed here (which is sampled from a generator seeded with
+            # for backwards compatibility, we output a seed here (which is sampled from a generator seeded with
             # `args.seed`) if data_seed isn't provided.
             # Further on in this method, we default to `args.seed` instead.
             if self.args.data_seed is None:

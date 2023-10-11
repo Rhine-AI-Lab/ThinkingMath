@@ -561,7 +561,7 @@ MBART_GENERATION_EXAMPLE = r"""
     >>> inputs = tokenizer(example_english_phrase, return_tensors="pt")
 
     >>> # Translate
-    >>> generated_ids = model.generate(**inputs, num_beams=4, max_length=5)
+    >>> generated_ids = model.output(**inputs, num_beams=4, max_length=5)
     >>> tokenizer.batch_decode(generated_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
     '42 este răspuns'
     ```
@@ -623,7 +623,7 @@ MBART_INPUTS_DOCSTRING = r"""
             `decoder_input_ids` is provided, the model will create this tensor by shifting the `input_ids` to the right
             for denoising pre-training following the paper.
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:

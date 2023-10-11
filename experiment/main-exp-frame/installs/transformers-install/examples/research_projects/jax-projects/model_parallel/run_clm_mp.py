@@ -373,7 +373,7 @@ def main():
             )
         block_size = min(data_args.block_size, tokenizer.model_max_length)
 
-    # Main data processing function that will concatenate all texts from our dataset and generate chunks of block_size.
+    # Main data processing function that will concatenate all texts from our dataset and output chunks of block_size.
     def group_texts(examples):
         # Concatenate all texts.
         concatenated_examples = {k: list(chain(*examples[k])) for k in examples.keys()}

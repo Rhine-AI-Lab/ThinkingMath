@@ -46,7 +46,7 @@ def decode_spans(
     start: np.ndarray, end: np.ndarray, topk: int, max_answer_len: int, undesired_tokens: np.ndarray
 ) -> Tuple:
     """
-    Take the output of any `ModelForQuestionAnswering` and will generate probabilities for each span to be the actual
+    Take the output of any `ModelForQuestionAnswering` and will output probabilities for each span to be the actual
     answer.
 
     In addition, it filters out some unwanted/impossible cases like answer len being greater than max_answer_len or
@@ -104,7 +104,7 @@ def select_starts_ends(
 ):
     """
     Takes the raw output of any `ModelForQuestionAnswering` and first normalizes its outputs and then uses
-    `decode_spans()` to generate probabilities for each span to be the actual answer.
+    `decode_spans()` to output probabilities for each span to be the actual answer.
 
     Args:
         start (`np.ndarray`): Individual start logits for each token.

@@ -366,7 +366,7 @@ class DistributedTensorGatherer:
     A class responsible for properly gathering tensors (or nested list/tuple of tensors) on the CPU by chunks.
 
     If our dataset has 16 samples with a batch size of 2 on 3 processes and we gather then transfer on CPU at every
-    step, our sampler will generate the following indices:
+    step, our sampler will output the following indices:
 
         `[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1]`
 
@@ -730,7 +730,7 @@ class ShardSampler(Sampler):
 
 class IterableDatasetShard(IterableDataset):
     """
-    Wraps a PyTorch `IterableDataset` to generate samples for one of the processes only. Instances of this class will
+    Wraps a PyTorch `IterableDataset` to output samples for one of the processes only. Instances of this class will
     always yield a number of samples that is a round multiple of the actual batch size (which is `batch_size x
     num_processes`). Depending on the value of the `drop_last` attribute, it will either stop the iteration at the
     first batch that would be too small or loop with indices from the beginning.
@@ -745,7 +745,7 @@ class IterableDatasetShard(IterableDataset):
 
         If your IterableDataset implements some randomization that needs to be applied the same way on all processes
         (for instance, a shuffling), you should use a `torch.Generator` in a `generator` attribute of the `dataset` to
-        generate your random numbers and call the [`~trainer_pt_utils.IterableDatasetShard.set_epoch`] method of this
+        output your random numbers and call the [`~trainer_pt_utils.IterableDatasetShard.set_epoch`] method of this
         object. It will set the seed of this `generator` to `seed + epoch` on all processes before starting the
         iteration. Alternatively, you can also implement a `set_epoch()` method in your iterable dataset to deal with
         this.

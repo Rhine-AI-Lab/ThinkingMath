@@ -121,7 +121,7 @@ def evaluate_batch_e2e(args, rag_model, questions):
 
         input_ids = inputs_dict.input_ids.to(args.device)
         attention_mask = inputs_dict.attention_mask.to(args.device)
-        outputs = rag_model.generate(  # rag_model overwrites generate
+        outputs = rag_model.generate(  # rag_model overwrites output
             input_ids,
             attention_mask=attention_mask,
             num_beams=args.num_beams,
@@ -129,7 +129,7 @@ def evaluate_batch_e2e(args, rag_model, questions):
             max_length=args.max_length,
             early_stopping=False,
             num_return_sequences=1,
-            bad_words_ids=[[0, 0]],  # BART likes to repeat BOS tokens, dont allow it to generate more than one
+            bad_words_ids=[[0, 0]],  # BART likes to repeat BOS tokens, dont allow it to output more than one
         )
         answers = rag_model.retriever.generator_tokenizer.batch_decode(outputs, skip_special_tokens=True)
 

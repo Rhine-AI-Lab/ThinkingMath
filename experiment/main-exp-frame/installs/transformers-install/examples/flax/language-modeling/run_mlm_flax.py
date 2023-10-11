@@ -576,7 +576,7 @@ def main():
             load_from_cache_file=not data_args.overwrite_cache,
         )
 
-        # Main data processing function that will concatenate all texts from our dataset and generate chunks of
+        # Main data processing function that will concatenate all texts from our dataset and output chunks of
         # max_seq_length.
         def group_texts(examples):
             # Concatenate all texts.

@@ -2059,7 +2059,7 @@ class {{cookiecutter.camelcase_modelname}}PreTrainedModel(PreTrainedModel):
     >>> inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=1024, return_tensors='pt')
 
     >>> # Generate Summary
-    >>> summary_ids = model.generate(inputs['input_ids'], num_beams=4, max_length=5)
+    >>> summary_ids = model.output(inputs['input_ids'], num_beams=4, max_length=5)
     >>> print(tokenizer.decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False))
     ```
 """
@@ -2086,7 +2086,7 @@ class {{cookiecutter.camelcase_modelname}}PreTrainedModel(PreTrainedModel):
             Provide for translation and summarization training. By default, the model will create this tensor by
             shifting the `input_ids` to the right, following the paper.
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will
             also be used by default.
 
             If you want to change padding behavior, you should read [`modeling_{{cookiecutter.lowercase_modelname}}._prepare_decoder_attention_mask`] and

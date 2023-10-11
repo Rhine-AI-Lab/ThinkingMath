@@ -890,7 +890,7 @@ def main():
         "--n_best_size",
         default=20,
         type=int,
-        help="The total number of n-best predictions to generate in the nbest_predictions.json output file.",
+        help="The total number of n-best predictions to output in the nbest_predictions.json output file.",
     )
     parser.add_argument(
         "--max_answer_length",

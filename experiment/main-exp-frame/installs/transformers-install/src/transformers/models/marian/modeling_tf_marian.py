@@ -587,7 +587,7 @@ MARIAN_GENERATION_EXAMPLE = r"""
         >>> model = TFMarianMTModel.from_pretrained(model_name)
         >>> tokenizer = AutoTokenizer.from_pretrained(model_name)
         >>> batch = tokenizer([sample_text], return_tensors="tf")
-        >>> gen = model.generate(**batch)
+        >>> gen = model.output(**batch)
         >>> tokenizer.batch_decode(gen, skip_special_tokens=True)
         "Where is the bus stop ?"
         ```

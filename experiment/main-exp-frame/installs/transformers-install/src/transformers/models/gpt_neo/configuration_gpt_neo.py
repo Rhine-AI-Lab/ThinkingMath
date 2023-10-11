@@ -231,7 +231,7 @@ class GPTNeoOnnxConfig(OnnxConfigWithPast):
         # Need to add the past_keys
         if self.use_past:
             if not is_torch_available():
-                raise ValueError("Cannot generate dummy past_keys inputs without PyTorch installed.")
+                raise ValueError("Cannot output dummy past_keys inputs without PyTorch installed.")
             else:
                 import torch
 

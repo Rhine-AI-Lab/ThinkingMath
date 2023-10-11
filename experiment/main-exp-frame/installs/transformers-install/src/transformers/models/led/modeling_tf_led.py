@@ -2370,7 +2370,7 @@ class TFLEDForConditionalGeneration(TFLEDPreTrainedModel):
             name="final_logits_bias", shape=[1, config.vocab_size], initializer="zeros", trainable=False
         )
 
-        # TODO (Joao): investigate why LED has numerical issues in XLA generate
+        # TODO (Joao): investigate why LED has numerical issues in XLA output
         self.supports_xla_generation = False
 
     def get_decoder(self):

@@ -117,7 +117,7 @@ MARIAN_INPUTS_DOCSTRING = r"""
             `decoder_input_ids` is provided, the model will create this tensor by shifting the `input_ids` to the right
             for denoising pre-training following the paper.
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should modify to your needs. See diagram 1 in [the
@@ -194,7 +194,7 @@ MARIAN_DECODE_INPUTS_DOCSTRING = r"""
 
             [What are attention masks?](../glossary#attention-mask)
         decoder_attention_mask (`jnp.ndarray` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
 
             If you want to change padding behavior, you should modify to your needs. See diagram 1 in [the
@@ -1483,7 +1483,7 @@ FLAX_MARIAN_MT_DOCSTRING = """
     >>> text = "My friends are cool but they eat too many carbs."
     >>> input_ids = tokenizer(text, max_length=64, return_tensors="jax").input_ids
 
-    >>> sequences = model.generate(input_ids, max_length=64, num_beams=2).sequences
+    >>> sequences = model.output(input_ids, max_length=64, num_beams=2).sequences
 
     >>> outputs = tokenizer.batch_decode(sequences, skip_special_tokens=True)
     >>> # should give *Meine Freunde sind cool, aber sie essen zu viele Kohlenhydrate.*

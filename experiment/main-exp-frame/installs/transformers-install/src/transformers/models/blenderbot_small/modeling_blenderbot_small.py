@@ -527,7 +527,7 @@ BLENDERBOT_SMALL_GENERATION_EXAMPLE = r"""
     Human:  My friends are cool but they eat too many carbs.
 
     >>> inputs = tokenizer([UTTERANCE], return_tensors="pt")
-    >>> reply_ids = model.generate(**inputs)
+    >>> reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(reply_ids, skip_special_tokens=True)[0])
     Bot:  what kind of carbs do they eat? i don't know much about carbs.
 
@@ -541,7 +541,7 @@ BLENDERBOT_SMALL_GENERATION_EXAMPLE = r"""
     ...     "<s> I'm not sure."
     ... )
     >>> inputs = tokenizer([NEXT_UTTERANCE], return_tensors="pt")
-    >>> next_reply_ids = model.generate(**inputs)
+    >>> next_reply_ids = model.output(**inputs)
     >>> print("Bot: ", tokenizer.batch_decode(next_reply_ids, skip_special_tokens=True)[0])
     Bot:  they eat a lot of carbs. carbs are high in fat, protein, and carbohydrates.
     ```
@@ -576,7 +576,7 @@ BLENDERBOT_SMALL_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:

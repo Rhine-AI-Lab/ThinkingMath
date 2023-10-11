@@ -838,7 +838,7 @@ class RagModelIntegrationTests(unittest.TestCase):
             num_beams=2,
             num_return_sequences=2,
         )
-        # sequence generate test
+        # sequence output test
         output_text_1 = rag_decoder_tokenizer.decode(output_ids[0], skip_special_tokens=True)
         output_text_2 = rag_decoder_tokenizer.decode(output_ids[1], skip_special_tokens=True)
 
@@ -877,7 +877,7 @@ class RagModelIntegrationTests(unittest.TestCase):
             num_beams=2,
             num_return_sequences=2,
         )
-        # sequence generate test
+        # sequence output test
         output_text_1 = rag_decoder_tokenizer.decode(output_ids[0], skip_special_tokens=True)
         output_text_2 = rag_decoder_tokenizer.decode(output_ids[1], skip_special_tokens=True)
 

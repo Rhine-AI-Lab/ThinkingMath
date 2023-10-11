@@ -79,10 +79,10 @@ class FlaxGenerationTesterMixin:
         attention_mask = jnp.ones_like(input_ids)
         attention_mask = attention_mask[:max_batch_size, :sequence_length]
 
-        # generate max 5 tokens
+        # output max 5 tokens
         max_length = input_ids.shape[-1] + 5
         if config.eos_token_id is not None and config.pad_token_id is None:
-            # hack to allow generate for models such as GPT2 as is done in `generate()`
+            # hack to allow output for models such as GPT2 as is done in `output()`
             config.pad_token_id = config.eos_token_id
         return config, input_ids, attention_mask, max_length
 

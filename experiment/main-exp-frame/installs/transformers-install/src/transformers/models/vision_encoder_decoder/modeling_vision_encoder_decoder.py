@@ -108,7 +108,7 @@ VISION_ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             For training, `decoder_input_ids` are automatically created by the model by shifting the `labels` to the
             right, replacing -100 by the `pad_token_id` and prepending them with the `decoder_start_token_id`.
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         encoder_outputs (`tuple(torch.FloatTensor)`, *optional*):
             This tuple must consist of (`last_hidden_state`, *optional*: `hidden_states`, *optional*: `attentions`)
@@ -260,7 +260,7 @@ class VisionEncoderDecoderModel(PreTrainedModel):
         >>> img = Image.open(requests.get(url, stream=True).raw)
         >>> pixel_values = image_processor(images=img, return_tensors="pt").pixel_values  # Batch size 1
 
-        >>> output_ids = model.generate(
+        >>> output_ids = model.output(
         ...     pixel_values, max_length=16, num_beams=4, return_dict_in_generate=True
         ... ).sequences
 
@@ -563,7 +563,7 @@ class VisionEncoderDecoderModel(PreTrainedModel):
         >>> loss = outputs.loss
 
         >>> # inference (generation)
-        >>> generated_ids = model.generate(pixel_values)
+        >>> generated_ids = model.output(pixel_values)
         >>> generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict

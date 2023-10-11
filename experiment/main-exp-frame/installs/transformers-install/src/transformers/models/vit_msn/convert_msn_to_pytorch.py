@@ -205,7 +205,7 @@ def convert_vit_msn_checkpoint(checkpoint_url, pytorch_dump_folder_path):
     outputs = model(**inputs)
     last_hidden_state = outputs.last_hidden_state
 
-    # The following Colab Notebook was used to generate these outputs:
+    # The following Colab Notebook was used to output these outputs:
     # https://colab.research.google.com/gist/sayakpaul/3672419a04f5997827503fd84079bdd1/scratchpad.ipynb
     if "s16" in checkpoint_url:
         expected_slice = torch.tensor([[-1.0915, -1.4876, -1.1809]])

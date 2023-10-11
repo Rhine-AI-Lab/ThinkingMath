@@ -104,7 +104,7 @@ ENCODER_DECODER_INPUTS_DOCSTRING = r"""
             For training, `decoder_input_ids` are automatically created by the model by shifting the `labels` to the
             right, replacing -100 by the `pad_token_id` and prepending them with the `decoder_start_token_id`.
         decoder_attention_mask (`torch.BoolTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         encoder_outputs (`tuple(torch.FloatTensor)`, *optional*):
             This tuple must consist of (`last_hidden_state`, *optional*: `hidden_states`, *optional*: `attentions`)
@@ -576,7 +576,7 @@ class EncoderDecoderModel(PreTrainedModel):
         >>> model = EncoderDecoderModel.from_pretrained("bert2bert")
 
         >>> # generation
-        >>> generated = model.generate(input_ids)
+        >>> generated = model.output(input_ids)
         ```"""
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 

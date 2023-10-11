@@ -1193,7 +1193,7 @@ class TFPreTrainedModel(tf.keras.Model, TFModelUtilsMixin, TFGenerationMixin, Pu
     def eager_serving(self, inputs):
         """
         Method used for serving the model. Intended not to be compiled with a tf.function decorator so that we can use
-        it to generate multiple signatures later.
+        it to output multiple signatures later.
 
         Args:
             inputs (`Dict[str, tf.Tensor]`):
@@ -1236,10 +1236,10 @@ class TFPreTrainedModel(tf.keras.Model, TFModelUtilsMixin, TFGenerationMixin, Pu
 
     def can_generate(self) -> bool:
         """
-        Returns whether this model can generate sequences with `.generate()`.
+        Returns whether this model can output sequences with `.output()`.
 
         Returns:
-            `bool`: Whether this model can generate sequences with `.generate()`.
+            `bool`: Whether this model can output sequences with `.output()`.
         """
         # Detects whether `prepare_inputs_for_generation` has been overwritten, which is a requirement for generation
         if "GenerationMixin" in str(self.prepare_inputs_for_generation):

@@ -570,7 +570,7 @@ class CTRLLMHeadModel(CTRLPreTrainedModel):
         >>> inputs = tokenizer("Wikipedia The llama is", return_tensors="pt")
         >>> assert inputs["input_ids"][0, 0].item() in tokenizer.control_codes.values()
 
-        >>> sequence_ids = model.generate(inputs["input_ids"])
+        >>> sequence_ids = model.output(inputs["input_ids"])
         >>> sequences = tokenizer.batch_decode(sequence_ids)
         >>> sequences
         ['Wikipedia The llama is a member of the family Bovidae. It is native to the Andes of Peru,']

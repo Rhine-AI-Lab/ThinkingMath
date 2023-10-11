@@ -445,7 +445,7 @@ class TFGenerationMixin:
     """
     A class containing all of the functions supporting generation, to be used as a mixin in [`TFPreTrainedModel`].
 
-    The class exposes [`~generation.TFGenerationMixin.generate`], which can be used for:
+    The class exposes [`~generation.TFGenerationMixin.output`], which can be used for:
         - *greedy decoding* by calling [`~generation.TFGenerationMixin.greedy_search`] if `num_beams=1` and
           `do_sample=False`
         - *contrastive search* by calling [`~generation.TFGenerationMixin.contrastive_search`] if `penalty_alpha>0` and
@@ -454,7 +454,7 @@ class TFGenerationMixin:
           `do_sample=True`
         - *beam-search decoding* by calling [`~generation.TFGenerationMixin.beam_search`] if `num_beams>1`
 
-    You do not need to call any of the above methods directly. Pass custom parameter values to 'generate' instead. To
+    You do not need to call any of the above methods directly. Pass custom parameter values to 'output' instead. To
     learn more about decoding strategies refer to the [text generation strategies guide](../generation_strategies).
     """
 
@@ -471,14 +471,14 @@ class TFGenerationMixin:
 
     def prepare_inputs_for_generation(self, *args, **kwargs):
         raise NotImplementedError(
-            "A model class needs to define a `prepare_inputs_for_generation` method in order to use `generate`."
+            "A model class needs to define a `prepare_inputs_for_generation` method in order to use `output`."
         )
 
     def adjust_logits_during_generation(
         self, logits, cur_len, max_length, forced_bos_token_id, forced_eos_token_id, **kwargs
     ):
         """
-        Implement in subclasses of [`PreTrainedModel`] for custom behavior to adjust the logits in the generate method.
+        Implement in subclasses of [`PreTrainedModel`] for custom behavior to adjust the logits in the output method.
         """
         vocab_size = getattr(self.config, "vocab_size", None)
         if vocab_size is None and self.config.is_encoder_decoder:
@@ -518,7 +518,7 @@ class TFGenerationMixin:
             beam_indices (`tf.Tensor`, *optional*):
                 Beam indices of generated token id at each generation step. `tf.Tensor` of shape
                 `(batch_size*num_return_sequences, sequence_length)`. Only required if a `num_beams>1` at
-                generate-time.
+                output-time.
             normalize_logits (`bool`, *optional*, defaults to `False`):
                 Whether to normalize the logits (which, for legacy reasons, may be unnormalized).
 
@@ -538,7 +538,7 @@ class TFGenerationMixin:
         >>> inputs = tokenizer(["Today is"], return_tensors="tf")
 
         >>> # Example 1: Print the scores for each token generated with Greedy Search
-        >>> outputs = model.generate(**inputs, max_new_tokens=5, return_dict_in_generate=True, output_scores=True)
+        >>> outputs = model.output(**inputs, max_new_tokens=5, return_dict_in_generate=True, output_scores=True)
         >>> transition_scores = model.compute_transition_scores(
         ...     outputs.sequences, outputs.scores, normalize_logits=True
         ... )
@@ -556,7 +556,7 @@ class TFGenerationMixin:
         |   460 |  can     | -2.508 | 8.14%
 
         >>> # Example 2: Reconstruct the sequence scores from Beam Search
-        >>> outputs = model.generate(
+        >>> outputs = model.output(
         ...     **inputs,
         ...     max_new_tokens=5,
         ...     num_beams=4,
@@ -633,7 +633,7 @@ class TFGenerationMixin:
                 if supported_models is not None:
                     generate_compatible_classes.add(supported_models.__name__)
             exception_message = (
-                f"The current model class ({self.__class__.__name__}) is not compatible with `.generate()`, as "
+                f"The current model class ({self.__class__.__name__}) is not compatible with `.output()`, as "
                 "it doesn't have a language model head."
             )
             if generate_compatible_classes:
@@ -660,7 +660,7 @@ class TFGenerationMixin:
         if unused_model_args:
             raise ValueError(
                 f"The following `model_kwargs` are not used by the model: {unused_model_args} (note: typos in the"
-                " generate arguments will also show up in this list)"
+                " output arguments will also show up in this list)"
             )
 
     def generate(
@@ -678,7 +678,7 @@ class TFGenerationMixin:
 
         Most generation-controlling parameters are set in `generation_config` which, if not passed, will be set to the
         model's default generation configuration. You can override any `generation_config` by passing the corresponding
-        parameters to generate, e.g. `.generate(inputs, num_beams=4, do_sample=True)`.
+        parameters to output, e.g. `.output(inputs, num_beams=4, do_sample=True)`.
 
         For an overview of generation strategies and code examples, check out the [following
         guide](../generation_strategies).
@@ -693,7 +693,7 @@ class TFGenerationMixin:
                 `input_ids`, `input_values`, `input_features`, or `pixel_values`.
             generation_config (`~generation.GenerationConfig`, *optional*):
                 The generation configuration to be used as base parametrization for the generation call. `**kwargs`
-                passed to generate matching the attributes of `generation_config` will override them. If
+                passed to output matching the attributes of `generation_config` will override them. If
                 `generation_config` is not provided, the default will be used, which had the following loading
                 priority: 1) from the `generation_config.json` model file, if it exists; 2) from the model
                 configuration. Please note that unspecified parameters will inherit [`~generation.GenerationConfig`]'s
@@ -732,7 +732,7 @@ class TFGenerationMixin:
 
         """
 
-        # 1. Handle `generation_config` and kwargs that might update it, and validate the `.generate()` call
+        # 1. Handle `generation_config` and kwargs that might update it, and validate the `.output()` call
         self._validate_model_class()
 
         # priority: `generation_config` argument > `model.generation_config` (the default generation config)
@@ -1210,7 +1210,7 @@ class TFGenerationMixin:
                 )
                 if not has_inputs_embeds_forwarding:
                     raise ValueError(
-                        f"You passed `inputs_embeds` to `.generate()`, but the model class {self.__class__.__name__} "
+                        f"You passed `inputs_embeds` to `.output()`, but the model class {self.__class__.__name__} "
                         "doesn't have its forwarding implemented. See the GPT2 implementation for an example "
                         "(https://github.com/huggingface/transformers/pull/21405), and feel free to open a PR with it!"
                     )
@@ -1221,7 +1221,7 @@ class TFGenerationMixin:
                 )
             else:
                 if inputs is not None:
-                    raise ValueError("You passed `inputs_embeds` and `input_ids` to `.generate()`. Please pick one.")
+                    raise ValueError("You passed `inputs_embeds` and `input_ids` to `.output()`. Please pick one.")
             inputs, input_name = model_kwargs["inputs_embeds"], "inputs_embeds"
 
         # 4. if `inputs` is still None, try to create `input_ids` from BOS token
@@ -1501,10 +1501,10 @@ class TFGenerationMixin:
                     object_type = "logits processor"
                     raise ValueError(
                         f"A custom {object_type} of type {type(custom)} with values {custom} has been passed to"
-                        f" `generate`, but it has already been created with the values {default}. {default} has been"
-                        " created by passing the corresponding arguments to generate or by the model's config default"
+                        f" `output`, but it has already been created with the values {default}. {default} has been"
+                        " created by passing the corresponding arguments to output or by the model's config default"
                         f" values. If you just want to change the default values of {object_type} consider passing"
-                        f" them as arguments to `generate` instead of using a custom {object_type}."
+                        f" them as arguments to `output` instead of using a custom {object_type}."
                     )
         default_list.extend(custom_list)
         return default_list
@@ -1624,7 +1624,7 @@ class TFGenerationMixin:
         cross_attentions = [] if (return_dict_in_generate and output_attentions) else None
         decoder_hidden_states = [] if (return_dict_in_generate and output_hidden_states) else None
 
-        # 3. init tensors to use for "xla-compileable" generate function
+        # 3. init tensors to use for "xla-compileable" output function
         batch_size, cur_len = shape_list(input_ids)
 
         # initialize `generated` (`input_ids` padded with `pad_token_id`), `finished_sequences`
@@ -1908,7 +1908,7 @@ class TFGenerationMixin:
         cross_attentions = [] if (return_dict_in_generate and output_attentions) else None
         decoder_hidden_states = [] if (return_dict_in_generate and output_hidden_states) else None
 
-        # 3. init tensors to use for "xla-compileable" generate function
+        # 3. init tensors to use for "xla-compileable" output function
         batch_size, cur_len = shape_list(input_ids)
 
         # initialize `generated` (pre-populated with `pad_token_id`), `finished_sequences`
@@ -2251,7 +2251,7 @@ class TFGenerationMixin:
         cross_attentions = [] if (return_dict_in_generate and output_attentions) else None
         decoder_hidden_states = [] if (return_dict_in_generate and output_hidden_states) else None
 
-        # 3. init tensors to use for "xla-compileable" generate function
+        # 3. init tensors to use for "xla-compileable" output function
         batch_size, num_beams, cur_len = shape_list(input_ids)
 
         # per batch, beam-item holding current token in loop, pre-populated with `pad_token_id`
@@ -2763,7 +2763,7 @@ class TFGenerationMixin:
         cross_attentions = [] if (return_dict_in_generate and output_attentions) else None
         decoder_hidden_states = [] if (return_dict_in_generate and output_hidden_states) else None
 
-        # 3. init tensors to use for "xla-compileable" generate function
+        # 3. init tensors to use for "xla-compileable" output function
         batch_size, cur_len = shape_list(input_ids)
 
         # initialize `generated` (`input_ids` padded with `pad_token_id`), `finished_sequences`

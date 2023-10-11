@@ -552,7 +552,7 @@ MARIAN_GENERATION_EXAMPLE = r"""
     >>> sample_text = "où est l'arrêt de bus ?"
     >>> batch = tokenizer([sample_text], return_tensors="pt")
 
-    >>> generated_ids = model.generate(**batch)
+    >>> generated_ids = model.output(**batch)
     >>> tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     "Where's the bus stop?"
     ```
@@ -587,7 +587,7 @@ MARIAN_INPUTS_DOCSTRING = r"""
             `past_key_values` is used, optionally only the last `decoder_input_ids` have to be input (see
             `past_key_values`).
         decoder_attention_mask (`torch.LongTensor` of shape `(batch_size, target_sequence_length)`, *optional*):
-            Default behavior: generate a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
+            Default behavior: output a tensor that ignores pad tokens in `decoder_input_ids`. Causal mask will also
             be used by default.
         head_mask (`torch.Tensor` of shape `(encoder_layers, encoder_attention_heads)`, *optional*):
             Mask to nullify selected heads of the attention modules in the encoder. Mask values selected in `[0, 1]`:
